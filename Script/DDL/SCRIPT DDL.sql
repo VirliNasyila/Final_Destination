@@ -1,8 +1,11 @@
+
 /*==============================================================*/
 /* DBMS name:      PostgreSQL 9.x                               */
-/* Created on:     11/19/2025 11:23:37 AM                       */
+/* Created on:     11/19/2025 8:39:55 PM                        */
 /*==============================================================*/
+begin;
 
+drop index if exists ADD_SONGS_PLAYLISTS_PK;
 
 drop index if exists MENAMBAHKAN_LAGU_FK;
 
@@ -23,6 +26,8 @@ drop index if exists MEMILIKI2_FK;
 drop index if exists ARTISTS_TOURS_PK;
 
 drop table if exists ARTISTS_TOURS;
+
+drop index if exists ARTIST_PROMOTION_PK;
 
 drop index if exists MEMPROMOSIKAN_FK;
 
@@ -118,11 +123,11 @@ drop index if exists LIKE_SONGS_PK;
 
 drop table if exists LIKE_SONGS;
 
+drop index if exists LISTENS_PK;
+
 drop index if exists MENDENGARKAN_FK;
 
 drop index if exists MENDENGARKAN2_FK;
-
-drop index if exists LISTENS_PK;
 
 drop table if exists LISTENS;
 
@@ -194,12 +199,13 @@ drop table if exists USERS;
 /* Table: ADD_SONGS_PLAYLISTS                                   */
 /*==============================================================*/
 create table ADD_SONGS_PLAYLISTS (
+   ADD_SONG_PL_ID       INT4                 not null,
    USER_ID              INT4                 not null,
    PLAYLIST_ID          INT4                 not null,
    SONG_ID              INT4                 not null,
    NO_URUT              INT4                 not null,
-   "TIMESTAMP"          DATE                 not null DEFAULT CURRENT_TIMESTAMP,
-   constraint PK_ADD_SONGS_PLAYLISTS primary key (USER_ID, PLAYLIST_ID, SONG_ID)
+   "TIMESTAMP"          DATE                 not null,
+   constraint PK_ADD_SONGS_PLAYLISTS primary key (ADD_SONG_PL_ID)
 );
 
 /*==============================================================*/
@@ -224,6 +230,13 @@ SONG_ID
 );
 
 /*==============================================================*/
+/* Index: ADD_SONGS_PLAYLISTS_PK                                */
+/*==============================================================*/
+create unique index ADD_SONGS_PLAYLISTS_PK on ADD_SONGS_PLAYLISTS (
+ADD_SONG_PL_ID
+);
+
+/*==============================================================*/
 /* Table: ARTISTS                                               */
 /*==============================================================*/
 create table ARTISTS (
@@ -232,7 +245,7 @@ create table ARTISTS (
    BIO                  TEXT                 null,
    MONTHLY_LISTENER_COUNT INT8                 null,
    ARTIST_PFP           VARCHAR(2048)        null,
-   ARTIST_EMAIL         VARCHAR(320)         not null unique,
+   ARTIST_EMAIL         VARCHAR(320)         not null,
    BANNER               VARCHAR(2048)        null,
    FOLLOWER_COUNT       INT8                 null,
    constraint PK_ARTISTS primary key (ARTIST_ID)
@@ -285,9 +298,6 @@ create table ARTIST_PROMOTION (
    KOMENTAR_PROMOSI     TEXT                 null,
    constraint PK_ARTIST_PROMOTION primary key (ARTIST_ID)
 );
-create unique index ARTIST_PROMOTION_PK on ARTIST_PROMOTION (
-ARTIST_ID
-);
 
 /*==============================================================*/
 /* Index: MEMPROMOSIKAN2_FK                                     */
@@ -301,6 +311,13 @@ ARTIST_ID
 /*==============================================================*/
 create  index MEMPROMOSIKAN_FK on ARTIST_PROMOTION (
 COLLECTION_ID
+);
+
+/*==============================================================*/
+/* Index: ARTIST_PROMOTION_PK                                   */
+/*==============================================================*/
+create unique index ARTIST_PROMOTION_PK on ARTIST_PROMOTION (
+ARTIST_ID
 );
 
 /*==============================================================*/
@@ -518,7 +535,7 @@ SONG_ID
 create table FOLLOW_ARTISTS (
    USER_ID              INT4                 not null,
    ARTIST_ID            INT4                 not null,
-   "TIMESTAMP"          DATE                 not null DEFAULT CURRENT_TIMESTAMP,
+   "TIMESTAMP"          DATE                 not null,
    constraint PK_FOLLOW_ARTISTS primary key (USER_ID, ARTIST_ID)
 );
 
@@ -628,7 +645,7 @@ REVIEW_ID
 create table LIKE_SONGS (
    SONG_ID              INT4                 not null,
    USER_ID              INT4                 not null,
-   "TIMESTAMP"          DATE                 not null DEFAULT CURRENT_TIMESTAMP,
+   "TIMESTAMP"          DATE                 not null,
    constraint PK_LIKE_SONGS primary key (SONG_ID, USER_ID)
 );
 
@@ -658,19 +675,12 @@ USER_ID
 /* Table: LISTENS                                               */
 /*==============================================================*/
 create table LISTENS (
+   LISTEN_ID            INT4                 not null,
    USER_ID              INT4                 not null,
    SONG_ID              INT4                 not null,
    DURATION_LISTENED    INT4                 not null,
-   "TIMESTAMP"          DATE                 not null DEFAULT CURRENT_TIMESTAMP,
-   constraint PK_LISTENS primary key (USER_ID, SONG_ID)
-);
-
-/*==============================================================*/
-/* Index: LISTENS_PK                                            */
-/*==============================================================*/
-create unique index LISTENS_PK on LISTENS (
-USER_ID,
-SONG_ID
+   "TIMESTAMP"          DATE                 not null,
+   constraint PK_LISTENS primary key (LISTEN_ID)
 );
 
 /*==============================================================*/
@@ -685,6 +695,13 @@ USER_ID
 /*==============================================================*/
 create  index MENDENGARKAN_FK on LISTENS (
 SONG_ID
+);
+
+/*==============================================================*/
+/* Index: LISTENS_PK                                            */
+/*==============================================================*/
+create unique index LISTENS_PK on LISTENS (
+LISTEN_ID
 );
 
 /*==============================================================*/
@@ -755,7 +772,7 @@ create table RATE_SONGS (
    USER_ID              INT4                 not null,
    SONG_ID              INT4                 not null,
    SONG_RATING          NUMERIC(3,0)         not null,
-   "TIMESTAMP"          DATE                 not null DEFAULT CURRENT_TIMESTAMP,
+   "TIMESTAMP"          DATE                 not null,
    constraint PK_RATE_SONGS primary key (USER_ID, SONG_ID)
 );
 
@@ -818,7 +835,7 @@ COLLECTION_ID
 create table REVIEWS (
    REVIEW               TEXT                 null,
    RATING               NUMERIC(3,0)         not null,
-   "TIMESTAMP"          DATE                 not null DEFAULT CURRENT_TIMESTAMP,
+   "TIMESTAMP"          DATE                 not null,
    REVIEW_ID            INT4                 not null,
    USER_ID              INT4                 not null,
    COLLECTION_ID        INT4                 not null,
@@ -954,7 +971,7 @@ create table USERS (
    USERNAME             VARCHAR(50)          not null,
    USER_PP              VARCHAR(2048)        null,
    PW_HASH              VARCHAR(255)         not null,
-   USER_EMAIL           VARCHAR(320)         not null unique,
+   USER_EMAIL           VARCHAR(320)         not null,
    REGION               VARCHAR(50)          null,
    COUNTRY              VARCHAR(50)          null,
    constraint PK_USERS primary key (USER_ID)
@@ -985,12 +1002,12 @@ alter table ADD_SONGS_PLAYLISTS
 alter table ARTISTS_TOURS
    add constraint FK_ARTISTS__MEMILIKI2_ARTISTS foreign key (ARTIST_ID)
       references ARTISTS (ARTIST_ID)
-      on delete restrict on update restrict;
+      on delete restrict on update cascade;
 
 alter table ARTISTS_TOURS
    add constraint FK_ARTISTS__MEMILIKI3_TOURS foreign key (TOUR_ID)
       references TOURS (TOUR_ID)
-      on delete restrict on update restrict;
+      on delete cascade on update cascade;
 
 alter table ARTIST_PROMOTION
    add constraint FK_ARTIST_P_MEMPROMOS_COLLECTI foreign key (COLLECTION_ID)
@@ -1005,7 +1022,7 @@ alter table ARTIST_PROMOTION
 alter table BLOCKLIST_ARTISTS
    add constraint FK_BLOCKLIS_MEM_BLACK_ARTISTS foreign key (ARTIST_ID)
       references ARTISTS (ARTIST_ID)
-      on delete restrict on update restrict;
+      on delete restrict on update cascade;
 
 alter table BLOCKLIST_ARTISTS
    add constraint FK_BLOCKLIS_MEM_BLACK_USERS foreign key (USER_ID)
@@ -1065,7 +1082,7 @@ alter table CREATE_SONGS
 alter table FOLLOW_ARTISTS
    add constraint FK_FOLLOW_A_MENGIKUTI_ARTISTS foreign key (ARTIST_ID)
       references ARTISTS (ARTIST_ID)
-      on delete cascade on update cascade;
+      on delete restrict on update cascade;
 
 alter table FOLLOW_ARTISTS
    add constraint FK_FOLLOW_A_MENGIKUTI_USERS foreign key (USER_ID)
@@ -1085,7 +1102,7 @@ alter table FOLLOW_USERS
 alter table LIKE_REVIEWS
    add constraint FK_LIKE_REV_LIKE_REVI_REVIEWS foreign key (REVIEW_ID)
       references REVIEWS (REVIEW_ID)
-      on delete restrict on update restrict;
+      on delete cascade on update cascade;
 
 alter table LIKE_REVIEWS
    add constraint FK_LIKE_REV_LIKE_REVI_USERS foreign key (USER_ID)
@@ -1171,6 +1188,7 @@ alter table SONGS_GENRES
    add constraint FK_SONGS_GE_MEMPUNYAI_SONGS foreign key (SONG_ID)
       references SONGS (SONG_ID)
       on delete cascade on update cascade;
+
 
 
 -- Sequence untuk artists
@@ -1269,6 +1287,13 @@ ALTER SEQUENCE seq_socials_id OWNED BY SOCIALS.SOCIAL_ID;
       ALTER TABLE ARTISTS ADD CONSTRAINT CHK_ARTISTNAME_NO_WHITESPACE
       CHECK (LENGTH(TRIM(ARTIST_NAME)) > 0);
 
+      ALTER TABLE FOLLOW_USERS
+      ADD CONSTRAINT CHK_NO_SELF_FOLLOW
+      CHECK (FOLLOWER_ID <> FOLLOWED_ID);
+
+      ALTER TABLE BLOCK_USERS
+      ADD CONSTRAINT CHK_NO_SELF_BLOCK
+      CHECK (BLOCKER_ID <> BLOCKED_ID);
       /* --- VALIDASI FORMAT TEKS & TIPE --- */
 
       ALTER TABLE USERS ADD CONSTRAINT CHK_EMAIL_FORMAT
@@ -1285,13 +1310,6 @@ ALTER SEQUENCE seq_socials_id OWNED BY SOCIALS.SOCIAL_ID;
       -- 2. Playlist otomatis Tidak Kolaboratif jika tidak diisi
       ALTER TABLE PLAYLISTS ALTER COLUMN ISCOLLABORATIVE SET DEFAULT FALSE;
 
-      ALTER TABLE FOLLOW_USERS
-      ADD CONSTRAINT CHK_NO_SELF_FOLLOW
-      CHECK (FOLLOWER_ID <> FOLLOWED_ID);
-
-      ALTER TABLE BLOCK_USERS
-      ADD CONSTRAINT CHK_NO_SELF_BLOCK
-      CHECK (BLOCKER_ID <> BLOCKED_ID);
 
       -- artist hanya bisa promosi rilisannya sendiri
       ALTER TABLE ARTIST_PROMOTION
@@ -1299,3 +1317,5 @@ ALTER SEQUENCE seq_socials_id OWNED BY SOCIALS.SOCIAL_ID;
          FOREIGN KEY (ARTIST_ID, COLLECTION_ID)
          REFERENCES RELEASES (ARTIST_ID, COLLECTION_ID)
          ON DELETE CASCADE ON UPDATE CASCADE;
+
+commit;
