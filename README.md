@@ -12,6 +12,9 @@ This project is a relational database system for a music streaming platform, dev
 - **Interactions**: Likes, follows, blocks, reviews, ratings, listening history.
 - **Relationships**: Artists to songs, users to playlists, songs to genres, etc.
 
+![erd](models/erd.png)
+![postgresql schema diagram](models/postgresql_schema_diagram.png)
+
 ## Current Progress
 
 - **Data Models**: ✔️ Complete (see `/Data Models`)
