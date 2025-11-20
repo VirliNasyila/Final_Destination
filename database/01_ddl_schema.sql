@@ -204,7 +204,7 @@ create table ADD_SONGS_PLAYLISTS (
    PLAYLIST_ID          INT4                 not null,
    SONG_ID              INT4                 not null,
    NO_URUT              INT4                 not null,
-   "TIMESTAMP"          DATE                 not null,
+   "TIMESTAMP"          TIMESTAMP                 not null default current_timestamp,
    constraint PK_ADD_SONGS_PLAYLISTS primary key (ADD_SONG_PL_ID)
 );
 
@@ -389,7 +389,7 @@ create table COLLECTIONS (
    COLLECTION_ID        INT4                 not null,
    COLLECTION_TITLE     VARCHAR(255)         not null,
    COLLECTION_TYPE      VARCHAR(50)          not null,
-   COLLCETION_COVER     VARCHAR(2048)        null,
+   COLLECTION_COVER     VARCHAR(2048)        null,
    COLLECTION_RELEASE_DATE DATE                 not null,
    COLLECTION_RATING    NUMERIC(3,0)         null,
    ISPRERELEASE         BOOL                 null,
@@ -535,7 +535,7 @@ SONG_ID
 create table FOLLOW_ARTISTS (
    USER_ID              INT4                 not null,
    ARTIST_ID            INT4                 not null,
-   "TIMESTAMP"          DATE                 not null,
+   "TIMESTAMP"          TIMESTAMP                 not null default current_timestamp,
    constraint PK_FOLLOW_ARTISTS primary key (USER_ID, ARTIST_ID)
 );
 
@@ -645,7 +645,7 @@ REVIEW_ID
 create table LIKE_SONGS (
    SONG_ID              INT4                 not null,
    USER_ID              INT4                 not null,
-   "TIMESTAMP"          DATE                 not null,
+   "TIMESTAMP"          TIMESTAMP                 not null default current_timestamp,
    constraint PK_LIKE_SONGS primary key (SONG_ID, USER_ID)
 );
 
@@ -679,7 +679,7 @@ create table LISTENS (
    USER_ID              INT4                 not null,
    SONG_ID              INT4                 not null,
    DURATION_LISTENED    INT4                 not null,
-   "TIMESTAMP"          DATE                 not null,
+   "TIMESTAMP"           TIMESTAMP                 not null DEFAULT current_timestamp,
    constraint PK_LISTENS primary key (LISTEN_ID)
 );
 
@@ -772,7 +772,7 @@ create table RATE_SONGS (
    USER_ID              INT4                 not null,
    SONG_ID              INT4                 not null,
    SONG_RATING          NUMERIC(3,0)         not null,
-   "TIMESTAMP"          DATE                 not null,
+   "TIMESTAMP"           TIMESTAMP                 not null DEFAULT current_timestamp,
    constraint PK_RATE_SONGS primary key (USER_ID, SONG_ID)
 );
 
@@ -835,7 +835,7 @@ COLLECTION_ID
 create table REVIEWS (
    REVIEW               TEXT                 null,
    RATING               NUMERIC(3,0)         not null,
-   "TIMESTAMP"          DATE                 not null,
+   "TIMESTAMP"          TIMESTAMP                 not null DEFAULT current_timestamp,
    REVIEW_ID            INT4                 not null,
    USER_ID              INT4                 not null,
    COLLECTION_ID        INT4                 not null,
@@ -969,7 +969,7 @@ TOUR_ID
 create table USERS (
    USER_ID              INT4                 not null,
    USERNAME             VARCHAR(50)          not null,
-   USER_PP              VARCHAR(2048)        null,
+   USER_PFP              VARCHAR(2048)        null,
    PW_HASH              VARCHAR(255)         not null,
    USER_EMAIL           VARCHAR(320)         not null,
    REGION               VARCHAR(50)          null,
@@ -1244,6 +1244,16 @@ CREATE SEQUENCE seq_socials_id START 1;
 ALTER TABLE SOCIALS
 ALTER COLUMN SOCIAL_ID SET DEFAULT nextval('seq_socials_id');
 ALTER SEQUENCE seq_socials_id OWNED BY SOCIALS.SOCIAL_ID;
+-- Sequence untuk Listens
+CREATE SEQUENCE seq_listens_id START 1;
+ALTER TABLE LISTENS
+ALTER COLUMN LISTEN_ID SET DEFAULT nextval('seq_listens_id');
+ALTER SEQUENCE seq_listens_id OWNED BY LISTENS.LISTEN_ID;
+-- Sequence untuk ADD_SONGS_PLAYLISTS
+CREATE SEQUENCE seq_add_songs_playlist_id START 1;
+ALTER TABLE ADD_SONGS_PLAYLISTS
+ALTER COLUMN ADD_SONG_PL_ID SET DEFAULT nextval('seq_add_songs_playlist_id');
+ALTER SEQUENCE seq_add_songs_playlist_id OWNED BY ADD_SONGS_PLAYLISTS.ADD_SONG_PL_ID;
 
 
       -- cek socials
