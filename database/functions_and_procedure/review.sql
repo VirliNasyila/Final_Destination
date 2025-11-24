@@ -6,9 +6,10 @@
 /* Procedure: CREATE_REVIEW                               */
 /*==============================================================*/
 CREATE OR REPLACE PROCEDURE create_review(
-    p_user_id INT,
-    p_collection_id INT,
-    p_review_text TEXT
+    p_review_text TEXT,
+	p_rating NUMERIC (3,0),
+	p_user_id INT4,
+    p_collection_id INT4
 )
 LANGUAGE plpgsql
 AS $$
@@ -31,35 +32,35 @@ BEGIN
     END IF;
 
     -- cek apakah user sudah review koleksi ini
-    IF EXISTS (
-        SELECT 1 FROM reviews
-        WHERE user_id = p_user_id
-        AND collection_id = p_collection_id
+    IF EXISTS (SELECT 1 FROM reviews WHERE user_id = p_user_id
+		AND collection_id = p_collection_id
     ) THEN
         RAISE EXCEPTION 'User has already reviewed this collection';
     END IF;
 
     -- ambil review_id dari sequence
-    SELECT NEXTVAL('reviews_review_id_seq')
+    SELECT NEXTVAL('seq_reviews_id')
     INTO v_review_id;
 
-    -- insert review (trigger kamu akan update timestamp jika review diganti)
-    INSERT INTO reviews(review_id, user_id, collection_id, review, "timestamp")
-    VALUES (v_review_id, p_user_id, p_collection_id, p_review_text, CURRENT_TIMESTAMP);
+    -- insert review (trigger akan update timestamp jika review diganti)
+    INSERT INTO reviews(review, rating, "TIMESTAMP", review_id, user_id, collection_id)
+    VALUES (p_review_text, p_rating, CURRENT_TIMESTAMP, v_review_id, p_user_id, p_collection_id);
 
     RAISE NOTICE 'Review created with ID %', v_review_id;
 END;
 $$;
 
-CALL create_review(1, 10, 'Album ini sangat keren!');
-CALL create_review(9999, 10, 'Test review');
-CALL create_review(1, 9999, 'Test review');
-CALL create_review(1, 10, '');
-CALL create_review(1, 10, 'Review pertama');
-CALL create_review(1, 10, 'Review kedua');
+select * from users
+select * from reviews
+CALL create_review('Album ini sangat keren!', 10, 1, 1);
+CALL create_review('Test review', 10, 9999, 1);
+CALL create_review('Test review', 10, 2, 9999);
+CALL create_review('', 10, 2, 3);
+CALL create_review('Review pertama', 10, 1, 10);
+CALL create_review('Review kedua', 10, 1, 10);
 
 /*==============================================================*/
-/* Procedure: CREATE_REVIEW                               */
+/* Procedure: LIKE_REVIEW                               */
 /*==============================================================*/
 CREATE OR REPLACE PROCEDURE like_review(
     p_user_id INT,
@@ -112,7 +113,7 @@ CALL like_review(2, 15);
 CALL like_review(2, 15);
 
 /*==============================================================*/
-/* Procedure: CREATE_REVIEW                               */
+/* Procedure: UNLIKE_REVIEW                               */
 /*==============================================================*/
 CREATE OR REPLACE PROCEDURE unlike_review(
     p_user_id INT,
@@ -158,6 +159,10 @@ CREATE OR REPLACE FUNCTION get_reviews_with_likes()
 RETURNS TABLE (
     review_id INT,
     review TEXT,
+	rating NUMERIC (3,0),
+	review_timestamp TIMESTAMP,
+	reviewer_id INT,
+	collection_id INT,
     liked_by INT
 )
 AS $$
@@ -166,9 +171,15 @@ BEGIN
     SELECT 
         r.review_id,
         r.review,
+		r.rating,
+		r."TIMESTAMP",
+		r.user_id AS reviewer_id,
+		r.collection_id,
         lr.user_id AS liked_by
     FROM reviews r
     LEFT JOIN like_reviews lr ON lr.review_id = r.review_id
     ORDER BY r.review_id;
 END;
 $$ LANGUAGE plpgsql;
+
+SELECT * FROM get_reviews_with_likes();
