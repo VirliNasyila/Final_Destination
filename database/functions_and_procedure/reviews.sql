@@ -62,10 +62,7 @@ CALL create_review('Review kedua', 10, 1, 10);
 /*==============================================================*/
 /* Procedure: LIKE_REVIEW                               */
 /*==============================================================*/
-CREATE OR REPLACE PROCEDURE like_review(
-    p_user_id INT,
-    p_review_id INT
-)
+CREATE OR REPLACE PROCEDURE like_review(p_user_id INT, p_review_id INT)
 LANGUAGE plpgsql
 AS $$
 BEGIN
@@ -79,22 +76,13 @@ BEGIN
         RAISE EXCEPTION 'Review_id % not found', p_review_id;
     END IF;
 
-    -- user tidak boleh like review sendiri
-    IF EXISTS (
-        SELECT 1 FROM reviews
-        WHERE review_id = p_review_id
-        AND user_id = p_user_id
-    ) THEN
-        RAISE EXCEPTION 'User cannot like their own review';
-    END IF;
-
     -- cek jika sudah like
     IF EXISTS (
         SELECT 1 FROM like_reviews
         WHERE review_id = p_review_id
         AND user_id = p_user_id
     ) THEN
-        RAISE EXCEPTION 'Review already liked by this user';
+        RAISE EXCEPTION 'User % already liked review %', p_user_id, p_review_id;
     END IF;
 
     -- insert like (tanpa timestamp)
@@ -105,20 +93,16 @@ BEGIN
 END;
 $$;
 
-CALL like_review(2, 15);
+CALL like_review(2, 4);
 CALL like_review(9999, 15);
 CALL like_review(2, 99999);
-CALL like_review(1, 15);
-CALL like_review(2, 15);
-CALL like_review(2, 15);
+CALL like_review(1,4);
+CALL like_review(2, 4);
 
 /*==============================================================*/
 /* Procedure: UNLIKE_REVIEW                               */
 /*==============================================================*/
-CREATE OR REPLACE PROCEDURE unlike_review(
-    p_user_id INT,
-    p_review_id INT
-)
+CREATE OR REPLACE PROCEDURE unlike_review(p_user_id INT, p_review_id INT)
 LANGUAGE plpgsql
 AS $$
 BEGIN
@@ -134,52 +118,22 @@ BEGIN
 
     -- cek apakah like belum ada
     IF NOT EXISTS (
-        SELECT 1 FROM like_reviews
-        WHERE review_id = p_review_id
-        AND user_id = p_user_id
+        SELECT 1 FROM like_reviews WHERE review_id = p_review_id
+        	AND user_id = p_user_id
     ) THEN
         RAISE EXCEPTION 'User has not liked this review';
     END IF;
 
     -- hapus like
-    DELETE FROM like_reviews
-    WHERE review_id = p_review_id
-    AND user_id = p_user_id;
+    DELETE FROM like_reviews WHERE review_id = p_review_id AND user_id = p_user_id;
 
     RAISE NOTICE 'Review % unliked by user %', p_review_id, p_user_id;
 END;
 $$;
 
-CALL unlike_review(2, 15);
+select * from like_reviews
+CALL unlike_review(2, 4);
 CALL unlike_review(9999, 15);
 CALL unlike_review(2, 99999);
-CALL unlike_review(3, 15);
-
-CREATE OR REPLACE FUNCTION get_reviews_with_likes()
-RETURNS TABLE (
-    review_id INT,
-    review TEXT,
-	rating NUMERIC (3,0),
-	review_timestamp TIMESTAMP,
-	reviewer_id INT,
-	collection_id INT,
-    liked_by INT
-)
-AS $$
-BEGIN
-    RETURN QUERY
-    SELECT 
-        r.review_id,
-        r.review,
-		r.rating,
-		r."TIMESTAMP",
-		r.user_id AS reviewer_id,
-		r.collection_id,
-        lr.user_id AS liked_by
-    FROM reviews r
-    LEFT JOIN like_reviews lr ON lr.review_id = r.review_id
-    ORDER BY r.review_id;
-END;
-$$ LANGUAGE plpgsql;
-
-SELECT * FROM get_reviews_with_likes();
+CALL unlike_review(2, 4);
+CALL unlike_review(2, 3);

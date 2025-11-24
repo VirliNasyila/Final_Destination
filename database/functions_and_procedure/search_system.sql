@@ -2,6 +2,7 @@
 --search_collection
 --search_artist
 --search_playlist
+--search_user
 
 /*==============================================================*/
 /* Function: SEARCH_SONG                                        */

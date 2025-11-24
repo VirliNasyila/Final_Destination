@@ -92,16 +92,18 @@ $$ LANGUAGE plpgsql;
 SELECT * FROM login_user('nurahma@gmail.com', 'password1234');
 
 /*==============================================================*/
-/* Procedure: UNFOLLOW_USER
-  menghapus dari tabel follow_users                                */
+/* Procedure: TOGGLE_FOLLOW_USER   
+toggle follow dan unfollow sesama user*/
 /*==============================================================*/
-CREATE OR REPLACE PROCEDURE unfollow_user(p_follower_id INT, p_followed_id INT)
+CREATE OR REPLACE PROCEDURE toggle_follow_user(p_follower_id INT, p_followed_id INT)
 LANGUAGE PLPGSQL
 AS $$
+DECLARE
+    v_exists BOOLEAN;
 BEGIN
-    --tidak boleh follow diri sendiri
+    --tidak boleh follow/unfollow diri sendiri
     IF p_follower_id = p_followed_id THEN
-        RAISE EXCEPTION 'User cannot unfollow themselves';
+        RAISE EXCEPTION 'User cannot follow/unfollow themselves';
     END IF;
 
     --cek apakah kedua user valid
@@ -113,65 +115,33 @@ BEGIN
         RAISE EXCEPTION 'Followed user_id % not found', p_followed_id;
     END IF;
 
-    --cek apakah sudah follow
-    IF NOT EXISTS (SELECT 1 FROM follow_users 
-        WHERE follower_id = p_follower_id AND followed_id = p_followed_id) THEN
-        RAISE EXCEPTION 'User is not following';
+    --cek apakah sudah follow, jika sudah -> unfollow
+    SELECT EXISTS (SELECT 1 FROM follow_users 
+        WHERE follower_id = p_follower_id AND followed_id = p_followed_id) 
+    INTO v_exists;
+
+    IF v_exists THEN
+        --delete relationship from follow_users
+        DELETE from follow_users 
+            WHERE follower_id = p_follower_id AND followed_id = p_followed_id;
+        RAISE NOTICE 'Unfollow successful';
+        RETURN;
     END IF;
 
-	--delete relationship from follow_users
-    DELETE from follow_users 
-		WHERE follower_id = p_follower_id AND followed_id = p_followed_id;
-	RAISE NOTICE 'Unfollow successful';
+    --jika belum follow -> follow
+    --insert ke table follow_users
+    INSERT INTO follow_users (follower_id, followed_id)
+    VALUES (p_follower_id, p_followed_id);
+	RAISE NOTICE 'Follow successful';
+    
 END;$$;
 
-CALL unfollow_user(12, 20);
+CALL toggle_follow_user(12, 20);
 SELECT * FROM follow_users;
 CALL unfollow_user(11, 11);
 CALL unfollow_user(100, 2);
 CALL unfollow_user(2, 100);
 CALL unfollow_user(12, 20);
-
-/*==============================================================*/
-/* Procedure: FOLLOW_USER
-  menambahkan tabel follow_users                                */
-/*==============================================================*/
-CREATE OR REPLACE PROCEDURE follow_user(p_follower_id INT, p_followed_id INT)
-LANGUAGE PLPGSQL
-AS $$
-BEGIN
-    --tidak boleh follow diri sendiri
-    IF p_follower_id = p_followed_id THEN
-        RAISE EXCEPTION 'User cannot follow themselves';
-    END IF;
-
-    --cek apakah kedua user valid
-    IF NOT EXISTS (SELECT 1 FROM users WHERE user_id = p_follower_id) THEN
-        RAISE EXCEPTION 'Follower user_id % not found', p_follower_id;
-    END IF;
-
-    IF NOT EXISTS (SELECT 1 FROM users WHERE user_id = p_followed_id) THEN
-        RAISE EXCEPTION 'Followed user_id % not found', p_followed_id;
-    END IF;
-
-    --cek apakah sudah follow
-    IF EXISTS (SELECT 1 FROM follow_users 
-        WHERE follower_id = p_follower_id AND followed_id = p_followed_id) THEN
-        RAISE EXCEPTION 'Already following';
-    END IF;
-
-	--insert ke table follow_users
-    INSERT INTO follow_users (follower_id, followed_id)
-    VALUES (p_follower_id, p_followed_id);
-	RAISE NOTICE 'Follow successful';
-END;$$;
-
-CALL follow_user(12, 20);
-SELECT * FROM follow_users;
-CALL follow_user(11, 11);
-CALL follow_user(100, 2);
-CALL follow_user(2, 100);
-CALL follow_user(12, 20);
 
 /*==============================================================*/
 /* Function: GET_FOLLOWERS                                      */
