@@ -243,11 +243,11 @@ create table ARTISTS (
    ARTIST_ID            INT4                 not null,
    ARTIST_NAME          VARCHAR(255)         not null,
    BIO                  TEXT                 null,
-   MONTHLY_LISTENER_COUNT INT8                 null,
+   MONTHLY_LISTENER_COUNT INT8                 null default 0,
    ARTIST_PFP           VARCHAR(2048)        null,
    ARTIST_EMAIL         VARCHAR(320)         not null,
    BANNER               VARCHAR(2048)        null,
-   FOLLOWER_COUNT       INT8                 null,
+   FOLLOWER_COUNT       INT8                 null default 0,
    constraint PK_ARTISTS primary key (ARTIST_ID)
 );
 
@@ -894,7 +894,7 @@ create table SONGS (
    SONG_ID              INT4                 not null,
    SONG_FILE            VARCHAR(320)         not null,
    SONG_TITLE           VARCHAR(255)         not null,
-   LISTEN_COUNT         INT8                 null,
+   LISTEN_COUNT         INT8                 null default 0,
    SONG_CREDITS         TEXT                 null,
    SONG_DURATION        INT4                 not null,
    VALENCE              DECIMAL(4,3)         null,
