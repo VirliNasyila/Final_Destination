@@ -85,7 +85,7 @@ VALUES (10, 4);
 -- unfollow
 DELETE FROM follow_artists
 WHERE user_id = 9 AND artist_id = 4;
-DELETE FROM follow_artists
+DELETE FROM follow_artists;
 
 SELECT follower_count FROM artists WHERE artist_id = 4;
 
@@ -120,7 +120,7 @@ EXECUTE FUNCTION fix_playlist_collaborators();
 -- Data sebelum/sesudah trigger bekerja
 SELECT add_song_pl_id, user_id, playlist_id, song_id
 FROM add_songs_playlists
-WHERE playlist_id = 2
+WHERE playlist_id = 2;
 
 -- Ubah playlist collaborative --> tidak collab
 UPDATE playlists
