@@ -2,18 +2,21 @@
 CREATE OR REPLACE FUNCTION update_collection_rating()
 RETURNS TRIGGER AS $$
 DECLARE
-    v_new_rating NUMERIC(5,2);
+    v_new_rating NUMERIC(5,2);  -- Variable untuk menyimpan rata-rata rating terbaru
 BEGIN
     -- Hitung ulang rating dari seluruh review untuk collection 
-    SELECT AVG(rating)
-    INTO v_new_rating
-    FROM reviews
+    SELECT AVG(rating)  -- Mengambil nilai rata-rata (AVG) dari semua rating pada review
+    INTO v_new_rating  -- Menyimpan hasil rata-rata tersebut ke variabel v_new_rating
+    FROM reviews  -- Mengambil data dari tabel reviews
+    --   INSERT → pakai NEW.collection_id
+    --   UPDATE → pakai NEW.collection_id
+    --   DELETE → pakai OLD.collection_id
     WHERE collection_id = COALESCE(NEW.collection_id, OLD.collection_id);
 
     -- Update ke tabel collections
     UPDATE collections
-    SET collection_rating = v_new_rating
-    WHERE collection_id = COALESCE(NEW.collection_id, OLD.collection_id);
+    SET collection_rating = v_new_rating  -- Menuliskan nilai rata-rata terbaru ke kolom collection_rating
+    WHERE collection_id = COALESCE(NEW.collection_id, OLD.collection_id);  -- Menentukan collection mana yang harus di-update
 
     RETURN NULL;
 END;
@@ -50,17 +53,17 @@ CREATE OR REPLACE FUNCTION update_artist_follow_count()
 RETURNS TRIGGER AS $$
 BEGIN
     -- FOLLOW → INSERT
-    IF TG_OP = 'INSERT' THEN
+    IF TG_OP = 'INSERT' THEN  -- TG_OP berisi string yang menunjukkan operasi apa yang memicu trigger nya
         UPDATE artists
         SET follower_count = COALESCE(follower_count, 0) + 1
-        WHERE artist_id = NEW.artist_id;
+        WHERE artist_id = NEW.artist_id;  -- artist_id dari baris baru
     END IF;
 
     -- UNFOLLOW → DELETE
-    IF TG_OP = 'DELETE' THEN
+    IF TG_OP = 'DELETE' THEN  -- TG_OP berisi string yang menunjukkan operasi apa yang memicu trigger nya
         UPDATE artists
         SET follower_count = COALESCE(follower_count, 0) - 1
-        WHERE artist_id = OLD.artist_id;
+        WHERE artist_id = OLD.artist_id;  -- artist_id dari baris lama
     END IF;
 
     RETURN NULL;
@@ -100,9 +103,9 @@ BEGIN
         
         -- Update semua lagu yang ditambahkan oleh user lain
         UPDATE add_songs_playlists
-        SET user_id = NEW.user_id
-        WHERE playlist_id = NEW.playlist_id
-        AND user_id <> NEW.user_id;
+        SET user_id = NEW.user_id  -- ganti pemilik lagu
+        WHERE playlist_id = NEW.playlist_id  -- hanya untuk playlist ini
+        AND user_id <> NEW.user_id;  -- hanya yang bukan owner
     END IF;
 
     RETURN NEW;
@@ -112,7 +115,7 @@ $$ LANGUAGE plpgsql;
 -- Trigger: berjalan ketika playlist di-update
 CREATE TRIGGER trg_fix_playlist_collaborators
 AFTER UPDATE OF iscollaborative
-ON playlists
+ON playlists  -- trigger untuk tabel playlists
 FOR EACH ROW
 EXECUTE FUNCTION fix_playlist_collaborators();
 
@@ -135,10 +138,10 @@ CREATE OR REPLACE FUNCTION update_review_timestamp()
 RETURNS TRIGGER AS $$
 BEGIN
     -- Jika kolom review atau rating berubah
-    IF NEW.review IS DISTINCT FROM OLD.review
+    IF NEW.review IS DISTINCT FROM OLD.review  -- IS DISTINCT FROM digunakan agar aman untuk nilai NULL.
        OR NEW.rating IS DISTINCT FROM OLD.rating THEN
 
-        NEW."TIMESTAMP" = CURRENT_TIMESTAMP;
+        NEW."TIMESTAMP" = CURRENT_TIMESTAMP; -- Jika ada perubahan pada review atau rating, update kolom TIMESTAMP dengan waktu saat ini. 
 
     END IF;
 
@@ -177,7 +180,7 @@ BEGIN
     IF NEW.isPrerelease = TRUE
        AND CURRENT_DATE = NEW.collection_release_date THEN
         
-        NEW.isPrerelease := FALSE; 
+        NEW.isPrerelease := FALSE;  -- Jika tanggal rilis sudah tiba → otomatis nonaktifkan prerelease.
     END IF;
 
     RETURN NEW;
@@ -235,18 +238,25 @@ WHERE collection_id = 1000;
 
 
 -- Update song rating
+-- Fungsi ini digunakan untuk menghitung ulang rata-rata rating sebuah lagu
+-- setiap kali terjadi perubahan pada tabel rate_songs.
+-- Trigger akan memanggil fungsi ini saat INSERT, UPDATE, atau DELETE.
 CREATE OR REPLACE FUNCTION update_song_rating()
 RETURNS TRIGGER AS $$
 DECLARE
-    v_new_rating NUMERIC(5,2); 
+    v_new_rating NUMERIC(5,2);  -- Variabel untuk menyimpan rata-rata rating terbaru
 BEGIN
     -- Hitung ulang rata-rata rating untuk song 
+        --    NEW.song_id digunakan saat INSERT/UPDATE.
+        --    OLD.song_id digunakan saat DELETE.
+        --    COALESCE memastikan salah satu pasti terpakai.
     SELECT AVG(song_rating)
     INTO v_new_rating
     FROM rate_songs
     WHERE song_id = COALESCE(NEW.song_id, OLD.song_id);
 
-    -- Update ke tabel songs
+    -- Update nilai rata-rata rating ke tabel songs.
+    -- Jika semua rating dihapus, AVG akan NULL → lagu tidak punya rating.
     UPDATE songs
     SET song_rating = v_new_rating
     WHERE song_id = COALESCE(NEW.song_id, OLD.song_id);
@@ -304,11 +314,11 @@ BEGIN
     FOR top_genre IN
         SELECT sg.genre_id
         FROM songs_genres sg
-        JOIN collections_songs cs ON sg.song_id = cs.song_id
+        JOIN collections_songs cs ON sg.song_id = cs.song_id  -- Menghubungkan genre dengan lagu yang masuk collection
         WHERE cs.collection_id = NEW.collection_id
-        GROUP BY sg.genre_id
-        ORDER BY COUNT(*) DESC
-        LIMIT 3
+        GROUP BY sg.genre_id  -- Kelompokkan berdasarkan genre
+        ORDER BY COUNT(*) DESC -- Mengurutkan genre paling sering muncul -> paling banyak lagu
+        LIMIT 3 -- Ambil 3 teratas
     LOOP
         -- Insert ke COLLECTION_TOP_3_GENRES
         INSERT INTO collection_top_3_genres (collection_id, genre_id)
