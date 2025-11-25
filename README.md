@@ -20,6 +20,18 @@ This project is a relational database system for a music streaming platform, dev
 - **Data Models**: ✔️ Complete (see `/Data Models`)
 - **DDL (Schema Creation)**: ✔️ Complete (see `/Script/DDL/SCRIPT DDL.sql`)
 
+## Data Insertion 💾
+
+1. Create .env profile
+2. Insert your CLIENT_ID and CLIENT_SECRET from Spotify API
+   ```bash
+    SPOTIFY_CLIENT_ID=[YOUR CLIENT ID]
+    SPOTIFY_CLIENT_SECRET=[YOUR CLIENT SECRET]
+   ```
+3. Dont forget to add .env to .gitignore
+4. Run dummy/faker_spotify.py
+   
+
 ## To Be Implemented
 
 - Functions, Procedures, Triggers
