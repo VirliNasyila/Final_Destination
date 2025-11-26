@@ -244,7 +244,7 @@
     BIO                  TEXT                 null,
     MONTHLY_LISTENER_COUNT INT8                 null default 0,
     ARTIST_PFP           VARCHAR(2048)        null,
-    ARTIST_EMAIL         VARCHAR(320)         not null,
+    ARTIST_EMAIL         VARCHAR(320)         not null unique,
     BANNER               VARCHAR(2048)        null,
     FOLLOWER_COUNT       INT8                 null default 0,
     constraint PK_ARTISTS primary key (ARTIST_ID)
@@ -967,10 +967,10 @@
     /*==============================================================*/
     create table USERS (
     USER_ID              INT4                 not null,
-    USERNAME             VARCHAR(50)          not null,
+    USERNAME             VARCHAR(50)          not null unique,
     USER_PFP              VARCHAR(2048)        null,
     PW_HASH              VARCHAR(255)         not null,
-    USER_EMAIL           VARCHAR(320)         not null,
+    USER_EMAIL           VARCHAR(320)         not null unique,
     REGION               VARCHAR(50)          null,
     COUNTRY              VARCHAR(50)          null,
     constraint PK_USERS primary key (USER_ID)
