@@ -1,39 +1,3 @@
-
--- Trigger
-CREATE TRIGGER trg_update_song_rating
-AFTER INSERT OR UPDATE OR DELETE
-ON rate_songs
-FOR EACH ROW
-EXECUTE FUNCTION update_song_rating();
-
-
-SELECT * FROM songs;
--- cek 
--- Insert rating baru
-INSERT INTO rate_songs (user_id, song_id, song_rating)
-VALUES (2, 2, 4);
-
--- Update rating song
-UPDATE rate_songs
-SET song_rating = 5
-WHERE user_id = 2 AND song_id = 2;
-
--- Update rating song
-UPDATE rate_songs
-SET song_rating = 5
-WHERE user_id = 3 AND song_id = 2;
-
--- Insert baru
-INSERT INTO rate_songs (user_id, song_id, song_rating) 
-VALUES (3, 2, 3);
-
--- Delete
-DELETE FROM rate_songs
-WHERE user_id = 2 AND song_id = 2;
-
-SELECT song_id, song_rating FROM songs WHERE song_id = 2;
-
-
 -- Update_collection_top3_genres
 CREATE OR REPLACE FUNCTION update_collection_top3_genres()
 RETURNS TRIGGER AS $$
@@ -62,3 +26,31 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+
+-- trigger
+CREATE TRIGGER trg_update_collection_top3_genres
+AFTER INSERT OR UPDATE ON collections_songs
+FOR EACH ROW
+EXECUTE FUNCTION update_collection_top3_genres();
+
+
+SELECT * FROM collections_songs;
+-- cek
+-- Update supaya trigger jalan
+UPDATE collections_songs
+SET nomor_track = nomor_track
+WHERE collection_id = 1;
+
+UPDATE collections_songs
+SET nomor_track = nomor_track
+WHERE collection_id = 2;
+
+-- Lihat hasil top 3 genre
+SELECT * FROM collection_top_3_genres
+WHERE collection_id = 1;
+
+SELECT * FROM collection_top_3_genres
+WHERE collection_id = 2;
+
+SELECT * FROM collection_top_3_genres;
