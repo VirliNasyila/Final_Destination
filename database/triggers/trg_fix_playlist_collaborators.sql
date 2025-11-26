@@ -1,35 +1,10 @@
-
--- trigger
-CREATE TRIGGER trg_update_artist_follow_count
-AFTER INSERT OR DELETE
-ON follow_artists   
-FOR EACH ROW
-EXECUTE FUNCTION update_artist_follow_count();
-
--- cek
--- follow
-INSERT INTO follow_artists (user_id, artist_id)
-VALUES (9, 4);
-
-INSERT INTO follow_artists (user_id, artist_id)
-VALUES (10, 4);
-
--- unfollow
-DELETE FROM follow_artists
-WHERE user_id = 9 AND artist_id = 4;
-DELETE FROM follow_artists
-
-SELECT follower_count FROM artists WHERE artist_id = 4;
-
-SELECT * FROM artists;
-
 -- Function: Update user_id lagu ketika playlist tidak lagi collaborative
 CREATE OR REPLACE FUNCTION fix_playlist_collaborators()
 RETURNS TRIGGER AS $$
 BEGIN
     -- Jika sebelumnya collaborative dan sekarang tidak collaborative
     IF OLD.iscollaborative = TRUE AND NEW.iscollaborative = FALSE THEN
-        
+
         -- Update semua lagu yang ditambahkan oleh user lain
         UPDATE add_songs_playlists
         SET user_id = NEW.user_id
@@ -40,3 +15,23 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+-- Trigger: berjalan ketika playlist di-update
+CREATE TRIGGER trg_fix_playlist_collaborators
+AFTER UPDATE OF iscollaborative
+ON playlists
+FOR EACH ROW
+EXECUTE FUNCTION fix_playlist_collaborators();
+
+-- -- cek
+-- -- Data sebelum/sesudah trigger bekerja
+-- SELECT add_song_pl_id, user_id, playlist_id, song_id
+-- FROM add_songs_playlists
+-- WHERE playlist_id = 2
+
+-- -- Ubah playlist collaborative --> tidak collab
+-- UPDATE playlists
+-- SET iscollaborative = false
+-- WHERE playlist_id = 2;
+
+-- SELECT * FROM PLAYLISTS;
