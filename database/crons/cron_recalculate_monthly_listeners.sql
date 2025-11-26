@@ -18,6 +18,6 @@ $$ LANGUAGE plpgsql;
 
 SELECT cron.schedule(
     'recalculate_monthly_listeners_daily',
-    '0 1 * * *',
+    '10 0 * * *',
     $$SELECT recalculate_monthly_listeners();$$
 );

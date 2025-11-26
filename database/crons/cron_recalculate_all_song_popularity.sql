@@ -20,6 +20,6 @@ $$ LANGUAGE plpgsql;
 
 SELECT cron.schedule(
     'recalculate_song_popularity_daily',
-    '0 3 * * *',
+    '15 0 * * *',
     $$SELECT recalculate_all_song_popularity();$$
 );
