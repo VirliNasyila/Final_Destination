@@ -60,11 +60,13 @@ CALL create_review('Review pertama', 10, 1, 10);
 CALL create_review('Review kedua', 10, 1, 10);
 
 /*==============================================================*/
-/* Procedure: LIKE_REVIEW                               */
+/* Procedure: TOGGLE_LIKE_REVIEW                               */
 /*==============================================================*/
-CREATE OR REPLACE PROCEDURE like_review(p_user_id INT, p_review_id INT)
+CREATE OR REPLACE PROCEDURE toggle_like_review(p_user_id INT, p_review_id INT)
 LANGUAGE plpgsql
 AS $$
+DECLARE
+	v_exists BOOLEAN;
 BEGIN
     -- cek user
     IF NOT EXISTS (SELECT 1 FROM users WHERE user_id = p_user_id) THEN
@@ -76,28 +78,28 @@ BEGIN
         RAISE EXCEPTION 'Review_id % not found', p_review_id;
     END IF;
 
-    -- cek jika sudah like
-    IF EXISTS (
-        SELECT 1 FROM like_reviews
-        WHERE review_id = p_review_id
-        AND user_id = p_user_id
-    ) THEN
-        RAISE EXCEPTION 'User % already liked review %', p_user_id, p_review_id;
+    --cek toggle
+    SELECT EXISTS (SELECT 1 FROM like_reviews WHERE review_id = p_review_id AND user_id = p_user_id)
+    INTO v_exists;
+
+    --jika sudah like -> unlike
+    IF v_exists THEN
+        DELETE FROM like_reviews WHERE review_id = p_review_id AND user_id = p_user_id;
+        RAISE NOTICE 'Review % unliked by user %', p_review_id, p_user_id;
+        RETURN;
     END IF;
 
-    -- insert like (tanpa timestamp)
-    INSERT INTO like_reviews(review_id, user_id)
-    VALUES (p_review_id, p_user_id);
-
+    -- jika belum like -> insert like
+    INSERT INTO like_reviews VALUES (p_review_id, p_user_id);
     RAISE NOTICE 'Review % liked by user %', p_review_id, p_user_id;
 END;
 $$;
 
-CALL like_review(2, 4);
-CALL like_review(9999, 15);
-CALL like_review(2, 99999);
-CALL like_review(1,4);
-CALL like_review(2, 4);
+select * from reviews
+CALL toggle_like_review(2, 1);
+select * from like_reviews
+CALL toggle_like_review(9999, 15);
+CALL toggle_like_review(2, 99999);
 
 /*==============================================================*/
 /* Procedure: UNLIKE_REVIEW                               */

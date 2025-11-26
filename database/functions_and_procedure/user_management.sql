@@ -130,8 +130,7 @@ BEGIN
 
     --jika belum follow -> follow
     --insert ke table follow_users
-    INSERT INTO follow_users (follower_id, followed_id)
-    VALUES (p_follower_id, p_followed_id);
+    INSERT INTO follow_users VALUES (p_follower_id, p_followed_id);
 	RAISE NOTICE 'Follow successful';
     
 END;$$;
