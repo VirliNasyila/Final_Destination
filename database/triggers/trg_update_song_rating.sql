@@ -28,28 +28,28 @@ FOR EACH ROW
 EXECUTE FUNCTION update_song_rating();
 
 
-SELECT * FROM songs;
--- cek
--- Insert rating baru
-INSERT INTO rate_songs (user_id, song_id, song_rating)
-VALUES (2, 2, 4);
+-- SELECT * FROM songs;
+-- -- cek
+-- -- Insert rating baru
+-- INSERT INTO rate_songs (user_id, song_id, song_rating)
+-- VALUES (2, 2, 4);
 
--- Update rating song
-UPDATE rate_songs
-SET song_rating = 5
-WHERE user_id = 2 AND song_id = 2;
+-- -- Update rating song
+-- UPDATE rate_songs
+-- SET song_rating = 5
+-- WHERE user_id = 2 AND song_id = 2;
 
--- Update rating song
-UPDATE rate_songs
-SET song_rating = 5
-WHERE user_id = 3 AND song_id = 2;
+-- -- Update rating song
+-- UPDATE rate_songs
+-- SET song_rating = 5
+-- WHERE user_id = 3 AND song_id = 2;
 
--- Insert baru
-INSERT INTO rate_songs (user_id, song_id, song_rating)
-VALUES (3, 2, 3);
+-- -- Insert baru
+-- INSERT INTO rate_songs (user_id, song_id, song_rating)
+-- VALUES (3, 2, 3);
 
--- Delete
-DELETE FROM rate_songs
-WHERE user_id = 2 AND song_id = 2;
+-- -- Delete
+-- DELETE FROM rate_songs
+-- WHERE user_id = 2 AND song_id = 2;
 
-SELECT song_id, song_rating FROM songs WHERE song_id = 2;
+-- SELECT song_id, song_rating FROM songs WHERE song_id = 2;

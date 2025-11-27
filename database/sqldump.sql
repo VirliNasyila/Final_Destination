@@ -1,13 +1,1349 @@
+
+/*==============================================================*/
+/* DBMS name:      PostgreSQL 9.x                               */
+/* Created on:     11/19/2025 8:39:55 PM                        */
+/*==============================================================*/
+begin;
+
+drop index if exists ADD_SONGS_PLAYLISTS_PK;
+
+drop index if exists MENAMBAHKAN_LAGU_FK;
+
+drop index if exists MENAMBAHKAN_KE_PLAYLIST_FK;
+
+drop index if exists USER_MENAMBAHKAN_FK;
+
+drop table if exists ADD_SONGS_PLAYLISTS;
+
+drop index if exists ARTISTS_PK;
+
+drop table if exists ARTISTS;
+
+drop index if exists MEMILIKI3_FK;
+
+drop index if exists MEMILIKI2_FK;
+
+drop index if exists ARTISTS_TOURS_PK;
+
+drop table if exists ARTISTS_TOURS;
+
+drop index if exists ARTIST_PROMOTION_PK;
+
+drop index if exists MEMPROMOSIKAN_FK;
+
+drop index if exists MEMPROMOSIKAN2_FK;
+
+drop table if exists ARTIST_PROMOTION;
+
+drop index if exists MEM_BLACKLIST_FK;
+
+drop index if exists MEM_BLACKLIST2_FK;
+
+drop index if exists BLOCKLIST_ARTISTS_PK;
+
+drop table if exists BLOCKLIST_ARTISTS;
+
+drop index if exists MEM_BLOCK_FK;
+
+drop index if exists MEM_BLOCK2_FK;
+
+drop index if exists BLOCK_USERS_PK;
+
+drop table if exists BLOCK_USERS;
+
+drop index if exists COLLECTIONS_PK;
+
+drop table if exists COLLECTIONS;
+
+drop index if exists MEMILIKI_FK;
+
+drop index if exists MEMILIKI4_FK;
+
+drop index if exists COLLECTIONS_SONGS_PK;
+
+drop table if exists COLLECTIONS_SONGS;
+
+drop index if exists RELATIONSHIP_41_FK;
+
+drop index if exists RELATIONSHIP_40_FK;
+
+drop index if exists COLLECTION_LIBRARY_PK;
+
+drop table if exists COLLECTION_LIBRARY;
+
+drop index if exists TOP_3_GENRE_FK;
+
+drop index if exists TOP_3_GENRE2_FK;
+
+drop index if exists COLLECTION_TOP_3_GENRES_PK;
+
+drop table if exists COLLECTION_TOP_3_GENRES;
+
+drop index if exists MEMBUAT_FK;
+
+drop index if exists MEMBUAT2_FK;
+
+drop index if exists CREATE_PLAYLISTS_PK;
+
+drop table if exists CREATE_SONGS;
+
+drop index if exists MENGIKUTI_FK;
+
+drop index if exists MENGIKUTI4_FK;
+
+drop index if exists FOLLOW_ARTISTS_PK;
+
+drop table if exists FOLLOW_ARTISTS;
+
+drop index if exists MENGIKUTI3_FK;
+
+drop index if exists MENGIKUTI2_FK;
+
+drop index if exists FOLLOW_USERS_PK;
+
+drop table if exists FOLLOW_USERS;
+
+drop index if exists GENRES_PK;
+
+drop table if exists GENRES;
+
+drop index if exists LIKE_REVIEW_FK;
+
+drop index if exists LIKE_REVIEW2_FK;
+
+drop index if exists LIKE_REVIEWS_PK;
+
+drop table if exists LIKE_REVIEWS;
+
+drop index if exists MENYUKAI_FK;
+
+drop index if exists MENYUKAI2_FK;
+
+drop index if exists LIKE_SONGS_PK;
+
+drop table if exists LIKE_SONGS;
+
+drop index if exists LISTENS_PK;
+
+drop index if exists MENDENGARKAN_FK;
+
+drop index if exists MENDENGARKAN2_FK;
+
+drop table if exists LISTENS;
+
+drop index if exists MEMBUAT_PLAYLIST_FK;
+
+drop index if exists PLAYLISTS_PK;
+
+drop table if exists PLAYLISTS;
+
+drop index if exists RELATIONSHIP_39_FK;
+
+drop index if exists RELATIONSHIP_38_FK;
+
+drop index if exists PL_LIBRARY_PK;
+
+drop table if exists PL_LIBRARY;
+
+drop index if exists RATE_FK;
+
+drop index if exists RATE2_FK;
+
+drop index if exists RATE_SONGS_PK;
+
+drop table if exists RATE_SONGS;
+
+drop index if exists MERILIS_FK;
+
+drop index if exists MERILIS2_FK;
+
+drop index if exists RELEASES_PK;
+
+drop table if exists RELEASES;
+
+drop index if exists COLLECTION_MANA_FK;
+
+drop index if exists MEMBUAT_REVIEW_FK;
+
+drop index if exists REVIEWS_PK;
+
+drop table if exists REVIEWS;
+
+drop index if exists HAS_FK;
+
+drop index if exists SOCIALS_PK;
+
+drop table if exists SOCIALS;
+
+drop index if exists SONGS_PK;
+
+drop table if exists SONGS;
+
+drop index if exists MEMPUNYAI_FK;
+
+drop index if exists MEMPUNYAI2_FK;
+
+drop index if exists SONGS_GENRES_PK;
+
+drop table if exists SONGS_GENRES;
+
+drop index if exists TOURS_PK;
+
+drop table if exists TOURS;
+
+drop index if exists USERS_PK;
+
+drop table if exists USERS;
+
+/*==============================================================*/
+/* Table: ADD_SONGS_PLAYLISTS                                   */
+/*==============================================================*/
+create table ADD_SONGS_PLAYLISTS (
+ADD_SONG_PL_ID       INT4                 not null,
+USER_ID              INT4                 not null,
+PLAYLIST_ID          INT4                 not null,
+SONG_ID              INT4                 not null,
+NO_URUT              INT4                 not null,
+"TIMESTAMP"          TIMESTAMP                 not null default current_timestamp,
+constraint PK_ADD_SONGS_PLAYLISTS primary key (ADD_SONG_PL_ID)
+);
+
+/*==============================================================*/
+/* Index: USER_MENAMBAHKAN_FK                                   */
+/*==============================================================*/
+create  index USER_MENAMBAHKAN_FK on ADD_SONGS_PLAYLISTS (
+USER_ID
+);
+
+/*==============================================================*/
+/* Index: MENAMBAHKAN_KE_PLAYLIST_FK                            */
+/*==============================================================*/
+create  index MENAMBAHKAN_KE_PLAYLIST_FK on ADD_SONGS_PLAYLISTS (
+PLAYLIST_ID
+);
+
+/*==============================================================*/
+/* Index: MENAMBAHKAN_LAGU_FK                                   */
+/*==============================================================*/
+create  index MENAMBAHKAN_LAGU_FK on ADD_SONGS_PLAYLISTS (
+SONG_ID
+);
+
+/*==============================================================*/
+/* Index: ADD_SONGS_PLAYLISTS_PK                                */
+/*==============================================================*/
+create unique index ADD_SONGS_PLAYLISTS_PK on ADD_SONGS_PLAYLISTS (
+ADD_SONG_PL_ID
+);
+
+/*==============================================================*/
+/* Table: ARTISTS                                               */
+/*==============================================================*/
+create table ARTISTS (
+ARTIST_ID            INT4                 not null,
+ARTIST_NAME          VARCHAR(255)         not null,
+BIO                  TEXT                 null,
+MONTHLY_LISTENER_COUNT INT8                 null default 0,
+ARTIST_PFP           VARCHAR(2048)        null,
+ARTIST_EMAIL         VARCHAR(320)         not null unique,
+BANNER               VARCHAR(2048)        null,
+FOLLOWER_COUNT       INT8                 null default 0,
+constraint PK_ARTISTS primary key (ARTIST_ID)
+);
+
+/*==============================================================*/
+/* Index: ARTISTS_PK                                            */
+/*==============================================================*/
+create unique index ARTISTS_PK on ARTISTS (
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Table: ARTISTS_TOURS                                         */
+/*==============================================================*/
+create table ARTISTS_TOURS (
+TOUR_ID              INT4                 not null,
+ARTIST_ID            INT4                 not null,
+constraint PK_ARTISTS_TOURS primary key (TOUR_ID, ARTIST_ID)
+);
+
+/*==============================================================*/
+/* Index: ARTISTS_TOURS_PK                                      */
+/*==============================================================*/
+create unique index ARTISTS_TOURS_PK on ARTISTS_TOURS (
+TOUR_ID,
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Index: MEMILIKI2_FK                                          */
+/*==============================================================*/
+create  index MEMILIKI2_FK on ARTISTS_TOURS (
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Index: MEMILIKI3_FK                                          */
+/*==============================================================*/
+create  index MEMILIKI3_FK on ARTISTS_TOURS (
+TOUR_ID
+);
+
+/*==============================================================*/
+/* Table: ARTIST_PROMOTION                                      */
+/*==============================================================*/
+create table ARTIST_PROMOTION (
+ARTIST_ID            INT4                 not null,
+COLLECTION_ID        INT4                 not null,
+KOMENTAR_PROMOSI     TEXT                 null,
+constraint PK_ARTIST_PROMOTION primary key (ARTIST_ID)
+);
+
+/*==============================================================*/
+/* Index: MEMPROMOSIKAN2_FK                                     */
+/*==============================================================*/
+create  index MEMPROMOSIKAN2_FK on ARTIST_PROMOTION (
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Index: MEMPROMOSIKAN_FK                                      */
+/*==============================================================*/
+create  index MEMPROMOSIKAN_FK on ARTIST_PROMOTION (
+COLLECTION_ID
+);
+
+/*==============================================================*/
+/* Index: ARTIST_PROMOTION_PK                                   */
+/*==============================================================*/
+create unique index ARTIST_PROMOTION_PK on ARTIST_PROMOTION (
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Table: BLOCKLIST_ARTISTS                                     */
+/*==============================================================*/
+create table BLOCKLIST_ARTISTS (
+ARTIST_ID            INT4                 not null,
+USER_ID              INT4                 not null,
+constraint PK_BLOCKLIST_ARTISTS primary key (ARTIST_ID, USER_ID)
+);
+
+/*==============================================================*/
+/* Index: BLOCKLIST_ARTISTS_PK                                  */
+/*==============================================================*/
+create unique index BLOCKLIST_ARTISTS_PK on BLOCKLIST_ARTISTS (
+ARTIST_ID,
+USER_ID
+);
+
+/*==============================================================*/
+/* Index: MEM_BLACKLIST2_FK                                     */
+/*==============================================================*/
+create  index MEM_BLACKLIST2_FK on BLOCKLIST_ARTISTS (
+USER_ID
+);
+
+/*==============================================================*/
+/* Index: MEM_BLACKLIST_FK                                      */
+/*==============================================================*/
+create  index MEM_BLACKLIST_FK on BLOCKLIST_ARTISTS (
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Table: BLOCK_USERS                                           */
+/*==============================================================*/
+create table BLOCK_USERS (
+BLOCKER_ID           INT4                 not null,
+BLOCKED_ID           INT4                 not null,
+constraint PK_BLOCK_USERS primary key (BLOCKER_ID, BLOCKED_ID)
+);
+
+/*==============================================================*/
+/* Index: BLOCK_USERS_PK                                        */
+/*==============================================================*/
+create unique index BLOCK_USERS_PK on BLOCK_USERS (
+BLOCKER_ID,
+BLOCKED_ID
+);
+
+/*==============================================================*/
+/* Index: MEM_BLOCK2_FK                                         */
+/*==============================================================*/
+create  index MEM_BLOCK2_FK on BLOCK_USERS (
+BLOCKED_ID
+);
+
+/*==============================================================*/
+/* Index: MEM_BLOCK_FK                                          */
+/*==============================================================*/
+create  index MEM_BLOCK_FK on BLOCK_USERS (
+BLOCKER_ID
+);
+
+/*==============================================================*/
+/* Table: COLLECTIONS                                           */
+/*==============================================================*/
+create table COLLECTIONS (
+COLLECTION_ID        INT4                 not null,
+COLLECTION_TITLE     VARCHAR(255)         not null,
+COLLECTION_TYPE      VARCHAR(50)          not null,
+COLLECTION_COVER     VARCHAR(2048)        null,
+COLLECTION_RELEASE_DATE DATE                 not null,
+COLLECTION_RATING    NUMERIC(3,0)         null,
+ISPRERELEASE         BOOL                 null,
+constraint PK_COLLECTIONS primary key (COLLECTION_ID)
+);
+
+/*==============================================================*/
+/* Index: COLLECTIONS_PK                                        */
+/*==============================================================*/
+create unique index COLLECTIONS_PK on COLLECTIONS (
+COLLECTION_ID
+);
+
+/*==============================================================*/
+/* Table: COLLECTIONS_SONGS                                     */
+/*==============================================================*/
+create table COLLECTIONS_SONGS (
+SONG_ID              INT4                 not null,
+COLLECTION_ID        INT4                 not null,
+NOMOR_DISC           INT4                 not null,
+NOMOR_TRACK          INT4                 not null,
+constraint PK_COLLECTIONS_SONGS primary key (SONG_ID, COLLECTION_ID)
+);
+
+/*==============================================================*/
+/* Index: COLLECTIONS_SONGS_PK                                  */
+/*==============================================================*/
+create unique index COLLECTIONS_SONGS_PK on COLLECTIONS_SONGS (
+SONG_ID,
+COLLECTION_ID
+);
+
+/*==============================================================*/
+/* Index: MEMILIKI4_FK                                          */
+/*==============================================================*/
+create  index MEMILIKI4_FK on COLLECTIONS_SONGS (
+SONG_ID
+);
+
+/*==============================================================*/
+/* Index: MEMILIKI_FK                                           */
+/*==============================================================*/
+create  index MEMILIKI_FK on COLLECTIONS_SONGS (
+COLLECTION_ID
+);
+
+/*==============================================================*/
+/* Table: COLLECTION_LIBRARY                                    */
+/*==============================================================*/
+create table COLLECTION_LIBRARY (
+USER_ID              INT4                 not null,
+COLLECTION_ID        INT4                 not null,
+constraint PK_COLLECTION_LIBRARY primary key (USER_ID, COLLECTION_ID)
+);
+
+/*==============================================================*/
+/* Index: COLLECTION_LIBRARY_PK                                 */
+/*==============================================================*/
+create unique index COLLECTION_LIBRARY_PK on COLLECTION_LIBRARY (
+USER_ID,
+COLLECTION_ID
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_40_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_40_FK on COLLECTION_LIBRARY (
+USER_ID
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_41_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_41_FK on COLLECTION_LIBRARY (
+COLLECTION_ID
+);
+
+/*==============================================================*/
+/* Table: COLLECTION_TOP_3_GENRES                               */
+/*==============================================================*/
+create table COLLECTION_TOP_3_GENRES (
+COLLECTION_ID        INT4                 not null,
+GENRE_ID             INT4                 not null,
+constraint PK_COLLECTION_TOP_3_GENRES primary key (COLLECTION_ID, GENRE_ID)
+);
+
+/*==============================================================*/
+/* Index: COLLECTION_TOP_3_GENRES_PK                            */
+/*==============================================================*/
+create unique index COLLECTION_TOP_3_GENRES_PK on COLLECTION_TOP_3_GENRES (
+COLLECTION_ID,
+GENRE_ID
+);
+
+/*==============================================================*/
+/* Index: TOP_3_GENRE2_FK                                       */
+/*==============================================================*/
+create  index TOP_3_GENRE2_FK on COLLECTION_TOP_3_GENRES (
+GENRE_ID
+);
+
+/*==============================================================*/
+/* Index: TOP_3_GENRE_FK                                        */
+/*==============================================================*/
+create  index TOP_3_GENRE_FK on COLLECTION_TOP_3_GENRES (
+COLLECTION_ID
+);
+
+/*==============================================================*/
+/* Table: CREATE_SONGS                                          */
+/*==============================================================*/
+create table CREATE_SONGS (
+SONG_ID              INT4                 not null,
+ARTIST_ID            INT4                 not null,
+constraint PK_CREATE_SONGS primary key (SONG_ID, ARTIST_ID)
+);
+
+/*==============================================================*/
+/* Index: CREATE_PLAYLISTS_PK                                   */
+/*==============================================================*/
+create unique index CREATE_PLAYLISTS_PK on CREATE_SONGS (
+SONG_ID,
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Index: MEMBUAT2_FK                                           */
+/*==============================================================*/
+create  index MEMBUAT2_FK on CREATE_SONGS (
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Index: MEMBUAT_FK                                            */
+/*==============================================================*/
+create  index MEMBUAT_FK on CREATE_SONGS (
+SONG_ID
+);
+
+/*==============================================================*/
+/* Table: FOLLOW_ARTISTS                                        */
+/*==============================================================*/
+create table FOLLOW_ARTISTS (
+USER_ID              INT4                 not null,
+ARTIST_ID            INT4                 not null,
+"TIMESTAMP"          TIMESTAMP                 not null default current_timestamp,
+constraint PK_FOLLOW_ARTISTS primary key (USER_ID, ARTIST_ID)
+);
+
+/*==============================================================*/
+/* Index: FOLLOW_ARTISTS_PK                                     */
+/*==============================================================*/
+create unique index FOLLOW_ARTISTS_PK on FOLLOW_ARTISTS (
+USER_ID,
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Index: MENGIKUTI4_FK                                         */
+/*==============================================================*/
+create  index MENGIKUTI4_FK on FOLLOW_ARTISTS (
+USER_ID
+);
+
+/*==============================================================*/
+/* Index: MENGIKUTI_FK                                          */
+/*==============================================================*/
+create  index MENGIKUTI_FK on FOLLOW_ARTISTS (
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Table: FOLLOW_USERS                                          */
+/*==============================================================*/
+create table FOLLOW_USERS (
+FOLLOWER_ID          INT4                 not null,
+FOLLOWED_ID          INT4                 not null,
+constraint PK_FOLLOW_USERS primary key (FOLLOWER_ID, FOLLOWED_ID)
+);
+
+/*==============================================================*/
+/* Index: FOLLOW_USERS_PK                                       */
+/*==============================================================*/
+create unique index FOLLOW_USERS_PK on FOLLOW_USERS (
+FOLLOWER_ID,
+FOLLOWED_ID
+);
+
+/*==============================================================*/
+/* Index: MENGIKUTI2_FK                                         */
+/*==============================================================*/
+create  index MENGIKUTI2_FK on FOLLOW_USERS (
+FOLLOWED_ID
+);
+
+/*==============================================================*/
+/* Index: MENGIKUTI3_FK                                         */
+/*==============================================================*/
+create  index MENGIKUTI3_FK on FOLLOW_USERS (
+FOLLOWER_ID
+);
+
+/*==============================================================*/
+/* Table: GENRES                                                */
+/*==============================================================*/
+create table GENRES (
+GENRE_ID             INT4                 not null,
+GENRE_NAME           VARCHAR(255)         not null,
+constraint PK_GENRES primary key (GENRE_ID)
+);
+
+/*==============================================================*/
+/* Index: GENRES_PK                                             */
+/*==============================================================*/
+create unique index GENRES_PK on GENRES (
+GENRE_ID
+);
+
+/*==============================================================*/
+/* Table: LIKE_REVIEWS                                          */
+/*==============================================================*/
+create table LIKE_REVIEWS (
+REVIEW_ID            INT4                 not null,
+USER_ID              INT4                 not null,
+constraint PK_LIKE_REVIEWS primary key (REVIEW_ID, USER_ID)
+);
+
+/*==============================================================*/
+/* Index: LIKE_REVIEWS_PK                                       */
+/*==============================================================*/
+create unique index LIKE_REVIEWS_PK on LIKE_REVIEWS (
+REVIEW_ID,
+USER_ID
+);
+
+/*==============================================================*/
+/* Index: LIKE_REVIEW2_FK                                       */
+/*==============================================================*/
+create  index LIKE_REVIEW2_FK on LIKE_REVIEWS (
+USER_ID
+);
+
+/*==============================================================*/
+/* Index: LIKE_REVIEW_FK                                        */
+/*==============================================================*/
+create  index LIKE_REVIEW_FK on LIKE_REVIEWS (
+REVIEW_ID
+);
+
+/*==============================================================*/
+/* Table: LIKE_SONGS                                            */
+/*==============================================================*/
+create table LIKE_SONGS (
+SONG_ID              INT4                 not null,
+USER_ID              INT4                 not null,
+"TIMESTAMP"          TIMESTAMP                 not null default current_timestamp,
+constraint PK_LIKE_SONGS primary key (SONG_ID, USER_ID)
+);
+
+/*==============================================================*/
+/* Index: LIKE_SONGS_PK                                         */
+/*==============================================================*/
+create unique index LIKE_SONGS_PK on LIKE_SONGS (
+SONG_ID,
+USER_ID
+);
+
+/*==============================================================*/
+/* Index: MENYUKAI2_FK                                          */
+/*==============================================================*/
+create  index MENYUKAI2_FK on LIKE_SONGS (
+SONG_ID
+);
+
+/*==============================================================*/
+/* Index: MENYUKAI_FK                                           */
+/*==============================================================*/
+create  index MENYUKAI_FK on LIKE_SONGS (
+USER_ID
+);
+
+/*==============================================================*/
+/* Table: LISTENS                                               */
+/*==============================================================*/
+create table LISTENS (
+LISTEN_ID            INT4                 not null,
+USER_ID              INT4                 not null,
+SONG_ID              INT4                 not null,
+DURATION_LISTENED    INT4                 not null,
+"TIMESTAMP"           TIMESTAMP                 not null DEFAULT current_timestamp,
+constraint PK_LISTENS primary key (LISTEN_ID)
+);
+
+/*==============================================================*/
+/* Index: MENDENGARKAN2_FK                                      */
+/*==============================================================*/
+create  index MENDENGARKAN2_FK on LISTENS (
+USER_ID
+);
+
+/*==============================================================*/
+/* Index: MENDENGARKAN_FK                                       */
+/*==============================================================*/
+create  index MENDENGARKAN_FK on LISTENS (
+SONG_ID
+);
+
+/*==============================================================*/
+/* Index: LISTENS_PK                                            */
+/*==============================================================*/
+create unique index LISTENS_PK on LISTENS (
+LISTEN_ID
+);
+
+/*==============================================================*/
+/* Table: PLAYLISTS                                             */
+/*==============================================================*/
+create table PLAYLISTS (
+PLAYLIST_ID          INT4                 not null,
+USER_ID              INT4                 not null,
+PLAYLIST_COVER       VARCHAR(2048)        null,
+PLAYLIST_TITLE       VARCHAR(255)         not null,
+ISPUBLIC             BOOL                 not null,
+ISCOLLABORATIVE      BOOL                 not null,
+PLAYLIST_DESC        TEXT                 null,
+ISONPROFILE          BOOL                 not null,
+PLAYLIST_DATE_CREATED DATE                 not null,
+constraint PK_PLAYLISTS primary key (PLAYLIST_ID)
+);
+
+/*==============================================================*/
+/* Index: PLAYLISTS_PK                                          */
+/*==============================================================*/
+create unique index PLAYLISTS_PK on PLAYLISTS (
+PLAYLIST_ID
+);
+
+/*==============================================================*/
+/* Index: MEMBUAT_PLAYLIST_FK                                   */
+/*==============================================================*/
+create  index MEMBUAT_PLAYLIST_FK on PLAYLISTS (
+USER_ID
+);
+
+/*==============================================================*/
+/* Table: PL_LIBRARY                                            */
+/*==============================================================*/
+create table PL_LIBRARY (
+USER_ID              INT4                 not null,
+PLAYLIST_ID          INT4                 not null,
+constraint PK_PL_LIBRARY primary key (USER_ID, PLAYLIST_ID)
+);
+
+/*==============================================================*/
+/* Index: PL_LIBRARY_PK                                         */
+/*==============================================================*/
+create unique index PL_LIBRARY_PK on PL_LIBRARY (
+USER_ID,
+PLAYLIST_ID
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_38_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_38_FK on PL_LIBRARY (
+USER_ID
+);
+
+/*==============================================================*/
+/* Index: RELATIONSHIP_39_FK                                    */
+/*==============================================================*/
+create  index RELATIONSHIP_39_FK on PL_LIBRARY (
+PLAYLIST_ID
+);
+
+/*==============================================================*/
+/* Table: RATE_SONGS                                            */
+/*==============================================================*/
+create table RATE_SONGS (
+USER_ID              INT4                 not null,
+SONG_ID              INT4                 not null,
+SONG_RATING          NUMERIC(3,0)         not null,
+"TIMESTAMP"           TIMESTAMP                 not null DEFAULT current_timestamp,
+constraint PK_RATE_SONGS primary key (USER_ID, SONG_ID)
+);
+
+/*==============================================================*/
+/* Index: RATE_SONGS_PK                                         */
+/*==============================================================*/
+create unique index RATE_SONGS_PK on RATE_SONGS (
+USER_ID,
+SONG_ID
+);
+
+/*==============================================================*/
+/* Index: RATE2_FK                                              */
+/*==============================================================*/
+create  index RATE2_FK on RATE_SONGS (
+USER_ID
+);
+
+/*==============================================================*/
+/* Index: RATE_FK                                               */
+/*==============================================================*/
+create  index RATE_FK on RATE_SONGS (
+SONG_ID
+);
+
+/*==============================================================*/
+/* Table: RELEASES                                              */
+/*==============================================================*/
+create table RELEASES (
+COLLECTION_ID        INT4                 not null,
+ARTIST_ID            INT4                 not null,
+constraint PK_RELEASES primary key (COLLECTION_ID, ARTIST_ID)
+);
+
+/*==============================================================*/
+/* Index: RELEASES_PK                                           */
+/*==============================================================*/
+create unique index RELEASES_PK on RELEASES (
+COLLECTION_ID,
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Index: MERILIS2_FK                                           */
+/*==============================================================*/
+create  index MERILIS2_FK on RELEASES (
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Index: MERILIS_FK                                            */
+/*==============================================================*/
+create  index MERILIS_FK on RELEASES (
+COLLECTION_ID
+);
+
+/*==============================================================*/
+/* Table: REVIEWS                                               */
+/*==============================================================*/
+create table REVIEWS (
+REVIEW               TEXT                 null,
+RATING               NUMERIC(3,0)         not null,
+"TIMESTAMP"          TIMESTAMP                 not null DEFAULT current_timestamp,
+REVIEW_ID            INT4                 not null,
+USER_ID              INT4                 not null,
+COLLECTION_ID        INT4                 not null,
+constraint PK_REVIEWS primary key (REVIEW_ID)
+);
+
+/*==============================================================*/
+/* Index: REVIEWS_PK                                            */
+/*==============================================================*/
+create unique index REVIEWS_PK on REVIEWS (
+REVIEW_ID
+);
+
+/*==============================================================*/
+/* Index: MEMBUAT_REVIEW_FK                                     */
+/*==============================================================*/
+create  index MEMBUAT_REVIEW_FK on REVIEWS (
+USER_ID
+);
+
+/*==============================================================*/
+/* Index: COLLECTION_MANA_FK                                    */
+/*==============================================================*/
+create  index COLLECTION_MANA_FK on REVIEWS (
+COLLECTION_ID
+);
+
+/*==============================================================*/
+/* Table: SOCIALS                                               */
+/*==============================================================*/
+create table SOCIALS (
+SOCIAL_ID            INT4                 not null,
+ARTIST_ID            INT4                 not null,
+SOCIAL_MEDIA_LINK    VARCHAR(2048)        not null,
+constraint PK_SOCIALS primary key (SOCIAL_ID)
+);
+
+/*==============================================================*/
+/* Index: SOCIALS_PK                                            */
+/*==============================================================*/
+create unique index SOCIALS_PK on SOCIALS (
+SOCIAL_ID
+);
+
+/*==============================================================*/
+/* Index: HAS_FK                                                */
+/*==============================================================*/
+create  index HAS_FK on SOCIALS (
+ARTIST_ID
+);
+
+/*==============================================================*/
+/* Table: SONGS                                                 */
+/*==============================================================*/
+create table SONGS (
+SONG_ID              INT4                 not null,
+SONG_FILE            VARCHAR(320)         not null,
+SONG_TITLE           VARCHAR(255)         not null,
+LISTEN_COUNT         INT8                 null default 0,
+SONG_CREDITS         TEXT                 null,
+SONG_DURATION        INT4                 not null,
+VALENCE              DECIMAL(4,3)         null,
+ACCOUSTICNESS        DECIMAL(4,3)         null,
+DANCEABILITY         DECIMAL(4,3)         null,
+ENERGY               DECIMAL(4,3)         null,
+POPULARITY           NUMERIC(3,0)         null,
+SONG_RELEASE_DATE    DATE                 not null,
+SONG_RATING          NUMERIC(3,0)         null,
+constraint PK_SONGS primary key (SONG_ID)
+);
+
+/*==============================================================*/
+/* Index: SONGS_PK                                              */
+/*==============================================================*/
+create unique index SONGS_PK on SONGS (
+SONG_ID
+);
+
+/*==============================================================*/
+/* Table: SONGS_GENRES                                          */
+/*==============================================================*/
+create table SONGS_GENRES (
+GENRE_ID             INT4                 not null,
+SONG_ID              INT4                 not null,
+constraint PK_SONGS_GENRES primary key (GENRE_ID, SONG_ID)
+);
+
+/*==============================================================*/
+/* Index: SONGS_GENRES_PK                                       */
+/*==============================================================*/
+create unique index SONGS_GENRES_PK on SONGS_GENRES (
+GENRE_ID,
+SONG_ID
+);
+
+/*==============================================================*/
+/* Index: MEMPUNYAI2_FK                                         */
+/*==============================================================*/
+create  index MEMPUNYAI2_FK on SONGS_GENRES (
+SONG_ID
+);
+
+/*==============================================================*/
+/* Index: MEMPUNYAI_FK                                          */
+/*==============================================================*/
+create  index MEMPUNYAI_FK on SONGS_GENRES (
+GENRE_ID
+);
+
+/*==============================================================*/
+/* Table: TOURS                                                 */
+/*==============================================================*/
+create table TOURS (
+TOUR_ID              INT4                 not null,
+TOUR_DATE            DATE                 not null,
+TOUR_NAME            VARCHAR(255)         not null,
+VENUE                VARCHAR(255)         not null,
+constraint PK_TOURS primary key (TOUR_ID)
+);
+
+/*==============================================================*/
+/* Index: TOURS_PK                                              */
+/*==============================================================*/
+create unique index TOURS_PK on TOURS (
+TOUR_ID
+);
+
+/*==============================================================*/
+/* Table: USERS                                                 */
+/*==============================================================*/
+create table USERS (
+USER_ID              INT4                 not null,
+USERNAME             VARCHAR(50)          not null unique,
+USER_PFP              VARCHAR(2048)        null,
+PW_HASH              VARCHAR(255)         not null,
+USER_EMAIL           VARCHAR(320)         not null unique,
+REGION               VARCHAR(50)          null,
+COUNTRY              VARCHAR(50)          null,
+constraint PK_USERS primary key (USER_ID)
+);
+
+/*==============================================================*/
+/* Index: USERS_PK                                              */
+/*==============================================================*/
+create unique index USERS_PK on USERS (
+USER_ID
+);
+
+alter table ADD_SONGS_PLAYLISTS
+add constraint FK_ADD_SONG_MENAMBAHK_PLAYLIST foreign key (PLAYLIST_ID)
+    references PLAYLISTS (PLAYLIST_ID)
+    on delete cascade on update cascade;
+
+alter table ADD_SONGS_PLAYLISTS
+add constraint FK_ADD_SONG_MENAMBAHK_SONGS foreign key (SONG_ID)
+    references SONGS (SONG_ID)
+    on delete cascade on update cascade;
+
+alter table ADD_SONGS_PLAYLISTS
+add constraint FK_ADD_SONG_USER_MENA_USERS foreign key (USER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table ARTISTS_TOURS
+add constraint FK_ARTISTS__MEMILIKI2_ARTISTS foreign key (ARTIST_ID)
+    references ARTISTS (ARTIST_ID)
+    on delete restrict on update cascade;
+
+alter table ARTISTS_TOURS
+add constraint FK_ARTISTS__MEMILIKI3_TOURS foreign key (TOUR_ID)
+    references TOURS (TOUR_ID)
+    on delete cascade on update cascade;
+
+alter table ARTIST_PROMOTION
+add constraint FK_ARTIST_P_MEMPROMOS_COLLECTI foreign key (COLLECTION_ID)
+    references COLLECTIONS (COLLECTION_ID)
+    on delete cascade on update cascade;
+
+alter table ARTIST_PROMOTION
+add constraint FK_ARTIST_P_MEMPROMOS_ARTISTS foreign key (ARTIST_ID)
+    references ARTISTS (ARTIST_ID)
+    on delete cascade on update cascade;
+
+alter table BLOCKLIST_ARTISTS
+add constraint FK_BLOCKLIS_MEM_BLACK_ARTISTS foreign key (ARTIST_ID)
+    references ARTISTS (ARTIST_ID)
+    on delete restrict on update cascade;
+
+alter table BLOCKLIST_ARTISTS
+add constraint FK_BLOCKLIS_MEM_BLACK_USERS foreign key (USER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table BLOCK_USERS
+add constraint FK_BLOCK_US_DI_BLOCK__USERS foreign key (BLOCKER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table BLOCK_USERS
+add constraint FK_BLOCK_US_MEM_BLOCK_USERS foreign key (BLOCKED_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table COLLECTIONS_SONGS
+add constraint FK_COLLECTI_MEMILIKI_COLLECTI foreign key (COLLECTION_ID)
+    references COLLECTIONS (COLLECTION_ID)
+    on delete cascade on update cascade;
+
+alter table COLLECTIONS_SONGS
+add constraint FK_COLLECTI_MEMILIKI4_SONGS foreign key (SONG_ID)
+    references SONGS (SONG_ID)
+    on delete cascade on update cascade;
+
+alter table COLLECTION_LIBRARY
+add constraint FK_COLLECTI_COLLECTIO_COLLECTI foreign key (COLLECTION_ID)
+    references COLLECTIONS (COLLECTION_ID)
+    on delete cascade on update cascade;
+
+alter table COLLECTION_LIBRARY
+add constraint FK_COLLECTI_USER_COLL_USERS foreign key (USER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table COLLECTION_TOP_3_GENRES
+add constraint FK_COLLECTI_TOP_3_GEN_COLLECTI foreign key (COLLECTION_ID)
+    references COLLECTIONS (COLLECTION_ID)
+    on delete cascade on update cascade;
+
+alter table COLLECTION_TOP_3_GENRES
+add constraint FK_COLLECTI_TOP_3_GEN_GENRES foreign key (GENRE_ID)
+    references GENRES (GENRE_ID)
+    on delete restrict on update cascade;
+
+alter table CREATE_SONGS
+add constraint FK_CREATE_S_MEMBUAT_SONGS foreign key (SONG_ID)
+    references SONGS (SONG_ID)
+    on delete cascade on update cascade;
+
+alter table CREATE_SONGS
+add constraint FK_CREATE_S_MEMBUAT2_ARTISTS foreign key (ARTIST_ID)
+    references ARTISTS (ARTIST_ID)
+    on delete restrict on update cascade;
+
+alter table FOLLOW_ARTISTS
+add constraint FK_FOLLOW_A_MENGIKUTI_ARTISTS foreign key (ARTIST_ID)
+    references ARTISTS (ARTIST_ID)
+    on delete restrict on update cascade;
+
+alter table FOLLOW_ARTISTS
+add constraint FK_FOLLOW_A_MENGIKUTI_USERS foreign key (USER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table FOLLOW_USERS
+add constraint FK_FOLLOW_U_MENGIKUTI_USERS foreign key (FOLLOWED_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table FOLLOW_USERS
+add constraint FK_FOLLOW_U_USER_DIIK_USERS foreign key (FOLLOWER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table LIKE_REVIEWS
+add constraint FK_LIKE_REV_LIKE_REVI_REVIEWS foreign key (REVIEW_ID)
+    references REVIEWS (REVIEW_ID)
+    on delete cascade on update cascade;
+
+alter table LIKE_REVIEWS
+add constraint FK_LIKE_REV_LIKE_REVI_USERS foreign key (USER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table LIKE_SONGS
+add constraint FK_LIKE_SON_MENYUKAI_USERS foreign key (USER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table LIKE_SONGS
+add constraint FK_LIKE_SON_MENYUKAI2_SONGS foreign key (SONG_ID)
+    references SONGS (SONG_ID)
+    on delete cascade on update cascade;
+
+alter table LISTENS
+add constraint FK_LISTENS_MENDENGAR_SONGS foreign key (SONG_ID)
+    references SONGS (SONG_ID)
+    on delete cascade on update cascade;
+
+alter table LISTENS
+add constraint FK_LISTENS_MENDENGAR_USERS foreign key (USER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table PLAYLISTS
+add constraint FK_PLAYLIST_MEMBUAT_P_USERS foreign key (USER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table PL_LIBRARY
+add constraint FK_PL_LIBRA_PLAYLIST__PLAYLIST foreign key (PLAYLIST_ID)
+    references PLAYLISTS (PLAYLIST_ID)
+    on delete cascade on update cascade;
+
+alter table PL_LIBRARY
+add constraint FK_PL_LIBRA_USER_PLAY_USERS foreign key (USER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table RATE_SONGS
+add constraint FK_RATE_SON_RATE_SONGS foreign key (SONG_ID)
+    references SONGS (SONG_ID)
+    on delete cascade on update cascade;
+
+alter table RATE_SONGS
+add constraint FK_RATE_SON_RATE2_USERS foreign key (USER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table RELEASES
+add constraint FK_RELEASES_MERILIS_COLLECTI foreign key (COLLECTION_ID)
+    references COLLECTIONS (COLLECTION_ID)
+    on delete cascade on update cascade;
+
+alter table RELEASES
+add constraint FK_RELEASES_MERILIS2_ARTISTS foreign key (ARTIST_ID)
+    references ARTISTS (ARTIST_ID)
+    on delete restrict on update cascade;
+
+alter table REVIEWS
+add constraint FK_REVIEWS_COLLECTIO_COLLECTI foreign key (COLLECTION_ID)
+    references COLLECTIONS (COLLECTION_ID)
+    on delete cascade on update cascade;
+
+alter table REVIEWS
+add constraint FK_REVIEWS_MEMBUAT_R_USERS foreign key (USER_ID)
+    references USERS (USER_ID)
+    on delete cascade on update cascade;
+
+alter table SOCIALS
+add constraint FK_SOCIALS_HAS_ARTISTS foreign key (ARTIST_ID)
+    references ARTISTS (ARTIST_ID)
+    on delete cascade on update cascade;
+
+alter table SONGS_GENRES
+add constraint FK_SONGS_GE_MEMPUNYAI_GENRES foreign key (GENRE_ID)
+    references GENRES (GENRE_ID)
+    on delete restrict on update cascade;
+
+alter table SONGS_GENRES
+add constraint FK_SONGS_GE_MEMPUNYAI_SONGS foreign key (SONG_ID)
+    references SONGS (SONG_ID)
+    on delete cascade on update cascade;
+
+
+
+-- Sequence untuk artists
+CREATE SEQUENCE seq_artists_id START 1;
+ALTER TABLE ARTISTS
+ALTER COLUMN ARTIST_ID SET DEFAULT nextval('seq_artists_id');
+ALTER SEQUENCE seq_artists_id OWNED BY ARTISTS.ARTIST_ID;
+
+-- Sequence untuk Songs
+CREATE SEQUENCE seq_songs_id START 1;
+ALTER TABLE SONGS
+ALTER COLUMN SONG_ID SET DEFAULT nextval('seq_songs_id');
+ALTER SEQUENCE seq_songs_id OWNED BY SONGS.SONG_ID;
+
+-- Sequence untuk Users
+CREATE SEQUENCE seq_users_id START 1;
+ALTER TABLE USERS
+ALTER COLUMN USER_ID SET DEFAULT nextval('seq_users_id');
+ALTER SEQUENCE seq_users_id OWNED BY USERS.USER_ID;
+
+-- Sequence untuk Playlists
+CREATE SEQUENCE seq_playlists_id START 1;
+ALTER TABLE PLAYLISTS
+ALTER COLUMN PLAYLIST_ID SET DEFAULT nextval('seq_playlists_id');
+ALTER SEQUENCE seq_playlists_id OWNED BY PLAYLISTS.PLAYLIST_ID;
+
+-- Sequence untuk Collections
+CREATE SEQUENCE seq_collections_id START 1;
+ALTER TABLE COLLECTIONS
+ALTER COLUMN COLLECTION_ID SET DEFAULT nextval('seq_collections_id');
+ALTER SEQUENCE seq_collections_id OWNED BY COLLECTIONS.COLLECTION_ID;
+
+-- Sequence untuk Genres
+CREATE SEQUENCE seq_genres_id START 1;
+ALTER TABLE GENRES
+ALTER COLUMN GENRE_ID SET DEFAULT nextval('seq_genres_id');
+ALTER SEQUENCE seq_genres_id OWNED BY GENRES.GENRE_ID;
+
+-- Sequence untuk Reviews
+CREATE SEQUENCE seq_reviews_id START 1;
+ALTER TABLE REVIEWS
+ALTER COLUMN REVIEW_ID SET DEFAULT nextval('seq_reviews_id');
+ALTER SEQUENCE seq_reviews_id OWNED BY REVIEWS.REVIEW_ID;
+
+-- Sequence untuk Tour
+CREATE SEQUENCE seq_tours_id START 1;
+ALTER TABLE TOURS
+ALTER COLUMN TOUR_ID SET DEFAULT nextval('seq_tours_id');
+ALTER SEQUENCE seq_tours_id OWNED BY TOURS.TOUR_ID;
+
+-- Sequence untuk Socials
+CREATE SEQUENCE seq_socials_id START 1;
+ALTER TABLE SOCIALS
+ALTER COLUMN SOCIAL_ID SET DEFAULT nextval('seq_socials_id');
+ALTER SEQUENCE seq_socials_id OWNED BY SOCIALS.SOCIAL_ID;
+-- Sequence untuk Listens
+CREATE SEQUENCE seq_listens_id START 1;
+ALTER TABLE LISTENS
+ALTER COLUMN LISTEN_ID SET DEFAULT nextval('seq_listens_id');
+ALTER SEQUENCE seq_listens_id OWNED BY LISTENS.LISTEN_ID;
+-- Sequence untuk ADD_SONGS_PLAYLISTS
+CREATE SEQUENCE seq_add_songs_playlist_id START 1;
+ALTER TABLE ADD_SONGS_PLAYLISTS
+ALTER COLUMN ADD_SONG_PL_ID SET DEFAULT nextval('seq_add_songs_playlist_id');
+ALTER SEQUENCE seq_add_songs_playlist_id OWNED BY ADD_SONGS_PLAYLISTS.ADD_SONG_PL_ID;
+
+
+    -- cek socials
+    /* --- VALIDASI LOGIKA BISNIS (ANGKA & RANGE) --- */
+
+    ALTER TABLE SONGS ADD CONSTRAINT CHK_SONG_METRICS
+    CHECK (
+        (VALENCE >= 0 AND VALENCE <= 1) AND
+        (DANCEABILITY >= 0 AND DANCEABILITY <= 1) AND
+        (ENERGY >= 0 AND ENERGY <= 1) AND
+        (ACCOUSTICNESS >= 0 AND ACCOUSTICNESS <= 1)
+    );
+
+    ALTER TABLE SONGS ADD CONSTRAINT CHK_SONG_DURATION_POSITIVE
+    CHECK (SONG_DURATION > 0);
+
+    ALTER TABLE SONGS ADD CONSTRAINT CHK_SONG_POPULARITY_RANGE
+    CHECK (POPULARITY >= 0 AND POPULARITY <= 100);
+
+    ALTER TABLE RATE_SONGS ADD CONSTRAINT CHK_RATE_SONG_RANGE
+    CHECK (SONG_RATING >= 1 AND SONG_RATING <= 100);
+
+    ALTER TABLE REVIEWS ADD CONSTRAINT CHK_REVIEW_RATING_RANGE
+    CHECK (RATING >= 1 AND RATING <= 100);
+
+    ALTER TABLE ARTISTS ADD CONSTRAINT CHK_LISTENER_POSITIVE
+    CHECK (MONTHLY_LISTENER_COUNT >= 0);
+
+    ALTER TABLE ADD_SONGS_PLAYLISTS ADD CONSTRAINT CHK_PLAYLIST_ORDER_POSITIVE
+    CHECK (NO_URUT > 0);
+
+    ALTER TABLE COLLECTIONS_SONGS ADD CONSTRAINT CHK_DISC_TRACK_POSITIVE
+    CHECK (NOMOR_DISC > 0 AND NOMOR_TRACK > 0);
+
+    ALTER TABLE USERS ADD CONSTRAINT CHK_PW_HASH_LENGTH
+    CHECK (LENGTH(PW_HASH) >= 8);
+
+    ALTER TABLE USERS ADD CONSTRAINT CHK_USERNAME_NO_WHITESPACE
+    CHECK (LENGTH(TRIM(USERNAME)) > 0);
+
+    ALTER TABLE ARTISTS ADD CONSTRAINT CHK_ARTISTNAME_NO_WHITESPACE
+    CHECK (LENGTH(TRIM(ARTIST_NAME)) > 0);
+
+    ALTER TABLE FOLLOW_USERS
+    ADD CONSTRAINT CHK_NO_SELF_FOLLOW
+    CHECK (FOLLOWER_ID <> FOLLOWED_ID);
+
+    ALTER TABLE BLOCK_USERS
+    ADD CONSTRAINT CHK_NO_SELF_BLOCK
+    CHECK (BLOCKER_ID <> BLOCKED_ID);
+    /* --- VALIDASI FORMAT TEKS & TIPE --- */
+
+    ALTER TABLE USERS ADD CONSTRAINT CHK_EMAIL_FORMAT
+    CHECK (USER_EMAIL LIKE '%_@__%.__%');
+
+    ALTER TABLE COLLECTIONS ADD CONSTRAINT CHK_COLLECTION_TYPE_VALID
+    CHECK (COLLECTION_TYPE IN ('Album', 'EP', 'Single', 'Compilation'));
+
+    /* --- NILAI DEFAULT --- */
+
+    -- 1. Playlist otomatis Private jika tidak diisi
+    ALTER TABLE PLAYLISTS ALTER COLUMN ISPUBLIC SET DEFAULT FALSE;
+
+    -- 2. Playlist otomatis Tidak Kolaboratif jika tidak diisi
+    ALTER TABLE PLAYLISTS ALTER COLUMN ISCOLLABORATIVE SET DEFAULT FALSE;
+
+
+    -- artist hanya bisa promosi rilisannya sendiri
+    ALTER TABLE ARTIST_PROMOTION
+        ADD CONSTRAINT FK_PROMO_OWN_RELEASE
+        FOREIGN KEY (ARTIST_ID, COLLECTION_ID)
+        REFERENCES RELEASES (ARTIST_ID, COLLECTION_ID)
+        ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+    ALTER TABLE REVIEWS
+    ADD CONSTRAINT UQ_USER_COLLECTION_REVIEW UNIQUE (user_id, collection_id);
+
+commit;
+
 /* Script Generated by Python Faker (Full 27 Tables) */
 BEGIN;
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
-TRUNCATE TABLE 
-        USERS, ARTISTS, GENRES, COLLECTIONS, SONGS, PLAYLISTS, 
-        RELEASES, COLLECTIONS_SONGS, CREATE_SONGS, SONGS_GENRES, 
-        FOLLOW_ARTISTS, FOLLOW_USERS, LISTENS, LIKE_SONGS, REVIEWS, 
-        RATE_SONGS, TOURS, ARTISTS_TOURS, SOCIALS, COLLECTION_LIBRARY, 
-        PL_LIBRARY, BLOCK_USERS, BLOCKLIST_ARTISTS, LIKE_REVIEWS, 
-        ADD_SONGS_PLAYLISTS, COLLECTION_TOP_3_GENRES, ARTIST_PROMOTION 
+TRUNCATE TABLE
+        USERS, ARTISTS, GENRES, COLLECTIONS, SONGS, PLAYLISTS,
+        RELEASES, COLLECTIONS_SONGS, CREATE_SONGS, SONGS_GENRES,
+        FOLLOW_ARTISTS, FOLLOW_USERS, LISTENS, LIKE_SONGS, REVIEWS,
+        RATE_SONGS, TOURS, ARTISTS_TOURS, SOCIALS, COLLECTION_LIBRARY,
+        PL_LIBRARY, BLOCK_USERS, BLOCKLIST_ARTISTS, LIKE_REVIEWS,
+        ADD_SONGS_PLAYLISTS, COLLECTION_TOP_3_GENRES, ARTIST_PROMOTION
         RESTART IDENTITY CASCADE;
 INSERT INTO USERS (USER_ID, USERNAME, USER_EMAIL, PW_HASH, USER_PFP, REGION, COUNTRY) VALUES (1, 'jmangunsong', 'jmangunsong_1@example.com', crypt('$&d_x5KqhkeS', gen_salt('bf')), 'https://ui-avatars.com/api/?name=jmangunsong&background=random', 'Padangpanjang', 'Niger');
 INSERT INTO USERS (USER_ID, USERNAME, USER_EMAIL, PW_HASH, USER_PFP, REGION, COUNTRY) VALUES (2, 'purwantiqueen', 'purwantiqueen_2@example.com', crypt('KL)1OTvT1^d1', gen_salt('bf')), 'https://ui-avatars.com/api/?name=purwantiqueen&background=random', 'Kotamobagu', 'Burkina Faso');
@@ -112,7 +1448,7 @@ INSERT INTO USERS (USER_ID, USERNAME, USER_EMAIL, PW_HASH, USER_PFP, REGION, COU
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (1, 'Laufey', 'https://i.scdn.co/image/ab6761610000e5eb98c2527b85500f68f53084f2', 8703092, 'contact.1@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (1, 'Lover Girl', 'Single', '2025-06-25', 'https://i.scdn.co/image/ab67616d0000b273be1e41eda793059fb9129bff', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (1, 1) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (1, 'Lover Girl', 164, '/stream/audio_default.mp3', 78, 0.607, 0.664, 0.433, 0.52, '2025-06-25') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (1, 1, 1, 1) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (1, 1) ON CONFLICT DO NOTHING;
@@ -121,7 +1457,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (1, 'k-pop') ON CONFLICT DO NOT
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (2, 'k-ballad') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (2, 'Love wins all', 'Single', '2024-01-24', 'https://i.scdn.co/image/ab67616d0000b273b79a12d47af18d1d83a5caf9', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (2, 2) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (2, 'Love wins all', 271, '/stream/audio_default.mp3', 68, 0.146, 0.788, 0.916, 0.802, '2024-01-24') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (2, 1) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (2, 2) ON CONFLICT DO NOTHING;
@@ -130,7 +1466,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (2, 2) ON CONFLICT DO NOTHI
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (3, 'Kristen Bell', 'https://i.scdn.co/image/4696b636f6be50265a1226814629eea4ed48a8e6', 165183, 'contact.3@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (3, 'Frozen (Original Motion Picture Soundtrack / Deluxe Edition)', 'Compilation', '2013-01-01', 'https://i.scdn.co/image/ab67616d0000b273a985e1e7c6b095da213eaa7c', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (3, 3) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (3, 'Love Is an Open Door - From "Frozen"/Soundtrack Version', 124, '/stream/audio_default.mp3', 69, 0.647, 0.353, 0.693, 0.732, '2013-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (3, 2) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (3, 1) ON CONFLICT DO NOTHING;
@@ -139,7 +1475,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (3, 3) ON CONFLICT DO NOTHI
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (4, 'Jeff Buckley', 'https://i.scdn.co/image/67779606c7f151618a28f62b1d24fb514d39dacf', 2342147, 'contact.4@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (4, 'Grace', 'Album', '1994-01-01', 'https://i.scdn.co/image/ab67616d0000b273afc2d1d2c8703a10aeded0af', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (4, 4) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (4, 'Lover, You Should''ve Come Over', 404, '/stream/audio_default.mp3', 84, 0.414, 0.354, 0.369, 0.781, '1994-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (4, 1) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (4, 2) ON CONFLICT DO NOTHING;
@@ -149,7 +1485,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (3, 'pop') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (5, 'My Everything (Deluxe)', 'Album', '2014-08-22', 'https://i.scdn.co/image/ab67616d0000b273deec12a28d1e336c5052e9aa', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (5, 5) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (5, 'Love Me Harder', 236, '/stream/audio_default.mp3', 84, 0.013, 0.089, 0.059, 0.643, '2014-08-22') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (5, 3) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (5, 5, 1, 9) ON CONFLICT DO NOTHING;
@@ -157,7 +1493,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (5, 5) ON CONFLICT DO NOTHI
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (6, 'BLACKPINK', 'https://i.scdn.co/image/ab6761610000e5eb9b57f5eccf180a0049be84b3', 56471290, 'contact.6@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (6, 'THE ALBUM', 'Album', '2020-10-02', 'https://i.scdn.co/image/ab67616d0000b2731895052324f123becdd0d53d', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (6, 6) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (6, 'Lovesick Girls', 192, '/stream/audio_default.mp3', 71, 0.164, 0.433, 0.685, 0.878, '2020-10-02') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (6, 1) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (6, 6, 1, 5) ON CONFLICT DO NOTHING;
@@ -165,7 +1501,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (6, 6) ON CONFLICT DO NOTHI
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (7, 'Rihanna', 'https://i.scdn.co/image/ab6761610000e5ebcb565a8e684e3be458d329ac', 69619520, 'contact.7@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (7, 'Unapologetic (Deluxe)', 'Album', '2012-12-11', 'https://i.scdn.co/image/ab67616d0000b2736dee21d6cd1823e4d6231d37', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (7, 7) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (7, 'Loveeeeeee Song', 256, '/stream/audio_default.mp3', 78, 0.57, 0.574, 0.535, 0.776, '2012-12-11') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (7, 2) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (7, 3) ON CONFLICT DO NOTHING;
@@ -174,7 +1510,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (7, 7) ON CONFLICT DO NOTHI
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (8, 'SECRET NUMBER', 'https://i.scdn.co/image/ab6761610000e5eb4a0c6368275d8c1886b6f553', 264376, 'contact.8@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (8, 'Love, Maybe (A Business Proposal OST Part.5)', 'Single', '2022-03-14', 'https://i.scdn.co/image/ab67616d0000b2739ba0f46373fe18f26c31bb55', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (8, 8) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (8, 'Love, Maybe', 185, '/stream/audio_default.mp3', 59, 0.31, 0.465, 0.0, 0.258, '2022-03-14') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (8, 1) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (8, 8, 1, 1) ON CONFLICT DO NOTHING;
@@ -182,7 +1518,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (8, 8) ON CONFLICT DO NOTHI
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (9, 'Freddie Mercury', 'https://i.scdn.co/image/ab6761610000e5eb1052b77abd7f89485562d797', 7008639, 'contact.9@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (9, 'Mr Bad Guy (Special Edition)', 'Album', '2019-10-10', 'https://i.scdn.co/image/ab67616d0000b273eb9b9159e1ecb0614c2fc945', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (9, 9) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (9, 'Love Me Like There''s No Tomorrow - Special Edition', 225, '/stream/audio_default.mp3', 60, 0.974, 0.449, 0.701, 0.03, '2019-10-10') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (9, 2) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (9, 1) ON CONFLICT DO NOTHING;
@@ -195,7 +1531,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (6, 'future bass') ON CONFLICT 
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (7, 'edm') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (10, 'Love Is Gone (Acoustic)', 'Single', '2019-11-13', 'https://i.scdn.co/image/ab67616d0000b2733892a2a2c261629f34bb5536', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (10, 10) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (10, 'Love Is Gone - Acoustic', 176, '/stream/audio_default.mp3', 75, 0.161, 0.935, 0.283, 0.092, '2019-11-13') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (10, 4) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (10, 6) ON CONFLICT DO NOTHING;
@@ -204,7 +1540,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (10, 10) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (11, 'Selena Gomez & The Scene', 'https://i.scdn.co/image/469b6a74f5ddca9560e9f5137842e3772c8576c0', 10416656, 'contact.11@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (11, 'When The Sun Goes Down', 'Album', '2011-01-01', 'https://i.scdn.co/image/ab67616d0000b2731c8193de8d62b2ffa49a09db', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (11, 11) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (11, 'Love You Like A Love Song', 188, '/stream/audio_default.mp3', 84, 0.08, 0.113, 0.531, 0.352, '2011-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (11, 2) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (11, 6) ON CONFLICT DO NOTHING;
@@ -213,7 +1549,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (11, 11) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (12, 'Delaney Bailey', 'https://i.scdn.co/image/ab6761610000e5eb89415c6dbafb0a674deb07a5', 294480, 'contact.12@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (12, '(i would have followed you)', 'Album', '2022-12-16', 'https://i.scdn.co/image/ab67616d0000b27390cd5ef3c0d264115d0f32f0', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (12, 12) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (12, 'Love Letter From The Sea to The Shore', 191, '/stream/audio_default.mp3', 56, 0.856, 0.407, 0.616, 0.094, '2022-12-16') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (12, 1) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (12, 2) ON CONFLICT DO NOTHING;
@@ -223,7 +1559,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (8, 'indonesian indie') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (13, 'Reality Club Presents…', 'Album', '2023-05-26', 'https://i.scdn.co/image/ab67616d0000b273c607bcd8355681ab4fac2968', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (13, 13) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (13, 'Love Epiphany', 338, '/stream/audio_default.mp3', 58, 0.886, 0.549, 0.812, 0.357, '2023-05-26') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (13, 8) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (13, 13, 1, 10) ON CONFLICT DO NOTHING;
@@ -231,7 +1567,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (13, 13) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (14, 'Edison Lighthouse', 'https://i.scdn.co/image/ab6761610000e5ebd4463af78a41ea5b1bd481d7', 68513, 'contact.14@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (14, 'Love Grows (Where My Rosemary Goes) & Other Gems', 'Album', '1970-01-01', 'https://i.scdn.co/image/ab67616d0000b2739a0011cc9d31cf969b656905', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (14, 14) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (14, 'Love Grows (Where My Rosemary Goes)', 174, '/stream/audio_default.mp3', 72, 0.056, 0.637, 0.14, 0.941, '1970-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (14, 6) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (14, 5) ON CONFLICT DO NOTHING;
@@ -240,7 +1576,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (14, 14) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (15, 'Little Mix', 'https://i.scdn.co/image/ab6761610000e5eb08cd53940cbf5813ee5fe565', 12327089, 'contact.15@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (15, 'Get Weird (Expanded Edition)', 'Album', '2015-11-06', 'https://i.scdn.co/image/ab67616d0000b273c6e0126da7f7476dd752b926', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (15, 15) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (15, 'Love Me Like You', 197, '/stream/audio_default.mp3', 74, 0.627, 0.506, 0.957, 0.113, '2015-11-06') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (15, 7) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (15, 3) ON CONFLICT DO NOTHING;
@@ -249,7 +1585,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (15, 15) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (16, 'Beyoncé', 'https://i.scdn.co/image/ab6761610000e5eb7eaa373538359164b843f7c0', 41384984, 'contact.16@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (16, '4', 'Album', '2011-06-24', 'https://i.scdn.co/image/ab67616d0000b273ff5429125128b43572dbdccd', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (16, 16) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (16, 'Love On Top', 267, '/stream/audio_default.mp3', 74, 0.377, 0.776, 0.082, 0.903, '2011-06-24') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (16, 3) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (16, 6) ON CONFLICT DO NOTHING;
@@ -262,7 +1598,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (11, 'afro r&b') ON CONFLICT DO
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (12, 'afropop') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (17, 'CKay The First', 'Album', '2019-08-30', 'https://i.scdn.co/image/ab67616d0000b273405fdad252857e01dbced96a', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (17, 17) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (17, 'love nwantiti (ah ah ah)', 145, '/stream/audio_default.mp3', 76, 0.856, 0.049, 0.66, 0.831, '2019-08-30') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (17, 10) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (17, 9) ON CONFLICT DO NOTHING;
@@ -271,7 +1607,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (17, 17) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (18, 'Billie Eilish', 'https://i.scdn.co/image/ab6761610000e5eb4a21b4760d2ecb7b0dcdc8da', 119716727, 'contact.18@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (18, 'Giving you all you want and more', 'Compilation', '2021-10-05', 'https://i.scdn.co/image/ab67616d0000b27314dcfb7581bf14f6ce8e6d67', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (18, 18) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (18, 'lovely', 200, '/stream/audio_default.mp3', 61, 0.342, 0.064, 0.724, 0.476, '2021-10-05') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (18, 2) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (18, 8) ON CONFLICT DO NOTHING;
@@ -281,7 +1617,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (13, 'swedish pop') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (19, 'First Band On The Moon (Remastered)', 'Album', '1996-01-01', 'https://i.scdn.co/image/ab67616d0000b2730aac8ca880151fda470e91af', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (19, 19) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (19, 'Lovefool', 193, '/stream/audio_default.mp3', 83, 0.304, 0.996, 0.354, 0.468, '1996-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (19, 13) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (19, 19, 1, 7) ON CONFLICT DO NOTHING;
@@ -289,7 +1625,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (19, 19) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (20, 'BJ Lips', 'https://i.scdn.co/image/ab6761610000e5eb84848d263662f164b2d3d37c', 169951, 'contact.20@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (20, 'Cum n Cocaine', 'Single', '2021-08-02', 'https://i.scdn.co/image/ab67616d0000b273afe31aa89995bd44ba17457d', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (20, 20) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (20, 'Love Potions', 173, '/stream/audio_default.mp3', 78, 0.869, 0.277, 0.337, 0.778, '2021-08-02') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (20, 12) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (20, 1) ON CONFLICT DO NOTHING;
@@ -298,7 +1634,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (20, 20) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (21, 'LOVELI LORI', 'https://i.scdn.co/image/ab6761610000e5ebae07056ccd6afb4cb53deef4', 213521, 'contact.21@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (21, 'Love For You', 'Single', '2022-05-21', 'https://i.scdn.co/image/ab67616d0000b27374a94c8c0c6b1e9f38ff7cfe', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (21, 21) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (21, 'Love For You', 170, '/stream/audio_default.mp3', 76, 0.503, 0.347, 0.199, 0.106, '2022-05-21') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (21, 4) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (21, 2) ON CONFLICT DO NOTHING;
@@ -309,7 +1645,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (14, 'gqom') ON CONFLICT DO NOT
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (15, 'amapiano') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (22, 'Love - Amapiano Remix', 'Single', '2025-01-06', 'https://i.scdn.co/image/ab67616d0000b273d55bd2fde9c2a40387347326', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (22, 22) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (22, 'Love - Amapiano Remix', 347, '/stream/audio_default.mp3', 50, 0.167, 0.75, 0.727, 0.589, '2025-01-06') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (22, 14) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (22, 15) ON CONFLICT DO NOTHING;
@@ -317,7 +1653,7 @@ INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) 
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (22, 22) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (23, 'love nwantiti (feat. Dj Yo! & AX''EL) [Remix]', 'Single', '2021-09-09', 'https://i.scdn.co/image/ab67616d0000b27339bb326b58346f99b8692745', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (17, 23) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (23, 'love nwantiti (feat. Dj Yo! & AX''EL) - Remix', 188, '/stream/audio_default.mp3', 73, 0.263, 0.322, 0.19, 0.069, '2021-09-09') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (23, 11) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (23, 12) ON CONFLICT DO NOTHING;
@@ -326,7 +1662,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (17, 23) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (23, 'MeloMance', 'https://i.scdn.co/image/ab6761610000e5eba0e601a6151cf62e4ff2ced2', 397198, 'contact.23@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (24, 'Love, Maybe (A Business Proposal OST Special Track)', 'Single', '2022-02-18', 'https://i.scdn.co/image/ab67616d0000b27347d4fcf597d9aee2d5a34e8e', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (23, 24) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (24, 'Love, Maybe', 185, '/stream/audio_default.mp3', 68, 0.296, 0.488, 0.53, 0.674, '2022-02-18') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (24, 1) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (24, 2) ON CONFLICT DO NOTHING;
@@ -338,7 +1674,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (17, 'rock') ON CONFLICT DO NOT
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (18, 'glam rock') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (25, 'In Love', 'Compilation', '2017-02-10', 'https://i.scdn.co/image/ab67616d0000b2730bbcf6b2907196b95a3d0c38', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (24, 25) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (25, 'Love Of My Life', 217, '/stream/audio_default.mp3', 50, 0.898, 0.036, 0.62, 0.804, '2017-02-10') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (25, 17) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (25, 18) ON CONFLICT DO NOTHING;
@@ -347,7 +1683,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (24, 25) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (25, 'Lexz', 'https://i.scdn.co/image/ab6761610000e5ebd043eac149a5f3e13f18e742', 17057, 'contact.25@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (26, 'Love Story (Slowed & Reverb)', 'Single', '2022-11-10', 'https://i.scdn.co/image/ab67616d0000b273eb5476754e53fda9feb40458', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (25, 26) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (26, 'Love Story - Slowed & Reverb', 295, '/stream/audio_default.mp3', 58, 0.652, 0.464, 0.383, 0.762, '2022-11-10') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (26, 9) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (26, 17) ON CONFLICT DO NOTHING;
@@ -356,7 +1692,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (25, 26) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (26, 'Ellie Goulding', 'https://i.scdn.co/image/ab6761610000e5eb69266d088d2ab5c74e028863', 13272083, 'contact.26@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (27, 'Delirium (Deluxe)', 'Album', '2015-11-06', 'https://i.scdn.co/image/ab67616d0000b2736bdee14242f244d9d6ddf2fd', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (26, 27) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (27, 'Love Me Like You Do - From "Fifty Shades Of Grey"', 252, '/stream/audio_default.mp3', 78, 0.281, 0.127, 0.377, 0.875, '2015-11-06') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (27, 17) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (27, 18) ON CONFLICT DO NOTHING;
@@ -365,7 +1701,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (26, 27) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (27, 'Taylor Swift', 'https://i.scdn.co/image/ab6761610000e5ebe2e8e7ff002a4afda1c7147e', 146900170, 'contact.27@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (28, 'Fearless (Big Machine Radio Release Special)', 'Album', '2008-11-11', 'https://i.scdn.co/image/ab67616d0000b27360cb9332e8c8c7d8e50854b3', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (27, 28) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (28, 'Love Story', 236, '/stream/audio_default.mp3', 76, 0.942, 0.226, 0.336, 0.388, '2008-11-11') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (28, 8) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (28, 13) ON CONFLICT DO NOTHING;
@@ -374,7 +1710,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (27, 28) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (28, 'TV Girl', 'https://i.scdn.co/image/ab6761610000e5ebd80695211689a9c8c3fee3b0', 12789946, 'contact.28@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (29, 'French Exit', 'Album', '2014-06-05', 'https://i.scdn.co/image/ab67616d0000b273e1bc1af856b42dd7fdba9f84', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (28, 29) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (29, 'Lovers Rock', 213, '/stream/audio_default.mp3', 87, 0.437, 0.796, 0.638, 0.627, '2014-06-05') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (29, 5) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (29, 1) ON CONFLICT DO NOTHING;
@@ -385,7 +1721,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (19, 'hip hop') ON CONFLICT DO 
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (20, 'west coast hip hop') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (30, 'DAMN.', 'Album', '2017-04-14', 'https://i.scdn.co/image/ab67616d0000b2738b52c6b9bc4e43d873869699', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (29, 30) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (30, 'LOVE. FEAT. ZACARI.', 213, '/stream/audio_default.mp3', 83, 0.819, 0.361, 0.08, 0.761, '2017-04-14') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (30, 19) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (30, 20) ON CONFLICT DO NOTHING;
@@ -394,7 +1730,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (29, 30) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (30, 'Justin Bieber', 'https://i.scdn.co/image/ab6761610000e5ebaf20f7db5288bce9beede034', 85439022, 'contact.30@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (31, 'My World', 'Album', '2009-01-01', 'https://i.scdn.co/image/ab67616d0000b2737c3bb9f74a98f60bdda6c9a7', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (30, 31) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (31, 'Love Me', 191, '/stream/audio_default.mp3', 69, 0.443, 0.977, 0.215, 0.805, '2009-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (31, 13) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (31, 7) ON CONFLICT DO NOTHING;
@@ -403,7 +1739,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (30, 31) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (31, 'iKON', 'https://i.scdn.co/image/ab6761610000e5eb8eb5e57e526ceb14f06ea203', 3592128, 'contact.31@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (32, 'Return', 'Album', '2018-01-25', 'https://i.scdn.co/image/ab67616d0000b27348f4704427189fe1957d2871', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (31, 32) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (32, 'LOVE SCENARIO', 209, '/stream/audio_default.mp3', 70, 0.478, 0.619, 0.548, 0.969, '2018-01-25') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (32, 1) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (32, 32, 1, 1) ON CONFLICT DO NOTHING;
@@ -412,14 +1748,14 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (21, 'french pop') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (33, 'Mini World (Deluxe)', 'Album', '2014-11-17', 'https://i.scdn.co/image/ab67616d0000b273eb5b8d192f9b4dfc67e4834d', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (32, 33) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (33, 'Love Story - Version Orchestrale', 297, '/stream/audio_default.mp3', 66, 0.695, 0.716, 0.873, 0.557, '2014-11-17') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (33, 21) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (33, 33, 1, 14) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (32, 33) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (34, 'Fearless (Taylor''s Version)', 'Album', '2021-04-09', 'https://i.scdn.co/image/ab67616d0000b273a48964b5d9a3d6968ae3e0de', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (27, 34) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (34, 'Love Story (Taylor’s Version)', 235, '/stream/audio_default.mp3', 75, 0.395, 0.5, 0.103, 0.104, '2021-04-09') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (34, 7) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (34, 21) ON CONFLICT DO NOTHING;
@@ -428,7 +1764,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (27, 34) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (33, 'The Walters', 'https://i.scdn.co/image/ab6761610000e5ebb63c6c447c9c484c6e87d509', 1062601, 'contact.33@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (35, 'I Love You So', 'Single', '2014-11-28', 'https://i.scdn.co/image/ab67616d0000b2739214ff0109a0e062f8a6cf0f', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (33, 35) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (35, 'I Love You So', 160, '/stream/audio_default.mp3', 87, 0.811, 0.229, 0.067, 0.334, '2014-11-28') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (35, 4) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (35, 20) ON CONFLICT DO NOTHING;
@@ -437,7 +1773,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (33, 35) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (34, 'Mitski', 'https://i.scdn.co/image/ab6761610000e5eb4bdb3888818637acb71c4a13', 11124491, 'contact.34@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (36, 'The Land Is Inhospitable and So Are We', 'Album', '2023-09-15', 'https://i.scdn.co/image/ab67616d0000b27334f21d3047d85440dfa37f10', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (34, 36) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (36, 'My Love Mine All Mine', 137, '/stream/audio_default.mp3', 87, 0.887, 0.573, 0.793, 0.543, '2023-09-15') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (36, 10) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (36, 16) ON CONFLICT DO NOTHING;
@@ -447,7 +1783,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (22, 'indonesian pop') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (37, 'Love, Love & Love', 'Album', '2011-02-01', 'https://i.scdn.co/image/ab67616d0000b27318c5ae00eb3bee52e169d232', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (35, 37) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (37, 'Terlalu Lama', 247, '/stream/audio_default.mp3', 76, 0.66, 0.264, 0.017, 0.186, '2011-02-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (37, 22) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (37, 37, 1, 2) ON CONFLICT DO NOTHING;
@@ -455,7 +1791,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (35, 37) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (36, 'Monotone Gift', 'https://i.scdn.co/image/ab6742d3000053b7fa659bc7be038134fc2be2b3', 7, 'contact.36@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (38, 'รักคือ...', 'Single', '2004-01-01', 'https://i.scdn.co/image/ab6742d3000053b7fa659bc7be038134fc2be2b3', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (36, 38) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (38, 'รักคือ...', 220, '/stream/audio_default.mp3', 21, 0.601, 0.587, 0.603, 0.279, '2004-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (38, 6) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (38, 3) ON CONFLICT DO NOTHING;
@@ -464,7 +1800,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (36, 38) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (37, 'Imagine Dragons', 'https://i.scdn.co/image/ab6761610000e5ebab47d8dae2b24f5afe7f9d38', 58554322, 'contact.37@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (39, 'Love Of Mine', 'Single', '2022-09-01', 'https://i.scdn.co/image/ab6742d3000053b7b241b2f69a9086e1764cfc64', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (37, 39) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (39, 'Love Of Mine', 250, '/stream/audio_default.mp3', 19, 0.06, 0.719, 0.645, 0.008, '2022-09-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (39, 3) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (39, 21) ON CONFLICT DO NOTHING;
@@ -474,7 +1810,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (23, 'variété française') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (40, 'Loved Me Back to Life (Live in Quebec City)', 'Single', '2013-09-17', 'https://i.scdn.co/image/ab6742d3000053b74eedab8aa8b8c6ffc2fb8e32', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (38, 40) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (40, 'Loved Me Back to Life - Live in Quebec City', 235, '/stream/audio_default.mp3', 5, 0.895, 0.788, 0.124, 0.831, '2013-09-17') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (40, 23) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (40, 40, 1, 1) ON CONFLICT DO NOTHING;
@@ -482,7 +1818,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (38, 40) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (39, 'Sody', 'https://i.scdn.co/image/ab6761610000e5eb0a6460f02b3e357370501916', 175902, 'contact.39@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (41, 'Love''s a Waste (feat. James Smith) [Live at Metropolis, London, 2020]', 'Single', '2020-02-14', 'https://i.scdn.co/image/ab6742d3000053b76a19e49e9db09896ab125a07', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (39, 41) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (41, 'Love''s a Waste (feat. James Smith) - Live at Metropolis, London, 2020', 232, '/stream/audio_default.mp3', 3, 0.264, 0.669, 0.802, 0.682, '2020-02-14') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (41, 10) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (41, 5) ON CONFLICT DO NOTHING;
@@ -490,7 +1826,7 @@ INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) 
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (39, 41) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (42, 'Love Me Like You (Live from The Get Weird Tour: Wembley Arena, 2016)', 'Single', '2016-01-01', 'https://i.scdn.co/image/ab67616d0000b27354ae9131dca8aa2e14bc4309', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (15, 42) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (42, 'Love Me Like You - Live from The Get Weird Tour: Wembley Arena, 2016', 295, '/stream/audio_default.mp3', 4, 0.796, 0.03, 0.688, 0.087, '2016-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (42, 19) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (42, 13) ON CONFLICT DO NOTHING;
@@ -500,7 +1836,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (24, 'grunge') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (43, 'Love Buzz (1992/Live at Reading)', 'Single', '2009-01-01', 'https://i.scdn.co/image/ab6742d3000053b73999ef916f6bb61b2a94bb33', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (40, 43) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (43, 'Love Buzz - Live At Reading, 1992', 231, '/stream/audio_default.mp3', 11, 0.62, 0.16, 0.905, 0.27, '2009-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (43, 24) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (43, 17) ON CONFLICT DO NOTHING;
@@ -512,7 +1848,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (26, 'christian') ON CONFLICT D
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (27, 'christian pop') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (44, 'Love Like You (feat. Kenzie Walker) [Live]', 'Single', '2020-07-31', 'https://i.scdn.co/image/ab6742d3000053b787d17907544797de345be1c5', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (41, 44) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (44, 'Love Like You (feat. Kenzie Walker) - Live', 282, '/stream/audio_default.mp3', 0, 0.017, 0.578, 0.321, 0.827, '2020-07-31') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (44, 26) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (44, 25) ON CONFLICT DO NOTHING;
@@ -523,7 +1859,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (28, 'alternative r&b') ON CONF
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (29, 'indie soul') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (45, 'Bird''s Eye', 'Album', '2024-08-09', 'https://i.scdn.co/image/ab67616d0000b273ef985ba96e76a9574cc68a30', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (42, 45) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (45, 'Love Me Not', 213, '/stream/audio_default.mp3', 89, 0.832, 0.226, 0.646, 0.636, '2024-08-09') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (45, 29) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (45, 28) ON CONFLICT DO NOTHING;
@@ -534,7 +1870,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (30, 'ambient folk') ON CONFLIC
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (31, 'downtempo') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (46, 'lovers'' carvings (Live Acoustic)', 'Single', '2009-06-22', 'https://i.scdn.co/image/ab6742d3000053b71f35755543c12c138cf742a2', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (43, 46) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (46, 'lovers’ carvings - Live Acoustic', 170, '/stream/audio_default.mp3', 7, 0.185, 0.327, 0.116, 0.261, '2009-06-22') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (46, 30) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (46, 31) ON CONFLICT DO NOTHING;
@@ -544,7 +1880,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (32, 'acid jazz') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (47, 'Love Foolosophy (Live in Verona)', 'Single', '2002-01-01', 'https://i.scdn.co/image/ab6742d3000053b7e1cddc4aaa85f30ea2a134f1', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (44, 47) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (47, 'Love Foolosophy - Live in Verona', 462, '/stream/audio_default.mp3', 17, 0.25, 0.362, 0.384, 0.553, '2002-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (47, 32) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (47, 47, 1, 1) ON CONFLICT DO NOTHING;
@@ -553,7 +1889,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (33, 'big room') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (48, 'Love Me Anyway', 'Single', '2022-07-22', 'https://i.scdn.co/image/ab6742d3000053b7ac0427bdec757e1e00ba5775', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (45, 48) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (48, 'Love Me Anyway', 163, '/stream/audio_default.mp3', 2, 0.793, 0.215, 0.713, 0.675, '2022-07-22') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (48, 33) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (48, 48, 1, 1) ON CONFLICT DO NOTHING;
@@ -562,7 +1898,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (34, 'celtic rock') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (49, 'Love to Love You (Live at Royal Albert Hall)', 'Single', '2000-01-01', 'https://i.scdn.co/image/ab6742d3000053b7677908f7deca10b5e20d29bf', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (46, 49) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (49, 'Love to Love You - Live at Royal Albert Hall', 241, '/stream/audio_default.mp3', 6, 0.804, 0.898, 0.654, 0.764, '2000-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (49, 34) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (49, 49, 1, 1) ON CONFLICT DO NOTHING;
@@ -572,13 +1908,13 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (35, 'rockabilly') ON CONFLICT 
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (36, 'rock and roll') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (50, 'Love Me (Live On The Ed Sullivan Show, October 28, 1956)', 'Single', '1956-10-28', 'https://i.scdn.co/image/ab6742d3000053b71d183a42e910f224ece8566f', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (47, 50) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (50, 'Love Me - Live On The Ed Sullivan Show, October 28, 1956', 188, '/stream/audio_default.mp3', 6, 0.536, 0.83, 0.283, 0.515, '1956-10-28') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (50, 36) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (50, 35) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (50, 50, 1, 1) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (47, 50) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (51, 'Fearless (Taylor’s Version)', 241, '/stream/audio_default.mp3', 73, 0.545, 0.07, 0.082, 0.397, '2021-04-09') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (51, 5) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (51, 6) ON CONFLICT DO NOTHING;
@@ -588,7 +1924,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (37, 'jazz rap') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (51, 'Modal Soul', 'Album', '2005-11-11', 'https://i.scdn.co/image/ab67616d0000b273912cc8fe2e9a53d328757a41', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (48, 51) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (52, 'Feather (feat. Cise Starr & Akin from CYNE)', 175, '/stream/audio_default.mp3', 68, 0.933, 0.782, 0.392, 0.727, '2005-11-11') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (52, 37) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (51, 52, 1, 1) ON CONFLICT DO NOTHING;
@@ -598,7 +1934,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (38, 'indonesian rock') ON CONF
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (39, 'indorock') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (52, 'Membangun & Menghancurkan', 'Album', '2024-08-30', 'https://i.scdn.co/image/ab67616d0000b273c800b90e2092a5328f699117', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (49, 52) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (53, 'Arteri', 270, '/stream/audio_default.mp3', 67, 0.024, 0.482, 0.175, 0.363, '2024-08-30') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (53, 38) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (53, 8) ON CONFLICT DO NOTHING;
@@ -609,7 +1945,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (40, 'reggaeton') ON CONFLICT D
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (41, 'latin') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (53, 'X (feat. Maluma & Ozuna) [Remix]', 'Single', '2018-06-29', 'https://i.scdn.co/image/ab67616d0000b2734b1734e4d48786063992ce04', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (50, 53) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (54, 'X (feat. Maluma & Ozuna) - Remix', 236, '/stream/audio_default.mp3', 80, 0.853, 0.813, 0.756, 0.155, '2018-06-29') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (54, 40) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (54, 41) ON CONFLICT DO NOTHING;
@@ -618,7 +1954,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (50, 54) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (51, 'Hindia', 'https://i.scdn.co/image/ab6761610000e5eb8022c4a018990cd93a9ddfe0', 11551080, 'contact.51@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (54, 'Lagipula Hidup Akan Berakhir', 'Album', '2023-07-21', 'https://i.scdn.co/image/ab67616d0000b27349bdf0e981cbba25d48b44e0', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (51, 54) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (55, 'Berdansalah, Karir Ini Tak Ada Artinya', 224, '/stream/audio_default.mp3', 75, 0.651, 0.45, 0.112, 0.669, '2023-07-21') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (55, 8) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (55, 22) ON CONFLICT DO NOTHING;
@@ -626,7 +1962,7 @@ INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) 
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (51, 55) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (55, 'Tarian Penghancur Raya', 'Single', '2019-11-08', 'https://i.scdn.co/image/ab67616d0000b273bf3e3b7cec2030618845107b', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (49, 55) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (56, 'Tarian Penghancur Raya', 240, '/stream/audio_default.mp3', 63, 0.954, 0.766, 0.357, 0.758, '2019-11-08') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (56, 22) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (56, 8) ON CONFLICT DO NOTHING;
@@ -635,35 +1971,35 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (49, 56) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (52, 'Sabrina Carpenter', 'https://i.scdn.co/image/ab6761610000e5eb78e45cfa4697ce3c437cb455', 27207975, 'contact.52@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (56, 'Manchild', 'Single', '2025-06-05', 'https://i.scdn.co/image/ab67616d0000b273062c6573009fdebd43de443b', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (52, 56) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (57, 'Manchild', 213, '/stream/audio_default.mp3', 86, 0.229, 0.359, 0.001, 0.434, '2025-06-05') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (57, 3) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (56, 57, 1, 1) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (52, 57) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (57, 'emails i can''t send', 'Album', '2022-07-15', 'https://i.scdn.co/image/ab67616d0000b273700f7bf79c9f063ad0362bdf', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (52, 57) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (58, 'Nonsense', 163, '/stream/audio_default.mp3', 84, 0.832, 0.157, 0.594, 0.237, '2022-07-15') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (58, 3) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (57, 58, 1, 9) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (52, 58) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (58, 'Espresso', 'Single', '2024-04-12', 'https://i.scdn.co/image/ab67616d0000b273659cd4673230913b3918e0d5', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (52, 58) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (59, 'Espresso', 175, '/stream/audio_default.mp3', 85, 0.122, 0.581, 0.599, 0.792, '2024-04-12') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (59, 3) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (58, 59, 1, 1) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (52, 59) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (59, 'Feather (Sped Up)', 'Single', '2023-08-04', 'https://i.scdn.co/image/ab67616d0000b27320bc45d92ee8e4e2097ed635', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (52, 59) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (60, 'Feather - Sped Up', 153, '/stream/audio_default.mp3', 51, 0.403, 0.321, 0.243, 0.824, '2023-08-04') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (60, 3) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (59, 60, 1, 2) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (52, 60) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (60, 'Abdi Lara Insani', 'Album', '2022-04-22', 'https://i.scdn.co/image/ab67616d0000b273471f8a4822a3ca180612d006', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (49, 60) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (61, 'Gugatan Rakyat Semesta', 266, '/stream/audio_default.mp3', 62, 0.091, 0.259, 0.408, 0.256, '2022-04-22') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (61, 22) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (61, 38) ON CONFLICT DO NOTHING;
@@ -671,7 +2007,7 @@ INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) 
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (49, 61) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (61, 'Short n'' Sweet', 'Album', '2024-08-23', 'https://i.scdn.co/image/ab67616d0000b273fd8d7a8d96871e791cb1f626', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (52, 61) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (62, 'Taste', 157, '/stream/audio_default.mp3', 87, 0.06, 0.636, 0.709, 0.759, '2024-08-23') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (62, 3) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (61, 62, 1, 1) ON CONFLICT DO NOTHING;
@@ -679,7 +2015,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (52, 62) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (53, 'Lost Sky', 'https://i.scdn.co/image/ab6761610000e5ebc5a27c631d60a8b0c99eff59', 353718, 'contact.53@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (62, 'Fearless Pt. II', 'Single', '2017-12-23', 'https://i.scdn.co/image/ab67616d0000b273df7c14e866cf14a259563ca1', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (53, 62) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (63, 'Fearless Pt. II', 194, '/stream/audio_default.mp3', 68, 0.834, 0.771, 0.504, 0.864, '2017-12-23') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (63, 21) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (63, 2) ON CONFLICT DO NOTHING;
@@ -687,20 +2023,20 @@ INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) 
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (53, 63) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (63, 'Please Please Please', 'Single', '2024-06-06', 'https://i.scdn.co/image/ab67616d0000b273de84adf0e48248ea2d769c3e', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (52, 63) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (64, 'Please Please Please', 186, '/stream/audio_default.mp3', 79, 0.058, 0.27, 0.247, 0.001, '2024-06-06') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (64, 3) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (63, 64, 1, 1) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (52, 64) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (64, 'Peradaban', 'Single', '2018-07-13', 'https://i.scdn.co/image/ab67616d0000b273a8701a073f15323f29e39d56', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (49, 64) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (65, 'Peradaban', 339, '/stream/audio_default.mp3', 73, 0.729, 0.947, 0.831, 0.296, '2018-07-13') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (65, 39) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (65, 8) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (64, 65, 1, 1) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (49, 65) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (66, 'Bintang Massa Aksi', 214, '/stream/audio_default.mp3', 58, 0.746, 0.071, 0.744, 0.78, '2022-04-22') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (66, 39) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (66, 8) ON CONFLICT DO NOTHING;
@@ -709,7 +2045,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (49, 66) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (54, 'Wale', 'https://i.scdn.co/image/ab6761610000e5eb273bdadffd7138dcbd7b79c3', 4302565, 'contact.54@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (65, 'The Gifted', 'Album', '2013-06-25', 'https://i.scdn.co/image/ab67616d0000b273af4a0e9eaf7a6f4ecaed385f', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (54, 65) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (67, 'Bad (feat. Rihanna) - Remix', 238, '/stream/audio_default.mp3', 80, 0.407, 0.147, 0.428, 0.401, '2013-06-25') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (67, 34) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (67, 9) ON CONFLICT DO NOTHING;
@@ -717,7 +2053,7 @@ INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) 
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (54, 67) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (66, 'Berita Kehilangan', 'Single', '2018-08-10', 'https://i.scdn.co/image/ab67616d0000b2732692d77a74b0da1756009e98', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (49, 66) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (68, 'Berita Kehilangan', 259, '/stream/audio_default.mp3', 66, 0.767, 0.678, 0.038, 0.021, '2018-08-10') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (68, 38) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (68, 39) ON CONFLICT DO NOTHING;
@@ -725,50 +2061,50 @@ INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) 
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (49, 68) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (67, 'Lagipula Hidup Akan Berakhir', 'Album', '2023-07-07', 'https://i.scdn.co/image/ab67616d0000b273d58121433ea3e6c4822ac494', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (51, 67) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (69, 'Cincin', 266, '/stream/audio_default.mp3', 83, 0.142, 0.182, 0.764, 0.923, '2023-07-07') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (69, 8) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (69, 22) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (67, 69, 1, 9) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (51, 69) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (70, 'Kita Ke Sana', 282, '/stream/audio_default.mp3', 78, 0.684, 0.633, 0.244, 0.747, '2023-07-21') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (70, 8) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (70, 22) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (54, 70, 2, 11) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (51, 70) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (71, 'Bed Chem', 171, '/stream/audio_default.mp3', 83, 0.124, 0.254, 0.29, 0.08, '2024-08-23') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (71, 3) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (61, 71, 1, 6) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (52, 71) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (68, 'Menari Dengan Bayangan', 'Album', '2019-11-29', 'https://i.scdn.co/image/ab67616d0000b273d623688488865906052ef96b', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (51, 68) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (72, 'Secukupnya', 205, '/stream/audio_default.mp3', 77, 0.647, 0.661, 0.153, 0.888, '2019-11-29') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (72, 22) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (72, 8) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (68, 72, 1, 8) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (51, 72) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (73, 'Rumah Ke Rumah', 277, '/stream/audio_default.mp3', 82, 0.057, 0.905, 0.967, 0.931, '2019-11-29') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (73, 8) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (73, 22) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (68, 73, 1, 12) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (51, 73) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (74, 'Cincin', 266, '/stream/audio_default.mp3', 57, 0.64, 0.119, 0.36, 0.15, '2023-07-21') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (74, 22) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (74, 8) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (54, 74, 1, 9) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (51, 74) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (75, 'Evaluasi', 194, '/stream/audio_default.mp3', 79, 0.03, 0.398, 0.453, 0.208, '2019-11-29') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (75, 22) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (75, 8) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (68, 75, 1, 15) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (51, 75) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (76, 'Nina', 277, '/stream/audio_default.mp3', 80, 0.673, 0.096, 0.593, 0.108, '2024-08-30') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (76, 8) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (76, 39) ON CONFLICT DO NOTHING;
@@ -777,7 +2113,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (49, 76) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (55, 'Bazzi', 'https://i.scdn.co/image/ab6761610000e5eb901476fdd0fd274362d445db', 5512461, 'contact.55@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (69, 'Beautiful (feat. Camila Cabello)', 'Single', '2018-08-02', 'https://i.scdn.co/image/ab67616d0000b27305559264ebef3889709826cf', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (55, 69) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (77, 'Beautiful (feat. Camila Cabello)', 180, '/stream/audio_default.mp3', 74, 0.853, 0.761, 0.133, 0.394, '2018-08-02') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (77, 1) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (77, 21) ON CONFLICT DO NOTHING;
@@ -788,7 +2124,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (42, 'malay') ON CONFLICT DO NO
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (43, 'malay pop') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (70, 'Melly', 'Album', '1999-11-26', 'https://i.scdn.co/image/ab67616d0000b273a6bce4cd942caea821e1ba76', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (56, 70) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (78, 'Jika (feat. Ari Lasso)', 324, '/stream/audio_default.mp3', 63, 0.184, 0.002, 0.888, 0.346, '1999-11-26') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (78, 42) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (78, 22) ON CONFLICT DO NOTHING;
@@ -797,7 +2133,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (56, 78) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (57, 'Judika', 'https://i.scdn.co/image/ab6761610000e5eb182818f4b3724670f8c5e9f5', 7004398, 'contact.57@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (71, 'Judika Mencari Cinta', 'Album', '2013-05-13', 'https://i.scdn.co/image/ab67616d0000b273a37335873ed72dc558ec6889', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (57, 71) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (79, 'Sampai Akhir (feat. DuMa)', 205, '/stream/audio_default.mp3', 71, 0.47, 0.614, 0.509, 0.826, '2013-05-13') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (79, 42) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (79, 43) ON CONFLICT DO NOTHING;
@@ -806,7 +2142,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (57, 79) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (58, 'Jennifer Lopez', 'https://i.scdn.co/image/ab6761610000e5eb48e24f77a03f78a00cfda0bb', 13748794, 'contact.58@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (72, 'Love?', 'Album', '2011-04-29', 'https://i.scdn.co/image/ab67616d0000b273d7b2aa3834b82b1cbe899a48', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (58, 72) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (80, 'On The Floor', 284, '/stream/audio_default.mp3', 82, 0.536, 0.61, 0.583, 0.73, '2011-04-29') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (80, 36) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (80, 20) ON CONFLICT DO NOTHING;
@@ -815,7 +2151,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (58, 80) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (59, 'Al-Ghazali', 'https://i.scdn.co/image/ab67616d0000b273c2737e0f45f4cc433ba69b11', 68752, 'contact.59@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (73, 'Kesayanganku (feat. Chelsea Shania) [From "Samudra Cinta"]', 'Single', '2020-01-10', 'https://i.scdn.co/image/ab67616d0000b273c2737e0f45f4cc433ba69b11', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (59, 73) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (81, 'Kesayanganku (feat. Chelsea Shania) [From "Samudra Cinta"]', 242, '/stream/audio_default.mp3', 67, 0.923, 0.377, 0.777, 0.864, '2020-01-10') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (81, 22) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (73, 81, 1, 1) ON CONFLICT DO NOTHING;
@@ -823,7 +2159,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (59, 81) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (60, 'The Weeknd', 'https://i.scdn.co/image/ab6761610000e5eb9e528993a2820267b97f6aae', 114242793, 'contact.60@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (74, 'Hurry Up Tomorrow', 'Album', '2025-01-31', 'https://i.scdn.co/image/ab67616d0000b273982320da137d0de34410df61', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (60, 74) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (82, 'Timeless (feat Playboi Carti)', 256, '/stream/audio_default.mp3', 91, 0.597, 0.565, 0.583, 0.299, '2025-01-31') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (82, 10) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (82, 35) ON CONFLICT DO NOTHING;
@@ -833,7 +2169,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (44, 'indonesian jazz') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (75, 'Titik Nadir', 'Single', '2025-06-24', 'https://i.scdn.co/image/ab67616d0000b2735cfcb24701901b0e53ce4fae', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (61, 75) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (83, 'Titik Nadir (feat. Monita Tahalea)', 245, '/stream/audio_default.mp3', 73, 0.647, 0.931, 0.833, 0.891, '2025-06-24') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (83, 44) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (83, 22) ON CONFLICT DO NOTHING;
@@ -842,7 +2178,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (61, 83) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (62, 'Lana Del Rey', 'https://i.scdn.co/image/ab6761610000e5ebb99cacf8acd5378206767261', 52502926, 'contact.62@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (76, 'Did you know that there''s a tunnel under Ocean Blvd', 'Album', '2023-03-24', 'https://i.scdn.co/image/ab67616d0000b27359ae8cf65d498afdd5585634', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (62, 76) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (84, 'Margaret (feat. Bleachers)', 339, '/stream/audio_default.mp3', 81, 0.764, 0.278, 0.586, 0.179, '2023-03-24') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (84, 29) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (84, 26) ON CONFLICT DO NOTHING;
@@ -851,7 +2187,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (62, 84) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (63, 'Clean Bandit', 'https://i.scdn.co/image/ab6761610000e5eb70d80b8ab8e193aef64223ec', 6004496, 'contact.63@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (77, 'What Is Love? (Deluxe Edition)', 'Album', '2018-11-30', 'https://i.scdn.co/image/ab67616d0000b2735c66e925d8fe4c92ebfb49ed', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (63, 77) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (85, 'Rockabye (feat. Sean Paul & Anne-Marie)', 251, '/stream/audio_default.mp3', 79, 0.455, 0.404, 0.908, 0.942, '2018-11-30') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (85, 15) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (85, 30) ON CONFLICT DO NOTHING;
@@ -860,7 +2196,7 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (63, 85) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (64, 'Daniel Caesar', 'https://i.scdn.co/image/ab6761610000e5ebe4d94f7cbebb17504c25d419', 11472410, 'contact.64@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (78, 'Freudian', 'Album', '2017-08-25', 'https://i.scdn.co/image/ab67616d0000b27305ac3e026324594a31fad7fb', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (64, 78) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (86, 'Best Part (feat. H.E.R.)', 209, '/stream/audio_default.mp3', 86, 0.55, 0.965, 0.494, 0.149, '2017-08-25') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (86, 26) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (86, 19) ON CONFLICT DO NOTHING;
@@ -874,7 +2210,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (48, 'koplo') ON CONFLICT DO NO
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (49, 'funkot') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (79, 'Calon Mantu Idaman (feat. Ncum)', 'Single', '2025-05-16', 'https://i.scdn.co/image/ab67616d0000b2732120cd815e807ae193648e7e', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (65, 79) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (87, 'Calon Mantu Idaman (feat. Ncum)', 189, '/stream/audio_default.mp3', 77, 0.419, 0.791, 0.587, 0.701, '2025-05-16') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (87, 45) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (87, 49) ON CONFLICT DO NOTHING;
@@ -882,7 +2218,7 @@ INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) 
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (65, 87) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (80, 'BIRDS OF A FEATHER (ISOLATED VOCALS/Visualizer)', 'Single', '2024-09-25', 'https://i.scdn.co/image/ab6742d3000053b73caba4166f723ff8af50d77c', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (18, 80) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (88, 'BIRDS OF A FEATHER - ISOLATED VOCALS/Visualizer', 210, '/stream/audio_default.mp3', 32, 0.499, 0.879, 0.798, 0.54, '2024-09-25') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (88, 43) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (88, 42) ON CONFLICT DO NOTHING;
@@ -890,14 +2226,14 @@ INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) 
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (18, 88) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (81, 'Toss the Feathers (Live at Royal Albert Hall)', 'Single', '2000-01-01', 'https://i.scdn.co/image/ab6742d3000053b752720d68948bbe137e18bed8', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (46, 81) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (89, 'Toss the Feathers - Live at Royal Albert Hall', 198, '/stream/audio_default.mp3', 7, 0.673, 0.946, 0.903, 0.884, '2000-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (89, 34) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (81, 89, 1, 1) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (46, 89) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (82, 'To Love You More feat. Taro Hakase (Live in Memphis, 1997)', 'Single', '1998-01-01', 'https://i.scdn.co/image/ab6742d3000053b71b62d7d6dcc92bb6dd39efb5', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (38, 82) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (90, 'To Love You More feat. Taro Hakase (Live in Memphis, 1997)', 311, '/stream/audio_default.mp3', 18, 0.758, 0.484, 0.106, 0.197, '1998-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (90, 23) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (82, 90, 1, 1) ON CONFLICT DO NOTHING;
@@ -908,7 +2244,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (51, 'gospel') ON CONFLICT DO N
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (52, 'pop worship') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (83, 'Dancing (feat. Joe L Barnes & Tiffany Hudson) [Live]', 'Single', '2022-03-04', 'https://i.scdn.co/image/ab6742d3000053b7f9d7a4f85a5d3eebc67e3a72', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (66, 83) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (91, 'Dancing (feat. Joe L Barnes & Tiffany Hudson) - Live', 304, '/stream/audio_default.mp3', 8, 0.979, 0.081, 0.348, 0.277, '2022-03-04') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (91, 50) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (91, 26) ON CONFLICT DO NOTHING;
@@ -916,7 +2252,7 @@ INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) 
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (66, 91) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (84, 'Easy (feat. Jonsal Barrientes) [Live]', 'Single', '2024-07-12', 'https://i.scdn.co/image/ab6742d3000053b7012dd917a0314e7b5e8d0dc6', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (66, 84) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (92, 'Easy (feat. Jonsal Barrientes) - Live', 317, '/stream/audio_default.mp3', 9, 0.323, 0.384, 0.951, 0.03, '2024-07-12') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (92, 51) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (92, 26) ON CONFLICT DO NOTHING;
@@ -929,7 +2265,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (55, 'screamo') ON CONFLICT DO 
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (56, 'post-hardcore') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (85, 'liMOusIne (feat. AURORA) [Live from Japan]', 'Single', '2024-09-27', 'https://i.scdn.co/image/ab6742d3000053b74049f1eb089da6e39e713780', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (67, 85) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (93, 'liMOusIne (feat. AURORA) - Live from Japan', 310, '/stream/audio_default.mp3', 21, 0.293, 0.837, 0.106, 0.635, '2024-09-27') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (93, 55) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (93, 56) ON CONFLICT DO NOTHING;
@@ -940,7 +2276,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (57, 'trap latino') ON CONFLICT
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (58, 'urbano latino') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (86, 'MIA (feat. Drake)', 'Single', '2020-01-01', 'https://i.scdn.co/image/ab6742d3000053b733af09e1cbe925d1c71adf24', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (68, 86) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (94, 'MIA (feat. Drake)', 217, '/stream/audio_default.mp3', 35, 0.833, 0.961, 0.42, 0.619, '2020-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (94, 41) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (94, 57) ON CONFLICT DO NOTHING;
@@ -949,14 +2285,14 @@ INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (68, 94) ON CONFLICT DO NOT
 INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT, ARTIST_EMAIL) VALUES (69, 'BTS', 'https://i.scdn.co/image/ab6761610000e5ebd642648235ebf3460d2d1f6a', 81487075, 'contact.69@label.com') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (87, 'IDOL (feat. Nicki Minaj)', 'Single', '2018-09-07', 'https://i.scdn.co/image/ab6742d3000053b79dbc80140da729e739e98acf', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (69, 87) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (95, 'IDOL (feat. Nicki Minaj)', 286, '/stream/audio_default.mp3', 24, 0.372, 0.285, 0.37, 0.81, '2018-09-07') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (95, 1) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (87, 95, 1, 1) ON CONFLICT DO NOTHING;
 INSERT INTO CREATE_SONGS (ARTIST_ID, SONG_ID) VALUES (69, 95) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (88, 'Runnin (feat. Brandon Lake) [Live]', 'Single', '2023-05-19', 'https://i.scdn.co/image/ab6742d3000053b75173ea02ba931154d48b2f13', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (66, 88) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (96, 'Runnin (feat. Brandon Lake) - Live', 376, '/stream/audio_default.mp3', 21, 0.966, 0.711, 0.966, 0.363, '2023-05-19') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (96, 52) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (96, 50) ON CONFLICT DO NOTHING;
@@ -970,7 +2306,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (62, 'taiwanese pop') ON CONFLI
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (63, 'gufeng') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (89, '别勉强 (feat. Eric 周兴哲)', 'Single', '2020-06-29', 'https://i.scdn.co/image/ab6742d3000053b7df2465199311a9818648a284', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (70, 89) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (97, '别勉强 (feat. Eric 周兴哲)', 278, '/stream/audio_default.mp3', 7, 0.22, 0.999, 0.039, 0.382, '2020-06-29') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (97, 59) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (97, 60) ON CONFLICT DO NOTHING;
@@ -980,7 +2316,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (64, 'hyperpop') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (90, 'illusion hills feat KAIRO - so bad (official music video)', 'Single', '2025-02-26', 'https://i.scdn.co/image/ab6742d3000053b79f163b0677aa13df4ea9896f', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (71, 90) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (98, 'illusion hills feat KAIRO - so bad (official music video)', 182, '/stream/audio_default.mp3', 1, 0.672, 0.321, 0.612, 0.055, '2025-02-26') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (98, 64) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (90, 98, 1, 1) ON CONFLICT DO NOTHING;
@@ -989,7 +2325,7 @@ INSERT INTO ARTISTS (ARTIST_ID, ARTIST_NAME, ARTIST_PFP, MONTHLY_LISTENER_COUNT,
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (65, 'j-pop') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (91, 'SH♡TGUN feat. JIMMY, WEESA, ぺろぺろきゃんでー', 'Single', '2024-12-27', 'https://i.scdn.co/image/ab6742d3000053b75606a26f0dd447d668dbb5f8', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (72, 91) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (99, 'SH♡TGUN feat. JIMMY, WEESA, ぺろぺろきゃんでー', 184, '/stream/audio_default.mp3', 3, 0.178, 0.393, 0.502, 0.683, '2024-12-27') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (99, 65) ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS_SONGS (COLLECTION_ID, SONG_ID, NOMOR_DISC, NOMOR_TRACK) VALUES (91, 99, 1, 1) ON CONFLICT DO NOTHING;
@@ -1002,7 +2338,7 @@ INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (69, 'funk rock') ON CONFLICT D
 INSERT INTO GENRES (GENRE_ID, GENRE_NAME) VALUES (70, 'nu jazz') ON CONFLICT DO NOTHING;
 INSERT INTO COLLECTIONS (COLLECTION_ID, COLLECTION_TITLE, COLLECTION_TYPE, COLLECTION_RELEASE_DATE, COLLECTION_COVER, ISPRERELEASE) VALUES (92, 'Snarky Puppy feat. KNOWER - One Hope', 'Single', '2016-01-01', 'https://i.scdn.co/image/ab6742d3000053b7b7342edecc85f4756061b05d', FALSE) ON CONFLICT DO NOTHING;
 INSERT INTO RELEASES (ARTIST_ID, COLLECTION_ID) VALUES (73, 92) ON CONFLICT DO NOTHING;
-INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE) 
+INSERT INTO SONGS (SONG_ID, SONG_TITLE, SONG_DURATION, SONG_FILE, POPULARITY, VALENCE, ACCOUSTICNESS, DANCEABILITY, ENERGY, SONG_RELEASE_DATE)
                   VALUES (100, 'Snarky Puppy feat. KNOWER - One Hope', 201, '/stream/audio_default.mp3', 8, 0.732, 0.154, 0.066, 0.099, '2016-01-01') ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (100, 66) ON CONFLICT DO NOTHING;
 INSERT INTO SONGS_GENRES (SONG_ID, GENRE_ID) VALUES (100, 70) ON CONFLICT DO NOTHING;
@@ -4015,3 +5351,1944 @@ SELECT setval('seq_tours_id', (SELECT MAX(TOUR_ID) FROM TOURS));
 SELECT setval('seq_listens_id', (SELECT MAX(LISTEN_ID) FROM LISTENS));
 SELECT setval('seq_add_songs_playlist_id', (SELECT MAX(ADD_SONG_PL_ID) FROM ADD_SONGS_PLAYLISTS));
 COMMIT;
+
+
+DROP VIEW IF EXISTS VIEW_ALBUM_TRACKLIST CASCADE;
+
+CREATE OR REPLACE VIEW VIEW_ALBUM_TRACKLIST AS
+WITH
+-- 1) Aggregate Album Artists (because some albums have multiple artists)
+ALBUM_ARTISTS AS (
+    SELECT
+        R.COLLECTION_ID,
+        STRING_AGG(DISTINCT A.ARTIST_NAME, ', ' ORDER BY A.ARTIST_NAME) AS ALBUM_ARTISTS
+    FROM RELEASES R
+    JOIN ARTISTS A ON R.ARTIST_ID = A.ARTIST_ID
+    GROUP BY R.COLLECTION_ID
+),
+
+-- 2) Aggregate Song Artists
+SONG_ARTISTS AS (
+    SELECT
+        CRS.SONG_ID,
+        STRING_AGG(DISTINCT A.ARTIST_NAME, ', ' ORDER BY A.ARTIST_NAME) AS SONG_ARTISTS
+    FROM CREATE_SONGS CRS
+    JOIN ARTISTS A ON CRS.ARTIST_ID = A.ARTIST_ID
+    GROUP BY CRS.SONG_ID
+)
+
+SELECT
+    C.COLLECTION_ID,
+    C.COLLECTION_TITLE,
+    AA.ALBUM_ARTISTS,
+
+    CS.NOMOR_DISC,
+    CS.NOMOR_TRACK,
+    S.SONG_TITLE,
+
+    SA.SONG_ARTISTS,
+
+    TO_CHAR((S.SONG_DURATION || ' second')::interval, 'MI:SS') AS DURATION
+
+FROM COLLECTIONS C
+JOIN ALBUM_ARTISTS AA ON C.COLLECTION_ID = AA.COLLECTION_ID
+
+JOIN COLLECTIONS_SONGS CS ON C.COLLECTION_ID = CS.COLLECTION_ID
+JOIN SONGS S ON CS.SONG_ID = S.SONG_ID
+LEFT JOIN SONG_ARTISTS SA ON SA.SONG_ID = S.SONG_ID
+
+ORDER BY
+    C.COLLECTION_ID,
+    CS.NOMOR_DISC,
+    CS.NOMOR_TRACK;
+
+
+    DROP VIEW IF EXISTS VIEW_ARTIST_PROFILE_HEADER CASCADE;
+
+    CREATE OR REPLACE VIEW VIEW_ARTIST_PROFILE_HEADER AS
+    WITH TOTAL_ALBUMS AS (
+        SELECT ARTIST_ID, COUNT(*) AS TOTAL_ALBUMS
+        FROM RELEASES
+        GROUP BY ARTIST_ID
+    ),
+    TOTAL_TRACKS AS (
+        SELECT ARTIST_ID, COUNT(*) AS TOTAL_TRACKS
+        FROM CREATE_SONGS
+        GROUP BY ARTIST_ID
+    )
+    SELECT
+        A.ARTIST_ID,
+        A.ARTIST_NAME,
+        A.BIO,
+        A.ARTIST_PFP,
+        A.BANNER,
+        A.ARTIST_EMAIL,
+
+        A.MONTHLY_LISTENER_COUNT,
+        A.FOLLOWER_COUNT,
+
+        COALESCE(ALB.TOTAL_ALBUMS, 0) AS TOTAL_ALBUMS,
+        COALESCE(TRK.TOTAL_TRACKS, 0) AS TOTAL_TRACKS
+
+    FROM ARTISTS A
+    LEFT JOIN TOTAL_ALBUMS ALB ON A.ARTIST_ID = ALB.ARTIST_ID
+    LEFT JOIN TOTAL_TRACKS TRK ON A.ARTIST_ID = TRK.ARTIST_ID;
+
+
+    DROP VIEW IF EXISTS VIEW_FULL_SONG_DETAILS CASCADE;
+
+    CREATE OR REPLACE VIEW VIEW_FULL_SONG_DETAILS AS
+    SELECT
+        S.SONG_ID,
+        S.SONG_TITLE,
+        STRING_AGG(DISTINCT A.ARTIST_NAME, ', ') AS ARTISTS_NAME,
+        C.COLLECTION_TITLE AS ALBUM_NAME,
+        S.SONG_DURATION,
+        S.POPULARITY,
+        S.SONG_FILE,
+        TO_CHAR((S.SONG_DURATION || ' second')::interval, 'MI:SS') AS DURATION_FORMATTED
+    FROM SONGS S
+    -- join ke artis
+    JOIN CREATE_SONGS CS ON S.SONG_ID = CS.SONG_ID
+    JOIN ARTISTS A ON CS.ARTIST_ID = A.ARTIST_ID
+    -- join ke album
+    LEFT JOIN COLLECTIONS_SONGS C_S ON S.SONG_ID = C_S.SONG_ID
+    LEFT JOIN COLLECTIONS C ON C_S.COLLECTION_ID = C.COLLECTION_ID
+    GROUP BY
+        -- sisa kolom lain wajib di group-by
+        S.SONG_ID,
+        S.SONG_TITLE,
+        C.COLLECTION_TITLE,
+        S.SONG_DURATION,
+        S.POPULARITY,
+        S.SONG_FILE;
+
+
+
+        DROP VIEW IF EXISTS VIEW_TOP_CHARTS CASCADE;
+
+        CREATE OR REPLACE VIEW VIEW_TOP_CHARTS AS
+        WITH SONG_ARTISTS AS (
+            SELECT
+                CRS.SONG_ID,
+                STRING_AGG(DISTINCT A.ARTIST_NAME, ', ' ORDER BY A.ARTIST_NAME) AS ARTISTS
+            FROM CREATE_SONGS CRS
+            JOIN ARTISTS A ON A.ARTIST_ID = CRS.ARTIST_ID
+            GROUP BY CRS.SONG_ID
+        ),
+        SONG_ALBUM AS (
+            SELECT DISTINCT ON (CS.SONG_ID)
+                CS.SONG_ID,
+                C.COLLECTION_TITLE AS ALBUM
+            FROM COLLECTIONS_SONGS CS
+            LEFT JOIN COLLECTIONS C ON C.COLLECTION_ID = CS.COLLECTION_ID
+            ORDER BY CS.SONG_ID, C.COLLECTION_TITLE
+        )
+        SELECT
+            ROW_NUMBER() OVER (ORDER BY S.POPULARITY DESC) AS RANK,
+            S.SONG_TITLE,
+            SA.ARTISTS,
+            AL.ALBUM,
+            S.POPULARITY
+        FROM SONGS S
+        LEFT JOIN SONG_ARTISTS SA ON SA.SONG_ID = S.SONG_ID
+        LEFT JOIN SONG_ALBUM AL ON AL.SONG_ID = S.SONG_ID
+        WHERE S.POPULARITY IS NOT NULL
+        ORDER BY S.POPULARITY DESC;
+
+
+
+        DROP VIEW IF EXISTS VIEW_USER_LIBRARY_STATS CASCADE;
+
+        CREATE OR REPLACE VIEW VIEW_USER_LIBRARY_STATS AS
+        WITH PUB_PLAYLISTS AS (
+            SELECT USER_ID, COUNT(*) AS PUBLIC_PLAYLISTS
+            FROM PLAYLISTS
+            WHERE ISPUBLIC = TRUE
+            GROUP BY USER_ID
+        ),
+        FOLLOWING_USERS AS (
+            SELECT FOLLOWER_ID AS USER_ID, COUNT(*) AS FOLLOW_USERS_COUNT
+            FROM FOLLOW_USERS
+            GROUP BY FOLLOWER_ID
+        ),
+        FOLLOWING_ARTISTS AS (
+            SELECT USER_ID, COUNT(*) AS FOLLOW_ARTISTS_COUNT
+            FROM FOLLOW_ARTISTS
+            GROUP BY USER_ID
+        ),
+        FOLLOWERS AS (
+            SELECT FOLLOWED_ID AS USER_ID, COUNT(*) AS FOLLOWERS_COUNT
+            FROM FOLLOW_USERS
+            GROUP BY FOLLOWED_ID
+        )
+        SELECT
+            U.USER_ID,
+            U.USERNAME,
+            U.USER_PFP,
+
+            COALESCE(PP.PUBLIC_PLAYLISTS, 0) AS PUBLIC_PLAYLISTS,
+
+            COALESCE(FU.FOLLOW_USERS_COUNT, 0) +
+            COALESCE(FA.FOLLOW_ARTISTS_COUNT, 0) AS FOLLOWING_COUNT,
+
+            COALESCE(FR.FOLLOWERS_COUNT, 0) AS FOLLOWERS_COUNT
+
+        FROM USERS U
+        LEFT JOIN PUB_PLAYLISTS PP ON PP.USER_ID = U.USER_ID
+        LEFT JOIN FOLLOWING_USERS FU ON FU.USER_ID = U.USER_ID
+        LEFT JOIN FOLLOWING_ARTISTS FA ON FA.USER_ID = U.USER_ID
+        LEFT JOIN FOLLOWERS FR ON FR.USER_ID = U.USER_ID;
+
+        -- Function: Update user_id lagu ketika playlist tidak lagi collaborative
+        CREATE OR REPLACE FUNCTION fix_playlist_collaborators()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            -- Jika sebelumnya collaborative dan sekarang tidak collaborative
+            IF OLD.iscollaborative = TRUE AND NEW.iscollaborative = FALSE THEN
+
+                -- Update semua lagu yang ditambahkan oleh user lain
+                UPDATE add_songs_playlists
+                SET user_id = NEW.user_id
+                WHERE playlist_id = NEW.playlist_id
+                AND user_id <> NEW.user_id;
+            END IF;
+
+            RETURN NEW;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        -- Trigger: berjalan ketika playlist di-update
+        CREATE TRIGGER trg_fix_playlist_collaborators
+        AFTER UPDATE OF iscollaborative
+        ON playlists
+        FOR EACH ROW
+        EXECUTE FUNCTION fix_playlist_collaborators();
+
+        CREATE OR REPLACE FUNCTION reorder_playlist_sequence()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            UPDATE add_songs_playlists
+            SET no_urut = no_urut - 1
+            WHERE playlist_id = OLD.playlist_id
+            AND no_urut > OLD.no_urut;
+            RETURN OLD;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CREATE TRIGGER trg_reorder_playlist_delete
+        AFTER DELETE ON add_songs_playlists
+        FOR EACH ROW
+        EXECUTE FUNCTION reorder_playlist_sequence();
+
+
+
+
+        -- Trigger follow–unfollow artis
+        CREATE OR REPLACE FUNCTION update_artist_follow_count()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            -- FOLLOW → INSERT
+            IF TG_OP = 'INSERT' THEN
+                UPDATE artists
+                SET follower_count = COALESCE(follower_count, 0) + 1
+                WHERE artist_id = NEW.artist_id;
+            END IF;
+
+            -- UNFOLLOW → DELETE
+            IF TG_OP = 'DELETE' THEN
+                UPDATE artists
+                SET follower_count = COALESCE(follower_count, 0) - 1
+                WHERE artist_id = OLD.artist_id;
+            END IF;
+
+            RETURN NULL;
+        END;
+        $$ LANGUAGE plpgsql;
+
+
+        -- trigger
+        CREATE TRIGGER trg_update_artist_follow_count
+        AFTER INSERT OR DELETE
+        ON follow_artists
+        FOR EACH ROW
+        EXECUTE FUNCTION update_artist_follow_count();
+
+
+        -- Trigger review collection, akan mengubah collection_rating
+        CREATE OR REPLACE FUNCTION update_collection_rating()
+        RETURNS TRIGGER AS $$
+        DECLARE
+            v_new_rating NUMERIC(5,2);
+        BEGIN
+            -- Hitung ulang rating dari seluruh review untuk collection
+            SELECT AVG(rating)
+            INTO v_new_rating
+            FROM reviews
+            WHERE collection_id = COALESCE(NEW.collection_id, OLD.collection_id);
+
+            -- Update ke tabel collections
+            UPDATE collections
+            SET collection_rating = v_new_rating
+            WHERE collection_id = COALESCE(NEW.collection_id, OLD.collection_id);
+
+            RETURN NULL;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CREATE TRIGGER trg_update_collection_rating
+        AFTER INSERT OR UPDATE OR DELETE
+        ON reviews
+        FOR EACH ROW
+        EXECUTE FUNCTION update_collection_rating();
+
+
+        -- Update_collection_top3_genres
+        CREATE OR REPLACE FUNCTION update_collection_top3_genres()
+        RETURNS TRIGGER AS $$
+        DECLARE
+            top_genre RECORD;
+        BEGIN
+            -- Hapus data lama untuk collection ini
+            DELETE FROM collection_top_3_genres
+            WHERE collection_id = NEW.collection_id;
+
+            -- Ambil 3 genre paling sering muncul dari lagu-lagu collection
+            FOR top_genre IN
+                SELECT sg.genre_id
+                FROM songs_genres sg
+                JOIN collections_songs cs ON sg.song_id = cs.song_id
+                WHERE cs.collection_id = NEW.collection_id
+                GROUP BY sg.genre_id
+                ORDER BY COUNT(*) DESC
+                LIMIT 3
+            LOOP
+                -- Insert ke COLLECTION_TOP_3_GENRES
+                INSERT INTO collection_top_3_genres (collection_id, genre_id)
+                VALUES (NEW.collection_id, top_genre.genre_id);
+            END LOOP;
+
+            RETURN NEW;
+        END;
+        $$ LANGUAGE plpgsql;
+
+
+        -- trigger
+        CREATE TRIGGER trg_update_collection_top3_genres
+        AFTER INSERT OR UPDATE ON collections_songs
+        FOR EACH ROW
+        EXECUTE FUNCTION update_collection_top3_genres();
+
+
+        -- FUNCTION untuk update timestamp saat review/rating berubah
+        CREATE OR REPLACE FUNCTION update_review_timestamp()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            -- Jika kolom review atau rating berubah
+            IF NEW.review IS DISTINCT FROM OLD.review
+               OR NEW.rating IS DISTINCT FROM OLD.rating THEN
+
+                NEW."TIMESTAMP" = CURRENT_TIMESTAMP;
+
+            END IF;
+
+            RETURN NEW;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        -- TRIGGER
+        CREATE TRIGGER trg_update_review_timestamp
+        BEFORE UPDATE
+        ON reviews
+        FOR EACH ROW
+        EXECUTE FUNCTION update_review_timestamp();
+
+
+        -- Update song rating
+        CREATE OR REPLACE FUNCTION update_song_rating()
+        RETURNS TRIGGER AS $$
+        DECLARE
+            v_new_rating NUMERIC(5,2);
+        BEGIN
+            -- Hitung ulang rata-rata rating untuk song
+            SELECT AVG(song_rating)
+            INTO v_new_rating
+            FROM rate_songs
+            WHERE song_id = COALESCE(NEW.song_id, OLD.song_id);
+
+            -- Update ke tabel songs
+            UPDATE songs
+            SET song_rating = v_new_rating
+            WHERE song_id = COALESCE(NEW.song_id, OLD.song_id);
+
+            RETURN NULL;
+        END;
+        $$ LANGUAGE plpgsql;
+
+
+        -- Trigger
+        CREATE TRIGGER trg_update_song_rating
+        AFTER INSERT OR UPDATE OR DELETE
+        ON rate_songs
+        FOR EACH ROW
+        EXECUTE FUNCTION update_song_rating();
+
+        CREATE OR REPLACE FUNCTION enforce_block_logic()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            -- Hapus hubungan follow kedua arah
+            DELETE FROM follow_users
+            WHERE (follower_id = NEW.blocker_id AND followed_id = NEW.blocked_id)
+               OR (follower_id = NEW.blocked_id AND followed_id = NEW.blocker_id);
+            RETURN NEW;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CREATE TRIGGER trg_block_cleanup
+        AFTER INSERT ON block_users
+        FOR EACH ROW
+        EXECUTE FUNCTION enforce_block_logic();
+
+
+        CREATE OR REPLACE FUNCTION validate_prerelease_date()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            -- RULE 1: prerelease must be future
+            IF NEW.isPrerelease = TRUE  -- Jika isPrerelease = TRUE
+               AND NEW.collection_release_date <= CURRENT_DATE THEN   -- Tetapi tanggal rilis tidak di masa depan
+                RAISE EXCEPTION
+                    'If isPrerelease = TRUE, then release_date (%s) must be in the future.',  -- Pesan error
+                    NEW.collection_release_date;
+            END IF;
+
+            -- RULE 2: NOT prerelease must be today or past
+            IF NEW.isPrerelease = FALSE  -- Jika isPrerelease = FALSE
+               AND NEW.collection_release_date > CURRENT_DATE THEN -- Tetapi tanggal rilis berada di masa depan
+                RAISE EXCEPTION
+                    'If isPrerelease = FALSE, release_date (%s) cannot be in the future.',  -- Pesan error
+                    NEW.collection_release_date;   -- Menampilkan tanggal yang salah
+            END IF;
+
+            -- RULE 3: If release date is today → force prerelease = FALSE
+            IF NEW.collection_release_date = CURRENT_DATE THEN   -- Jika tanggal rilis sama dengan hari ini
+                NEW.isPrerelease := FALSE;  -- isPrerelease menjadi FALSE
+            END IF;
+
+            RETURN NEW;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CREATE TRIGGER trg_validate_prerelease_date
+        BEFORE INSERT OR UPDATE ON collections
+        FOR EACH ROW
+        EXECUTE FUNCTION validate_prerelease_date();
+
+        CREATE OR REPLACE FUNCTION validate_tour_date()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            IF NEW.tour_date < CURRENT_DATE THEN
+                RAISE EXCEPTION 'Tour date (%s) shouldnt be before today (%s)', NEW.tour_date, CURRENT_DATE;
+            END IF;
+
+            RETURN NEW;
+        END;
+        $$ LANGUAGE plpgsql;
+
+
+        CREATE TRIGGER trg_validate_tour_date
+        BEFORE INSERT OR UPDATE ON tours
+        FOR EACH ROW
+        EXECUTE FUNCTION validate_tour_date();
+
+        /*==============================================================*/
+        /* Function: GET_ARTIST_DETAIL                                  */
+        /*==============================================================*/
+        DROP FUNCTION IF EXISTS get_artist_detail(INT);
+
+        CREATE OR REPLACE FUNCTION get_artist_detail(p_artist_id INT)
+        RETURNS TABLE (
+            artist_id INT,
+            artist_name VARCHAR(255),
+            bio TEXT,
+            artist_pfp VARCHAR(2048),
+            banner VARCHAR(2048),
+            artist_email VARCHAR(320),
+            monthly_listener_count BIGINT,
+            follower_count BIGINT,
+            total_albums BIGINT,
+            total_tracks BIGINT
+        )
+        AS $$
+        BEGIN
+            RETURN QUERY
+            SELECT * FROM view_artist_profile_header v WHERE v.artist_id = p_artist_id;
+        END;
+        $$ LANGUAGE plpgsql STABLE;
+
+        SELECT * FROM get_artist_detail(3)
+        /*==============================================================*/
+        /* Function: GET_ARTIST_CONTENT                                 */
+        /*==============================================================*/
+        DROP FUNCTION IF EXISTS get_artist_content(INT, TEXT);
+
+        CREATE OR REPLACE FUNCTION get_artist_content(p_artist_id INT, p_type TEXT)
+        RETURNS TABLE (
+            content_type TEXT,
+            content_id INT,
+            title TEXT,
+            extra_info TEXT
+        )
+        AS $$
+        BEGIN
+            -- ========== SONGS ==========
+            IF p_type = 'songs' THEN
+                RETURN QUERY
+                SELECT
+                    'song',
+                    v.song_id,
+                    v.song_title ::TEXT,
+                    'Album: ' || COALESCE(v.album_name, '-') || ' • Popularity: ' || v.popularity
+                FROM view_full_song_details v
+                WHERE v.artist_name ILIKE (
+                    SELECT '%' || artist_name || '%'
+                    FROM artists WHERE artist_id = p_artist_id
+                )
+                ORDER BY v.popularity DESC;
+
+            -- ========== COLLECTIONS ==========
+            ELSIF p_type = 'collections' THEN
+                RETURN QUERY
+                SELECT
+                    'collection',
+                    c.collection_id,
+                    c.collection_title ::TEXT,
+                    c.collection_type ::TEXT
+                FROM releases r
+                JOIN collections c ON c.collection_id = r.collection_id
+                WHERE r.artist_id = p_artist_id;
+
+            -- ========== TOURS ==========
+            ELSIF p_type = 'tours' THEN
+                RETURN QUERY
+                SELECT
+                    'tour',
+                    t.tour_id,
+                    t.tour_name ::TEXT,
+                    t.venue || ' • ' || t.tour_date
+                FROM artists_tours at
+                JOIN tours t ON t.tour_id = at.tour_id
+                WHERE at.artist_id = p_artist_id;
+
+            -- ========== PROMOTIONS ==========
+            ELSIF p_type = 'promotions' THEN
+                RETURN QUERY
+                SELECT
+                    'promotion',
+                    ap.collection_id,
+                    c.collection_title ::TEXT,
+                    ap.komentar_promosi
+                FROM artist_promotion ap
+                LEFT JOIN collections c ON c.collection_id = ap.collection_id
+                WHERE ap.artist_id = p_artist_id;
+
+            ELSE
+                RAISE EXCEPTION 'Invalid type: %, valid types: songs, collections, tours, promotions', p_type;
+            END IF;
+
+        END;
+        $$ LANGUAGE plpgsql STABLE;
+
+        SELECT * FROM get_artist_content(2, 'songs')
+        SELECT * FROM get_artist_content(2, 'collections')
+        SELECT * FROM get_artist_content(2, 'tours')
+        SELECT * FROM get_artist_content(2, 'promotions')
+        SELECT * FROM get_artist_content(2, 'song')
+
+        /*==============================================================*/
+        /* Procedure: TOGGLE_FOLLOW_ARTIST                              */
+        /*==============================================================*/
+        CREATE OR REPLACE PROCEDURE toggle_follow_artist(p_user_id INT, p_artist_id INT)
+        LANGUAGE plpgsql
+        AS $$
+        BEGIN
+            -- cek user valid
+            IF NOT EXISTS (SELECT 1 FROM users WHERE user_id = p_user_id) THEN
+                RAISE EXCEPTION 'User_id % not found', p_user_id;
+            END IF;
+
+            -- cek artist valid
+            IF NOT EXISTS (SELECT 1 FROM artists WHERE artist_id = p_artist_id) THEN
+                RAISE EXCEPTION 'Artist_id % not found', p_artist_id;
+            END IF;
+
+            -- jika sudah follow -> UNFOLLOW
+            IF EXISTS (
+                SELECT 1 FROM follow_artists
+                WHERE user_id = p_user_id AND artist_id = p_artist_id
+            ) THEN
+                DELETE FROM follow_artists
+                WHERE user_id = p_user_id AND artist_id = p_artist_id;
+
+                RAISE NOTICE 'Unfollowed artist %', p_artist_id;
+                RETURN;
+            END IF;
+
+            -- jika belum follow -> FOLLOW
+            INSERT INTO follow_artists(user_id, artist_id)
+            VALUES (p_user_id, p_artist_id);
+
+            RAISE NOTICE 'Followed artist %', p_artist_id;
+
+        END;
+        $$;
+
+        call toggle_follow_artist(1, 12)
+        select * from follow_artists
+        call toggle_follow_artist(9999, 12)
+        call toggle_follow_artist(12, 9999)
+        call toggle_follow_artist(1, 12)
+        select * from follow_artists
+
+        CREATE OR REPLACE FUNCTION get_song_average_rating(p_song_id INT)
+        RETURNS NUMERIC AS $$
+        DECLARE
+            avg_rating NUMERIC;
+        BEGIN
+            SELECT AVG(r.song_rating)
+            INTO avg_rating
+            FROM rate_songs r
+            WHERE r.song_id = p_song_id;
+
+            RETURN avg_rating;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CREATE OR REPLACE FUNCTION get_playlist_duration_minutes(p_playlist_id INT)
+        RETURNS INT AS $$
+        DECLARE
+            v_total_sec INT;
+        BEGIN
+            SELECT SUM(s.song_duration)
+            INTO v_total_sec
+            FROM songs s
+            JOIN add_songs_playlists asp ON s.song_id = asp.song_id
+            WHERE asp.playlist_id = p_playlist_id;
+
+            RETURN COALESCE(v_total_sec / 60, 0);
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CREATE OR REPLACE FUNCTION get_artist_total_plays(p_artist_id INT)
+        RETURNS BIGINT AS $$
+        DECLARE
+            v_total_plays BIGINT;
+        BEGIN
+            SELECT COUNT(l.listen_id)
+            INTO v_total_plays
+            FROM create_songs cs
+            JOIN listens l ON cs.song_id = l.song_id
+            WHERE cs.artist_id = p_artist_id;
+
+            RETURN COALESCE(v_total_plays, 0);
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CREATE OR REPLACE FUNCTION get_album_total_duration(p_collection_id INT)
+        RETURNS INT AS $$
+        DECLARE
+            v_total_seconds INT;
+        BEGIN
+            -- Aggregation: SUM (Menjumlahkan nilai durasi)
+            SELECT SUM(s.song_duration)
+            INTO v_total_seconds
+            FROM collections_songs cs
+            JOIN songs s ON cs.song_id = s.song_id
+            WHERE cs.collection_id = p_collection_id;
+
+            RETURN COALESCE(v_total_seconds, 0);
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CREATE OR REPLACE FUNCTION get_collection_genres(p_collection_id INT)
+        RETURNS TABLE(genre_id INT, genre_name VARCHAR)
+        LANGUAGE plpgsql
+        AS $$
+        BEGIN
+            RETURN QUERY
+            SELECT
+                g.genre_id,
+                g.genre_name
+            FROM COLLECTION_TOP_3_GENRES ct3g
+            JOIN GENRES g ON g.genre_id = ct3g.genre_id
+            WHERE ct3g.collection_id = p_collection_id;
+        END;
+        $$;
+
+
+        CREATE OR REPLACE FUNCTION get_collection_average_rating(p_collection_id INT)
+        RETURNS NUMERIC AS
+        $$
+        DECLARE
+            v_rating NUMERIC;
+        BEGIN
+            -- Mengambil nilai yang sudah dihitung oleh trigger
+            SELECT COLLECTION_RATING
+            INTO v_rating
+            FROM COLLECTIONS
+            WHERE COLLECTION_ID = p_collection_id;
+
+            RETURN COALESCE(v_rating, 0);
+        END;
+        $$ LANGUAGE plpgsql;
+
+
+        DROP FUNCTION IF EXISTS get_collection_detail(INT);
+        CREATE OR REPLACE FUNCTION get_collection_detail(p_collection_id INT)
+        RETURNS TABLE (
+            collection_id INT,
+            collection_title TEXT,
+            collection_type TEXT,
+            collection_cover TEXT,
+            release_date DATE,
+            rating NUMERIC(3,0),
+            is_prerelease BOOL,
+            total_tracks BIGINT,
+            total_artists BIGINT
+        )
+        AS $$
+        BEGIN
+            RETURN QUERY
+            SELECT
+                c.collection_id,
+                c.collection_title ::TEXT,
+                c.collection_type ::TEXT,
+                c.collection_cover ::TEXT,
+                c.collection_release_date,
+                c.collection_rating,
+                c.isprerelease,
+                (SELECT COUNT(*) FROM collections_songs cs
+                 WHERE cs.collection_id = c.collection_id) AS total_tracks,
+                (SELECT COUNT(DISTINCT r.artist_id)
+                 FROM releases r
+                 WHERE r.collection_id = c.collection_id) AS total_artists
+            FROM collections c
+            WHERE c.collection_id = p_collection_id;
+        END;
+        $$ LANGUAGE plpgsql STABLE;
+
+        SELECT * FROM get_collection_detail(1);
+        SELECT * FROM get_collection_detail(999);
+
+        DROP FUNCTION IF EXISTS get_collection_tracks
+        CREATE OR REPLACE FUNCTION get_collection_tracks(p_collection_id INT)
+        RETURNS TABLE (
+            track_number INT,
+            song_id INT,
+            song_title TEXT,
+            artist_name TEXT,
+            duration INT,
+            popularity NUMERIC(3,0),
+            song_file TEXT
+        )
+        AS $$
+        BEGIN
+            RETURN QUERY
+            SELECT
+                cs.nomor_track,
+                v.song_id,
+                v.song_title ::TEXT,
+                v.artist_name ::TEXT,
+                v.song_duration,
+                v.popularity,
+                v.song_file ::TEXT
+            FROM collections_songs cs
+            JOIN view_full_song_details v ON v.song_id = cs.song_id
+            WHERE cs.collection_id = p_collection_id
+            ORDER BY cs.nomor_disc, cs.nomor_track;
+        END;
+        $$ LANGUAGE plpgsql STABLE;
+
+        SELECT * FROM get_collection_tracks(1);
+
+        DROP FUNCTION IF EXISTS get_new_releases
+        CREATE OR REPLACE FUNCTION get_new_releases(p_limit INT)
+        RETURNS TABLE (
+            collection_id INT,
+            title TEXT,
+            artist_name TEXT,
+            release_date DATE,
+            total_tracks BIGINT
+        )
+        AS $$
+        BEGIN
+            RETURN QUERY
+            SELECT
+                c.collection_id,
+                c.collection_title ::TEXT,
+                STRING_AGG(DISTINCT a.artist_name, ', ') AS artist_name,
+                c.collection_release_date,
+                COUNT(cs.song_id) AS total_tracks
+            FROM collections c
+            LEFT JOIN releases r ON r.collection_id = c.collection_id
+            LEFT JOIN artists a ON a.artist_id = r.artist_id
+            LEFT JOIN collections_songs cs ON cs.collection_id = c.collection_id
+            GROUP BY
+                c.collection_id,
+                c.collection_title,
+                c.collection_release_date
+            ORDER BY c.collection_release_date DESC
+            LIMIT p_limit;
+        END;
+        $$ LANGUAGE plpgsql STABLE;
+
+        SELECT * FROM get_new_releases(5);
+        SELECT * FROM get_new_releases(20);
+
+        --  PROCEDURE log_listen
+        CREATE OR REPLACE PROCEDURE log_listen(
+            p_user_id INT,  -- Parameter input: ID user yang mendengarkan lagu, ID lagu yang didengarkan, durasi lagu yang didengarkan (dalam detik)
+            p_song_id INT,
+            p_duration INT
+        )
+        LANGUAGE plpgsql
+        AS $$
+        DECLARE
+            v_exists_listen INT;  -- Variabel untuk menyimpan jumlah record listens yang sudah ada untuk user & song
+        BEGIN
+            -- VALIDASI USER
+            IF NOT EXISTS (SELECT 1 FROM users WHERE user_id = p_user_id) THEN
+                RAISE EXCEPTION 'User % tidak ditemukan', p_user_id;
+            END IF;
+
+            -- VALIDASI SONG
+            IF NOT EXISTS (SELECT 1 FROM songs WHERE song_id = p_song_id) THEN
+                RAISE EXCEPTION 'Song % tidak ditemukan', p_song_id;
+            END IF;
+
+            -- VALIDASI DURASI
+            IF p_duration <= 0 THEN
+                RAISE EXCEPTION 'Duration harus > 0';
+            END IF;
+
+            -- CEK APAKAH USER SUDAH PERNAH MENDENGARKAN LAGU INI
+            SELECT COUNT(*)  -- Hitung jumlah record listens untuk user & song
+            INTO v_exists_listen   -- Simpan hasil hitungan ke variabel v_exists_listen
+            FROM listens
+            WHERE user_id = p_user_id
+              AND song_id = p_song_id;
+
+            -- INSERT LISTEN BARU  → listen_count + 1
+            IF v_exists_listen = 0 THEN  -- Jika user belum pernah mendengarkan lagu ini
+
+                INSERT INTO listens (listen_id, user_id, song_id, duration_listened)
+                VALUES (
+                    (SELECT COALESCE(MAX(listen_id), 0) + 1 FROM listens),  -- akan generate listen_id baru secara increment
+                    p_user_id,
+                    p_song_id,
+                    p_duration
+                );
+
+                -- TAMBAH COUNTER LISTEN HANYA UNTUK INSERT
+                UPDATE songs
+                SET listen_count = COALESCE(listen_count, 0) + 1   -- Increment listen_count lagu
+                WHERE song_id = p_song_id;
+
+            -- UPDATE LISTEN LAMA → TIDAK MENAMBAH COUNTER
+            ELSE
+
+                UPDATE listens
+                SET duration_listened = p_duration,  -- Update durasi terakhir mendengarkan
+                    "TIMESTAMP" = CURRENT_TIMESTAMP  -- Update timestamp terakhir
+                WHERE user_id = p_user_id
+                  AND song_id = p_song_id;
+
+            END IF;
+
+        END;
+        $$;
+
+
+        -- Funtion get_recently_played
+        CREATE OR REPLACE FUNCTION get_recently_played(
+            p_user_id INT,    -- Parameter input ID user
+            p_limit INT DEFAULT 10 -- Limit jumlah hasil yang ditampilkan
+        )
+        RETURNS TABLE (
+            song_id INT,  -- Mengambil ID lagu dari tabel songs
+            song_title VARCHAR,   -- Mengambil judul lagu dari tabel songs
+            duration_listened INT,  -- Durasi mendengarkan dalam bentuk detik
+            last_play TIMESTAMP  -- Timestamp kapan lagu diputar
+        )
+        LANGUAGE plpgsql
+        AS $$
+        BEGIN
+            RETURN QUERY
+            SELECT
+                s.song_id,
+                s.song_title,
+                l.duration_listened, -- dalam detik
+                l."TIMESTAMP" AS last_play
+            FROM listens l
+            JOIN songs s ON s.song_id = l.song_id  -- Join tabel listens dengan songs berdasarkan song_id
+            WHERE l.user_id = p_user_id   -- Memfilter hanya record yang sesuai user yang diminta
+            ORDER BY l."TIMESTAMP" DESC  -- Mengurutkan dari pemutaran terbaru
+            LIMIT p_limit;  -- Membatasi jumlah record sesuai parameter p_limit
+        END;
+        $$;
+
+        --  Procedure Create Playlist
+        CREATE OR REPLACE PROCEDURE create_playlist(
+            p_user_id INT,
+            p_title VARCHAR,
+            p_ispublic BOOLEAN,
+            p_iscollaborative BOOLEAN,
+            p_description TEXT,
+            p_cover VARCHAR,
+            p_isonprofile BOOLEAN
+        )
+        LANGUAGE plpgsql
+        AS $$
+        BEGIN
+           INSERT INTO playlists (
+               user_id,
+               playlist_cover,
+               playlist_title,
+               ispublic,
+               iscollaborative,
+               playlist_desc,
+               isonprofile,
+               playlist_date_created
+           )
+           VALUES (
+               p_user_id,
+               p_cover,
+               p_title,
+               p_ispublic,
+               p_iscollaborative,
+               p_description,
+               p_isonprofile,
+               CURRENT_DATE
+           );
+
+           RAISE NOTICE 'Playlist created successfully.';
+        END;
+        $$;
+
+        -- CALL user_id, playlist_title, ispublic, iscollaborative, playlist_desc, playlist_cover, isonprofile
+        CALL create_playlist(5, 'cek procedure', true, false, 'Santai sore', 'cover.png', true);
+
+        -- cek
+        SELECT *
+        FROM playlists;
+
+
+        -- Procedure add_song_to_playlist
+        CREATE OR REPLACE PROCEDURE add_song_to_playlist(
+            p_user_id INT,  -- Parameter input: ID user yang ingin menambahkan lagu
+            p_playlist_id INT,  -- Parameter input: ID playlist tujuan
+            p_song_id INT  -- Parameter input: ID lagu yang ingin ditambahkan
+        )
+        LANGUAGE plpgsql
+        AS $$
+        DECLARE
+            v_owner_id INT;  -- Variabel untuk menyimpan ID pemilik playlist
+            v_is_collab BOOLEAN;
+            v_exists INT;  -- Variabel untuk mengecek apakah lagu sudah ada di playlist
+            v_last_no_urut INT; -- Variabel untuk menentukan nomor urut lagu terakhir
+        BEGIN
+            -- Cek apakah playlist ada
+            SELECT user_id, isCollaborative
+            INTO v_owner_id, v_is_collab
+            FROM playlists
+            WHERE playlist_id = p_playlist_id;
+
+            IF NOT FOUND THEN
+	-- Kalo playlist tidak ditemukan,
+                RAISE EXCEPTION 'Playlist % tidak ditemukan.', p_playlist_id;
+            END IF;
+
+            -- Cek duplikasi lagu
+            SELECT COUNT(*)
+            INTO v_exists
+            FROM add_songs_playlists
+            WHERE playlist_id = p_playlist_id
+              AND song_id = p_song_id;
+
+            IF v_exists > 0 THEN
+	-- Kalo lagu sudah ada di playlist,
+                RAISE EXCEPTION 'Lagu % sudah ada di playlist %.', p_song_id, p_playlist_id;
+            END IF;
+
+            -- Cek kepemilikan playlist (non-collaborative)
+            IF v_is_collab = FALSE AND p_user_id <> v_owner_id THEN
+                RAISE EXCEPTION
+                    'Playlist ini non-collaborative. Hanya pemilik (user_id = %) yang dapat menambahkan lagu.',
+                    v_owner_id;
+            END IF;
+
+            -- Hitung nomor urut otomatis
+            SELECT COALESCE(MAX(no_urut), 0)
+            INTO v_last_no_urut
+            FROM add_songs_playlists
+            WHERE playlist_id = p_playlist_id;
+
+            v_last_no_urut := v_last_no_urut + 1;  -- Tambah 1 untuk nomor urut lagu baru
+
+            -- Insert lagu ke playlist
+            INSERT INTO add_songs_playlists (
+                user_id,
+                playlist_id,
+                song_id,
+                no_urut
+            ) VALUES (
+                p_user_id,
+                p_playlist_id,
+                p_song_id,
+                v_last_no_urut
+            );
+
+        END;
+        $$;
+
+        -- cek (user_id, playlist_id, song_id)
+        CALL add_song_to_playlist(2, 10, 5);
+
+        SELECT *
+        FROM add_songs_playlists
+        WHERE playlist_id = 10
+        ORDER BY no_urut;
+
+
+        -- PROCEDURE remove_song_from_playlist
+        CREATE OR REPLACE PROCEDURE remove_song_from_playlist(
+            p_playlist_id INT,  -- Parameter input: ID playlist yang ingin dihapus lagunya
+            p_song_id INT  -- Parameter input: ID lagu yang ingin dihapus
+        )
+        LANGUAGE plpgsql
+        AS $$
+        DECLARE
+            v_exists INT;  -- Variabel untuk mengecek apakah lagu ada di playlist
+        BEGIN
+            -- Cek apakah lagu ada di playlist
+            SELECT COUNT(*)
+            INTO v_exists
+            FROM add_songs_playlists
+            WHERE playlist_id = p_playlist_id
+              AND song_id = p_song_id;
+
+            IF v_exists = 0 THEN
+		-- Kalo lagu tidak ditemukan di playlist,
+                RAISE EXCEPTION 'Lagu % tidak ditemukan di playlist %.', p_song_id, p_playlist_id;
+            END IF;
+
+            -- Hapus lagu dari playlist
+            DELETE FROM add_songs_playlists
+            WHERE playlist_id = p_playlist_id
+              AND song_id = p_song_id;
+
+            -- Perbaiki nomor urut (re-order) supaya urutan lagu tetap berurutan
+            WITH ordered AS (
+                SELECT
+                    add_song_pl_id,  -- Ambil ID record
+                    ROW_NUMBER() OVER (ORDER BY no_urut) AS new_no  -- Hitung nomor urut baru
+                FROM add_songs_playlists
+                WHERE playlist_id = p_playlist_id  -- Hanya untuk playlist yang sama
+            )
+            UPDATE add_songs_playlists asp
+            SET no_urut = o.new_no  -- Update no_urut sesuai urutan baru
+            FROM ordered o
+            WHERE asp.add_song_pl_id = o.add_song_pl_id;  -- Cocokin dengan ID record nya
+
+        END;
+        $$;
+
+        -- hapus lagu (song_id 30) dari playlist 10
+        CALL remove_song_from_playlist(10, 30);
+
+        -- cek hasil
+        SELECT *
+        FROM add_songs_playlists
+        WHERE playlist_id = 10
+        ORDER BY no_urut;
+
+
+        -- Function: get_playlist_detail
+        CREATE OR REPLACE FUNCTION get_playlist_detail(p_playlist_id INT)
+        RETURNS TABLE (
+            playlist_id INT,
+            playlist_title VARCHAR,
+            playlist_cover VARCHAR,
+            playlist_desc TEXT,
+            song_no INT,
+            song_id INT,
+            song_title VARCHAR,
+            song_duration INT,
+            added_by_username VARCHAR
+        )
+        AS $$
+        BEGIN
+	-- Ambil data playlist + daftar lagu + siapa yang menambahkan lagu
+            RETURN QUERY
+            SELECT
+                p.playlist_id,
+                p.playlist_title,
+                p.playlist_cover,
+                p.playlist_desc,
+                asp.no_urut AS song_no,  -- nomor urut lagu di playlist
+                s.song_id,
+                s.song_title,
+                s.song_duration,
+                u.username AS added_by_username -- username yang menambahkan lagu
+            FROM PLAYLISTS p
+	-- Join ke tabel add_songs_playlists untuk mendapatkan daftar lagu yang ada di playlist
+            JOIN ADD_SONGS_PLAYLISTS asp ON p.playlist_id = asp.playlist_id
+            JOIN SONGS s ON asp.song_id = s.song_id  -- Join ke tabel songs untuk mengambil detail lagu
+            JOIN USERS u ON asp.user_id = u.user_id  -- Join ke tabel users untuk mengetahui siapa yang nambahin lagu
+            WHERE p.playlist_id = p_playlist_id  -- Filter hanya playlist yang sesuai dengan parameter input
+            ORDER BY asp.no_urut; -- urutkan lagu sesuai nomor urut
+        END;
+        $$ LANGUAGE plpgsql;
+
+        -- cek detail playlist id 1
+        SELECT * FROM get_playlist_detail(1);
+
+
+        -- Function: get_playlist_tracks
+        CREATE OR REPLACE FUNCTION get_playlist_tracks(p_playlist_id INT)
+        RETURNS TABLE (
+            song_no INT,
+            song_id INT,
+            song_title VARCHAR,
+            song_duration INT,
+            collection_id INT
+        )
+        AS $$
+        BEGIN
+            RETURN QUERY
+            SELECT
+                asp.no_urut AS song_no, -- nomor urut lagu di playlist
+                s.song_id,
+                s.song_title,
+                s.song_duration,
+                cs.collection_id   -- null jika lagu tidak ada di collection
+            FROM ADD_SONGS_PLAYLISTS asp  -- Ambil tabel lagu yang ditambahkan ke playlist (alias asp)
+            JOIN SONGS s ON asp.song_id = s.song_id
+            LEFT JOIN COLLECTIONS_SONGS cs ON s.song_id = cs.song_id -- cek lagu di collection mana
+            WHERE asp.playlist_id = p_playlist_id  -- ambil lagu dari playlist tertentu
+            ORDER BY asp.no_urut;  -- Urut sesuai nomor urut di playlist
+        END;
+        $$ LANGUAGE plpgsql;
+
+        -- cek lihat lagu-lagu di playlist dengan ID = 1
+        SELECT *
+        FROM get_playlist_tracks(1);
+
+
+
+        CREATE OR REPLACE FUNCTION reorder_playlist_sequence()
+        RETURNS TRIGGER AS $$
+        BEGIN
+            UPDATE add_songs_playlists
+            SET no_urut = no_urut - 1
+            WHERE playlist_id = OLD.playlist_id
+            AND no_urut > OLD.no_urut;
+            RETURN OLD;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CREATE TRIGGER trg_reorder_playlist_delete
+        AFTER DELETE ON add_songs_playlists
+        FOR EACH ROW
+        EXECUTE FUNCTION reorder_playlist_sequence();
+
+        /*==============================================================*/
+        /* Procedure: ADD_ARTIST_PROMOTION                              */
+        /*==============================================================*/
+        DROP PROCEDURE IF EXISTS add_artist_promotion(INT, INT, TEXT);
+        CREATE OR REPLACE PROCEDURE add_artist_promotion(p_artist_id INT, p_collection_id INT, p_comment TEXT)
+        LANGUAGE plpgsql
+        AS $$
+        BEGIN
+
+            -- cek artist valid
+            IF NOT EXISTS (SELECT 1 FROM artists WHERE artist_id = p_artist_id) THEN
+                RAISE EXCEPTION 'Artist_id % not found', p_artist_id;
+            END IF;
+
+            -- cek collection ada
+            IF NOT EXISTS (SELECT 1 FROM collections WHERE collection_id = p_collection_id) THEN
+                RAISE EXCEPTION 'Collection_id % not found', p_collection_id;
+            END IF;
+
+            --validasi, apakah koleksi ini dirilis oleh artis tersebut?
+            IF NOT EXISTS (SELECT 1 FROM releases WHERE artist_id = p_artist_id
+                AND collection_id = p_collection_id
+            ) THEN
+                RAISE EXCEPTION 'Artist % cannot promote collection %, because it does not belong to them',
+                    p_artist_id, p_collection_id;
+            END IF;
+
+            --jika sudah pernah promosi -> update komentar
+            IF EXISTS (SELECT 1 FROM artist_promotion WHERE artist_id = p_artist_id
+                AND collection_id = p_collection_id
+            ) THEN
+                UPDATE artist_promotion SET komentar_promosi = p_comment WHERE artist_id = p_artist_id
+                AND collection_id = p_collection_id;
+
+                RAISE NOTICE 'Promotion updated successfully';
+                RETURN;
+            END IF;
+
+            --jika belum -> insert baru
+            INSERT INTO artist_promotion(artist_id, collection_id, komentar_promosi)
+            VALUES (p_artist_id, p_collection_id, p_comment);
+            RAISE NOTICE 'Promotion added successfully';
+        END;
+        $$;
+
+        select * from releases
+
+        CALL add_artist_promotion(3, 3, 'Check out my new album!');
+        select * from artist_promotion
+        CALL add_artist_promotion(3, 3, 'Updated promo!');
+        select * from artist_promotion
+        CALL add_artist_promotion(10, 20, 'Invalid promotion');
+        CALL add_artist_promotion(999, 5, 'hello');
+        CALL add_artist_promotion(10, 999, 'promo');
+
+        /*==============================================================*/
+        /* Funtion:GET_ARTIST_TOURS                                     */
+        /*==============================================================*/
+        CREATE OR REPLACE FUNCTION get_artist_tours(p_artist_id INT)
+        RETURNS TABLE (
+            tour_id INT,
+            tour_name TEXT,
+            venue TEXT,
+            tour_date DATE
+        )
+        AS $$
+        BEGIN
+            RETURN QUERY
+            SELECT
+                t.tour_id,
+                t.tour_name ::TEXT,
+                t.venue ::TEXT,
+                t.tour_date
+            FROM artists_tours at
+            JOIN tours t ON t.tour_id = at.tour_id
+            WHERE at.artist_id = p_artist_id
+            ORDER BY t.tour_date ASC;
+        END;
+        $$ LANGUAGE plpgsql STABLE;
+
+        select * from artists_tours
+        select * from tours
+
+        --tambah tour
+        INSERT INTO tours (tour_id, tour_name, venue, tour_date)
+        VALUES (100, 'World Tour 2025', 'Jakarta Convention Center', '2025-12-20');
+
+        -- relasikan artis ke tour
+        INSERT INTO artists_tours (artist_id, tour_id)
+        VALUES (3, 100);
+
+        SELECT * FROM get_artist_tours(3);
+        SELECT * FROM get_artist_tours(20);
+        SELECT * FROM get_artist_tours(999);
+
+        /*==============================================================*/
+        /* Procedure: CREATE_REVIEW                               */
+        /*==============================================================*/
+        CREATE OR REPLACE PROCEDURE create_review(
+            p_review_text TEXT,
+	p_rating NUMERIC (3,0),
+	p_user_id INT4,
+            p_collection_id INT4
+        )
+        LANGUAGE plpgsql
+        AS $$
+        DECLARE
+            v_review_id INT;
+        BEGIN
+            -- cek user
+            IF NOT EXISTS (SELECT 1 FROM users WHERE user_id = p_user_id) THEN
+                RAISE EXCEPTION 'User_id % not found', p_user_id;
+            END IF;
+
+            -- cek collection
+            IF NOT EXISTS (SELECT 1 FROM collections WHERE collection_id = p_collection_id) THEN
+                RAISE EXCEPTION 'Collection_id % not found', p_collection_id;
+            END IF;
+
+            -- cek review kosong
+            IF p_review_text IS NULL OR LENGTH(TRIM(p_review_text)) = 0 THEN
+                RAISE EXCEPTION 'Review text cannot be empty';
+            END IF;
+
+            -- cek apakah user sudah review koleksi ini
+            IF EXISTS (SELECT 1 FROM reviews WHERE user_id = p_user_id
+		AND collection_id = p_collection_id
+            ) THEN
+                RAISE EXCEPTION 'User has already reviewed this collection';
+            END IF;
+
+            -- ambil review_id dari sequence
+            SELECT NEXTVAL('seq_reviews_id')
+            INTO v_review_id;
+
+            -- insert review (trigger akan update timestamp jika review diganti)
+            INSERT INTO reviews(review, rating, "TIMESTAMP", review_id, user_id, collection_id)
+            VALUES (p_review_text, p_rating, CURRENT_TIMESTAMP, v_review_id, p_user_id, p_collection_id);
+
+            RAISE NOTICE 'Review created with ID %', v_review_id;
+        END;
+        $$;
+
+        select * from users
+        select * from reviews
+        CALL create_review('Album ini sangat keren!', 10, 1, 1);
+        CALL create_review('Test review', 10, 9999, 1);
+        CALL create_review('Test review', 10, 2, 9999);
+        CALL create_review('', 10, 2, 3);
+        CALL create_review('Review pertama', 10, 1, 10);
+        CALL create_review('Review kedua', 10, 1, 10);
+
+        /*==============================================================*/
+        /* Procedure: TOGGLE_LIKE_REVIEW                               */
+        /*==============================================================*/
+        CREATE OR REPLACE PROCEDURE toggle_like_review(p_user_id INT, p_review_id INT)
+        LANGUAGE plpgsql
+        AS $$
+        DECLARE
+	v_exists BOOLEAN;
+        BEGIN
+            -- cek user
+            IF NOT EXISTS (SELECT 1 FROM users WHERE user_id = p_user_id) THEN
+                RAISE EXCEPTION 'User_id % not found', p_user_id;
+            END IF;
+
+            -- cek review
+            IF NOT EXISTS (SELECT 1 FROM reviews WHERE review_id = p_review_id) THEN
+                RAISE EXCEPTION 'Review_id % not found', p_review_id;
+            END IF;
+
+            --cek toggle
+            SELECT EXISTS (SELECT 1 FROM like_reviews WHERE review_id = p_review_id AND user_id = p_user_id)
+            INTO v_exists;
+
+            --jika sudah like -> unlike
+            IF v_exists THEN
+                DELETE FROM like_reviews WHERE review_id = p_review_id AND user_id = p_user_id;
+                RAISE NOTICE 'Review % unliked by user %', p_review_id, p_user_id;
+                RETURN;
+            END IF;
+
+            -- jika belum like -> insert like
+            INSERT INTO like_reviews VALUES (p_review_id, p_user_id);
+            RAISE NOTICE 'Review % liked by user %', p_review_id, p_user_id;
+        END;
+        $$;
+
+        select * from reviews
+        CALL toggle_like_review(2, 1);
+        select * from like_reviews
+        CALL toggle_like_review(9999, 15);
+        CALL toggle_like_review(2, 99999);
+
+
+
+        /*search(keyword, type)
+        type = 'song' | 'artist' | 'collection' | 'playlist' | 'user'*/
+
+        DROP FUNCTION IF EXISTS search(TEXT, TEXT);
+
+        CREATE OR REPLACE FUNCTION search(keyword TEXT, type TEXT)
+        RETURNS TABLE (
+            result_type TEXT,
+            id INT,
+            title TEXT,
+            info TEXT,
+            extra_info TEXT
+        )
+        AS $$
+        BEGIN
+            -- ============================
+            -- TYPE: SONG
+            -- ============================
+            IF type = 'song' THEN
+                RETURN QUERY
+                SELECT
+                    'song' AS result_type,
+                    v.song_id AS id,
+                    v.song_title ::TEXT AS title,
+                    'Artist: ' || COALESCE(v.artists_name, '-') AS info,
+                    'Album: ' || COALESCE(v.album_name, '-') ||
+                    ' | Popularity: ' || COALESCE(v.popularity, 0) AS extra_info
+                FROM view_full_song_details v
+                WHERE v.song_title ILIKE '%' || keyword || '%'
+                   OR v.artists_name ILIKE '%' || keyword || '%'
+                   OR v.album_name ILIKE '%' || keyword || '%'
+                ORDER BY v.popularity DESC NULLS LAST;
+
+            -- ============================
+            -- TYPE: COLLECTION (ALBUM)
+            -- ============================
+            ELSIF type = 'collection' THEN
+                RETURN QUERY
+                SELECT
+                    'collection',
+                    c.collection_id,
+                    c.collection_title ::TEXT,
+                    'Artist: ' || COALESCE(aa.album_artists,'-') AS info,
+                    'Release: ' || COALESCE(c.collection_release_date::TEXT, '-') AS extra_info
+                FROM collections c
+                JOIN (
+                    SELECT collection_id,
+                        STRING_AGG(artist_name, ', ') AS album_artists
+                    FROM releases r
+                    JOIN artists a ON a.artist_id = r.artist_id
+                    GROUP BY collection_id
+                ) aa ON aa.collection_id = c.collection_id
+                WHERE c.collection_title ILIKE '%' || keyword || '%'
+                   OR aa.album_artists ILIKE '%' || keyword || '%';
+
+            -- ============================
+            -- TYPE: PLAYLIST
+            -- ============================
+            ELSIF type = 'playlist' THEN
+                RETURN QUERY
+                SELECT
+                    'playlist',
+                    p.playlist_id,
+                    p.playlist_title ::TEXT,
+                    COALESCE(p.playlist_desc, ''),
+                    COUNT(asp.song_id)::TEXT AS extra
+                FROM playlists p
+                LEFT JOIN add_songs_playlists asp ON asp.playlist_id = p.playlist_id
+                LEFT JOIN view_full_song_details v ON v.song_id = asp.song_id
+                WHERE p.playlist_title ILIKE '%' || keyword || '%'
+                   OR COALESCE(p.playlist_desc, '') ILIKE '%' || keyword || '%'
+                   OR v.song_title ILIKE '%' || keyword || '%'
+                   OR v.artists_name ILIKE '%' || keyword || '%'
+                   OR v.album_name ILIKE '%' || keyword || '%'
+                GROUP BY p.playlist_id, p.playlist_title, p.playlist_desc;
+
+            -- ============================
+            -- TYPE: ARTIST
+            -- ============================
+            ELSIF type = 'artist' THEN
+                RETURN QUERY
+                SELECT
+                    'artist',
+                    v.artist_id,
+                    v.artist_name ::TEXT,
+                    v.follower_count::TEXT || ' followers',
+                    'Albums: ' || total_albums || ' | Tracks: ' || total_tracks AS extra
+                FROM view_artist_profile_header v
+                WHERE v.artist_name ILIKE '%' || keyword || '%';
+
+            -- ============================
+            -- TYPE: USER
+            -- ============================
+            ELSIF type = 'user' THEN
+                RETURN QUERY
+                SELECT
+                    'user',
+                    u.user_id,
+                    u.username ::TEXT,
+                    u.followers_count::TEXT || ' followers',
+                    'Following: ' || u.following_count ||
+                    ' | Public playlists: ' || u.public_playlists AS extra
+                FROM view_user_library_stats u
+                WHERE u.username ILIKE '%' || keyword || '%';
+
+            ELSE
+                RAISE EXCEPTION 'Invalid type: %, valid types = song | artist | collection | playlist | user', type;
+            END IF;
+        END;
+        $$ LANGUAGE plpgsql STABLE;
+
+        select * from search('nug', 'user')
+        select * from search ('lil', 'artist')
+        select * from search('story', 'song')
+        select * from search('love', 'collection')
+        select * from search('love', 'playlist')
+
+
+        -- Function get_song_detail
+        CREATE OR REPLACE FUNCTION get_song_detail(p_song_id INT)
+        RETURNS TABLE (
+            song_id INT,
+            song_title VARCHAR,
+            song_duration INT,
+            song_release_date DATE,
+            song_rating NUMERIC,
+            artist_name VARCHAR,
+            genre_name VARCHAR,
+            collection_title VARCHAR,
+            nomor_disc INT,
+            nomor_track INT
+        )
+        AS $$
+        BEGIN
+            RETURN QUERY
+            SELECT
+                -- Ambil ID lagu, judul lagu, durasi lagu, tanggal rilis lagu, rating lagu
+                s.song_id,
+                s.song_title,
+                s.song_duration,
+                s.song_release_date,
+                s.song_rating,
+
+                a.artist_name,                -- artis dari CREATE_SONGS)
+                g.genre_name,                 -- genre lagu dari SONGS_GENRES)
+                c.collection_title,           -- dari collection
+                cs.nomor_disc,                -- nomor disc lagu dalam collection
+                cs.nomor_track                -- nomor track lagu dalam collection
+
+            FROM SONGS s
+
+            -- ARTIST
+            LEFT JOIN CREATE_SONGS cr ON s.song_id = cr.song_id  -- Join untuk dapat artist_id dari CREATE_SONGS
+            LEFT JOIN ARTISTS a ON cr.artist_id = a.artist_id
+
+            -- GENRE
+            LEFT JOIN SONGS_GENRES sg ON s.song_id = sg.song_id
+            LEFT JOIN GENRES g ON sg.genre_id = g.genre_id
+
+            -- COLLECTION / ALBUM
+            LEFT JOIN COLLECTIONS_SONGS cs ON s.song_id = cs.song_id
+            LEFT JOIN COLLECTIONS c ON cs.collection_id = c.collection_id
+
+            WHERE s.song_id = p_song_id;   -- Filter hanya lagu dengan ID sesuai parameter
+        END;
+        $$ LANGUAGE plpgsql;
+
+        -- PROCEDURE toggle_like_song
+        CREATE OR REPLACE PROCEDURE toggle_like_song(
+            p_user_id INT, -- Parameter input: ID user yang ingin like/unlike lagu
+            p_song_id INT  -- Parameter input: ID lagu yang ingin di like/unlike
+        )
+        LANGUAGE plpgsql
+        AS $$
+        DECLARE
+            v_exists INT;  -- Variabel untuk mengecek record like_songs sudah ada apa belum
+        BEGIN
+            -- 1. Cek apakah user ada
+            IF NOT EXISTS (SELECT 1 FROM users WHERE user_id = p_user_id) THEN
+                RAISE EXCEPTION 'User dengan ID % tidak ditemukan', p_user_id;
+            END IF;
+
+            -- 2. Cek apakah lagu ada
+            IF NOT EXISTS (SELECT 1 FROM songs WHERE song_id = p_song_id) THEN
+                RAISE EXCEPTION 'Song dengan ID % tidak ditemukan', p_song_id;
+            END IF;
+
+            -- 3. Cek apakah sudah like
+            SELECT COUNT(*) INTO v_exists
+            FROM like_songs
+            WHERE user_id = p_user_id
+              AND song_id = p_song_id;
+            -- 4. Jika sudah LIKE → UNLIKE
+            IF v_exists > 0 THEN
+                DELETE FROM like_songs  -- Hapus record like (unlike)
+                WHERE user_id = p_user_id
+                  AND song_id = p_song_id;
+                RAISE NOTICE 'UNLIKE berhasil untuk song_id=% oleh user_id=%',
+                    p_song_id, p_user_id;
+            -- 5. Jika belum LIKE → LIKE
+            ELSE
+                INSERT INTO like_songs (song_id, user_id)  -- Tambah record like baru
+                VALUES (p_song_id, p_user_id);
+                RAISE NOTICE 'LIKE berhasil untuk song_id=% oleh user_id=%',
+                    p_song_id, p_user_id;
+            END IF;
+        END;
+        $$;
+
+        -- cek like
+        CALL toggle_like_song(1,10);
+
+        -- cek hasil
+        SELECT * FROM like_songs WHERE user_id = 1 AND song_id = 10;
+
+        -- cek unlike
+        CALL toggle_like_song(1,10);
+
+        -- PROCEDURE rate_song
+        CREATE OR REPLACE PROCEDURE rate_song(
+            p_user_id INT,  -- Parameter input: ID user yang memberi rating
+            p_song_id INT,  -- Parameter input: ID lagu yang dirating
+            p_rating NUMERIC  -- Parameter input: nilai rating lagu
+        )
+        LANGUAGE plpgsql
+        AS $$
+        BEGIN
+            -- Cek apakah user sudah pernah memberi rating
+            IF EXISTS (
+                SELECT 1 FROM rate_songs
+                WHERE user_id = p_user_id
+                  AND song_id = p_song_id
+            ) THEN
+                -- Kalo sudah ada rating → update rating lama dan timestamp
+                UPDATE rate_songs
+                SET song_rating = p_rating,  -- Set rating baru
+                    "TIMESTAMP" = CURRENT_TIMESTAMP  -- Update waktu rating terakhir
+                WHERE user_id = p_user_id
+                  AND song_id = p_song_id;  -- update record user & lagu
+            ELSE
+                -- Jika belum ada rating → insert rating baru
+                INSERT INTO rate_songs (user_id, song_id, song_rating)
+                VALUES (p_user_id, p_song_id, p_rating);   -- Masukkan record baru
+            END IF;
+        END;
+        $$;
+
+        -- cek
+        SELECT * FROM RATE_SONGS;
+
+        -- Cek insert rating
+        CALL rate_song(1,10,5);
+
+        -- cek
+        SELECT * FROM RATE_SONGS;
+
+        -- update rating
+        CALL rate_song(1, 10, 3);
+
+        -- cek hasil
+        SELECT * FROM RATE_SONGS WHERE song_id = 10;
+
+
+        -- Function get_song_audio_features
+        -- Deskripsi: Mengambil fitur audio dari sebuah lagu
+        -- Input: p_song_id (INT) -> ID lagu yang ingin diambil fiturnya
+        -- Output: Tabel berisi song_id, song_title, valence, accousticness, danceability, energy
+        CREATE OR REPLACE FUNCTION get_song_audio_features(p_song_id INT)
+        RETURNS TABLE (
+            song_id INT,                -- ID lagu
+            song_title VARCHAR,          -- Judul lagu
+            valence DECIMAL(4,3),       -- Valence lagu
+            acousticness DECIMAL(4,3),  -- Acousticness lagu
+            danceability DECIMAL(4,3),  -- Danceability lagu
+            energy DECIMAL(4,3)         -- Energy lagu
+        ) AS $$
+        BEGIN
+            -- Mengambil data audio features dari tabel SONGS berdasarkan song_id
+            RETURN QUERY
+            SELECT
+                s.song_id,
+                s.song_title,
+                s.valence,  -- seberapa “positif/ceria”
+                s.accousticness,   -- seberapa akustik
+                s.danceability, -- dance
+                s.energy -- seberapa enejik
+            FROM songs s
+            WHERE s.song_id = p_song_id;
+
+            -- Jika song_id tidak ada, hasilnya akan kosong
+        END;
+        $$ LANGUAGE plpgsql;
+
+        -- cek
+        -- coba panggil funciton dengan song_id
+        SELECT * FROM get_song_audio_features(3);
+
+        -- cek song_id nya yg gak ada di data
+        SELECT * FROM get_song_audio_features(500);
+
+        CREATE EXTENSION IF NOT EXISTS pgcrypto;
+        /*==============================================================*/
+        /* Function: REGISTER_USER
+        insert data user baru ke table users dan mengembalikan user_id  */
+        /*==============================================================*/
+        DROP FUNCTION IF EXISTS register_user(VARCHAR, VARCHAR, VARCHAR);
+
+        CREATE OR REPLACE FUNCTION register_user(p_username VARCHAR, p_raw_pw VARCHAR, p_user_email VARCHAR)
+        RETURNS TABLE (
+            user_id INT4,
+            message TEXT
+        )
+        AS $$
+        DECLARE
+	v_user_id INT4;
+            v_pw_hash TEXT;
+        BEGIN
+            --cek apakah email sudah dipakai atau belum
+            IF EXISTS (SELECT 1 FROM users WHERE user_email = p_user_email) THEN
+                RETURN QUERY SELECT NULL::INT, 'Email already registered'::TEXT;
+                RETURN;
+            END IF;
+
+            --cek apakah username sudah dipakai atau belum
+            IF EXISTS (SELECT 1 FROM users WHERE username = p_username) THEN
+                RETURN QUERY SELECT NULL::INT, 'Username already taken'::TEXT;
+                RETURN;
+            END IF;
+
+            --hash password menggunakan bcrypt
+            v_pw_hash := crypt(p_raw_pw, gen_salt('bf'));
+
+	--generate user_id dari sequence
+	SELECT nextval('seq_users_id') INTO v_user_id;
+
+            --insert user baru, user_id dari sequence
+            INSERT INTO users (user_id, username, pw_hash, user_email)
+            VALUES (v_user_id, p_username, v_pw_hash, p_user_email);
+            RETURN QUERY SELECT v_user_id, 'Registration successful'::TEXT;
+	RETURN;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        SELECT * FROM register_user('nugrinti', 'password1234', 'nurahma@gmail.com');
+
+        /*==============================================================*/
+        /* Function: LOGIN_USER
+        return user_id dan message login successful                     */
+        /*==============================================================*/
+        DROP FUNCTION IF EXISTS login_user(VARCHAR);
+
+        CREATE OR REPLACE FUNCTION login_user(p_user_email VARCHAR, p_raw_pw VARCHAR)
+        RETURNS TABLE (
+            user_id INT4,
+            message TEXT
+        )
+        AS $$
+        DECLARE
+	v_user_id INT4;
+            v_pw_hash VARCHAR(255);
+        BEGIN
+            --cek apakah username sudah terdaftar atau belum
+            SELECT u.user_id, u.pw_hash
+            INTO v_user_id, v_pw_hash
+            FROM users u
+            WHERE u.user_email = p_user_email;
+
+            --jika email belum terdaftar
+            IF v_user_id IS NULL THEN
+                RETURN QUERY SELECT NULL::INT4, 'Email not registered'::TEXT;
+                RETURN;
+            END IF;
+
+            --cek password
+            IF crypt(p_raw_pw, v_pw_hash) <> v_pw_hash THEN
+                RETURN QUERY SELECT NULL::INT4, 'Invalid password'::TEXT;
+                RETURN;
+            END IF;
+
+            --else, berhasil login
+            RETURN QUERY SELECT v_user_id, 'Login successful'::TEXT;
+	RETURN;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        SELECT * FROM login_user('nurahma@gmail.com', 'password1234');
+
+        /*==============================================================*/
+        /* Procedure: TOGGLE_FOLLOW_USER
+        toggle follow dan unfollow sesama user*/
+        /*==============================================================*/
+        CREATE OR REPLACE PROCEDURE toggle_follow_user(p_follower_id INT, p_followed_id INT)
+        LANGUAGE PLPGSQL
+        AS $$
+        DECLARE
+            v_exists BOOLEAN;
+        BEGIN
+            --tidak boleh follow/unfollow diri sendiri
+            IF p_follower_id = p_followed_id THEN
+                RAISE EXCEPTION 'User cannot follow/unfollow themselves';
+            END IF;
+
+            --cek apakah kedua user valid
+            IF NOT EXISTS (SELECT 1 FROM users WHERE user_id = p_follower_id) THEN
+                RAISE EXCEPTION 'Follower user_id % not found', p_follower_id;
+            END IF;
+
+            IF NOT EXISTS (SELECT 1 FROM users WHERE user_id = p_followed_id) THEN
+                RAISE EXCEPTION 'Followed user_id % not found', p_followed_id;
+            END IF;
+
+            --cek apakah sudah follow, jika sudah -> unfollow
+            SELECT EXISTS (SELECT 1 FROM follow_users
+                WHERE follower_id = p_follower_id AND followed_id = p_followed_id)
+            INTO v_exists;
+
+            IF v_exists THEN
+                --delete relationship from follow_users
+                DELETE from follow_users
+                    WHERE follower_id = p_follower_id AND followed_id = p_followed_id;
+                RAISE NOTICE 'Unfollow successful';
+                RETURN;
+            END IF;
+
+            --jika belum follow -> follow
+            --insert ke table follow_users
+            INSERT INTO follow_users VALUES (p_follower_id, p_followed_id);
+	RAISE NOTICE 'Follow successful';
+
+        END;$$;
+
+        CALL toggle_follow_user(12, 20);
+        SELECT * FROM follow_users;
+
+        /*==============================================================*/
+        /* Function: GET_FOLLOWERS                                      */
+        /*==============================================================*/
+        DROP FUNCTION IF EXISTS get_followers(INT);
+
+        CREATE OR REPLACE FUNCTION get_followers(p_user_id INT)
+        RETURNS TABLE (
+            follower_id INT4,
+            follower_username VARCHAR(50),
+            follower_email VARCHAR(320)
+        )
+        AS $$
+        BEGIN
+            RETURN QUERY
+            SELECT u.user_id, u.username, u. user_email
+            FROM follow_users
+            JOIN users u ON fu.follower_id = u.user_id
+            WHERE fu.followed_id = p_user_id
+            ORDER BY u.username;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CALL toggle_follow_user(11, 57);
+        CALL toggle_follow_user(12, 57);
+        CALL toggle_follow_user(20, 57);
+        CALL toggle_follow_user(31, 57);
+
+        SELECT * FROM get_followers(57);
+
+        /*==============================================================*/
+        /* Function: GET_FOLLOWING                                      */
+        /*==============================================================*/
+        DROP FUNCTION IF EXISTS get_following(INT);
+
+        CREATE OR REPLACE FUNCTION get_following(p_user_id INT)
+        RETURNS TABLE (
+            following_id INT4,
+            following_username VARCHAR(50),
+            following_email VARCHAR(320)
+        )
+        AS $$
+        BEGIN
+            RETURN QUERY
+            SELECT u.user_id, u.username, u. user_email
+            FROM follow_users
+            JOIN users u ON fu.followed_id = u.user_id
+            WHERE fu.follower_id = p_user_id
+            ORDER BY u.username;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        CALL toggle_follow_user(12, 40);
+        CALL toggle_follow_user(12, 30);
+        CALL toggle_follow_user(12, 53);
+
+        SELECT * FROM get_following(12);
+
+
+        CREATE OR REPLACE FUNCTION delete_expired_tours()
+        RETURNS VOID AS $$
+        BEGIN
+            DELETE FROM tours
+            WHERE tour_date < CURRENT_DATE;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        SELECT cron.schedule(
+            'delete_expired_tours_daily',
+            '5 0 * * *',
+            $$SELECT delete_expired_tours();$$
+        );
+
+        CREATE OR REPLACE FUNCTION recalc_listen_count()
+        RETURNS void AS $$
+        BEGIN
+            UPDATE songs s
+            SET listen_count = sub.cnt
+            FROM (
+                SELECT song_id, COUNT(*) AS cnt
+                FROM listens
+                GROUP BY song_id
+            ) sub
+            WHERE s.song_id = sub.song_id;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        SELECT cron.schedule(
+            'recalc_listen_count_daily',
+            '20 0 * * *',
+            $$SELECT recalc_listen_count();$$
+        );
+
+
+        CREATE OR REPLACE FUNCTION recalculate_all_song_popularity()
+        RETURNS VOID AS $$
+        BEGIN
+            UPDATE songs s
+            SET popularity = sub.pop
+            FROM (
+                SELECT
+                    l.song_id,
+                    CASE
+                        WHEN COUNT(*) <= 1 THEN 0
+                        ELSE LEAST(100, LOG(10, COUNT(*)) * 25)
+                    END AS pop
+                FROM listens l
+                WHERE l."TIMESTAMP" >= CURRENT_DATE - INTERVAL '30 days'
+                GROUP BY l.song_id
+            ) sub
+            WHERE s.song_id = sub.song_id;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        SELECT cron.schedule(
+            'recalculate_song_popularity_daily',
+            '15 0 * * *',
+            $$SELECT recalculate_all_song_popularity();$$
+        );
+
+
+
+        CREATE OR REPLACE FUNCTION recalculate_monthly_listeners()
+        RETURNS VOID AS $$
+        BEGIN
+            UPDATE artists a
+            SET monthly_listener_count = sub.cnt
+            FROM (
+                SELECT
+                    cs.artist_id,
+                    COUNT(DISTINCT l.user_id) AS cnt
+                FROM listens l
+                JOIN create_songs cs ON cs.song_id = l.song_id
+                WHERE DATE_TRUNC('month', l."TIMESTAMP") = DATE_TRUNC('month', CURRENT_DATE)
+                GROUP BY cs.artist_id
+            ) sub
+            WHERE a.artist_id = sub.artist_id;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        SELECT cron.schedule(
+            'recalculate_monthly_listeners_daily',
+            '10 0 * * *',
+            $$SELECT recalculate_monthly_listeners();$$
+        );
+
+
+        CREATE OR REPLACE FUNCTION update_prerelease_daily()
+        RETURNS VOID AS $$
+        BEGIN
+            UPDATE collections
+            SET isPrerelease = FALSE
+            WHERE isPrerelease = TRUE
+              AND collection_release_date <= CURRENT_DATE;
+        END;
+        $$ LANGUAGE plpgsql;
+
+        SELECT cron.schedule(
+            'update_prerelease_job_daily',
+            '0 0 * * *',
+            $$SELECT update_prerelease_daily();$$
+        );
