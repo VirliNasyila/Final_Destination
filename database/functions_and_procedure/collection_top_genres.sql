@@ -18,14 +18,14 @@ CREATE OR REPLACE FUNCTION get_collection_average_rating(p_collection_id INT)
 RETURNS NUMERIC AS
 $$
 DECLARE
-    avg_rating NUMERIC;
+    v_rating NUMERIC;
 BEGIN
-    SELECT AVG(a.rating)
-    INTO avg_rating
-    FROM collection_albums ca
-    JOIN albums a ON a.album_id = ca.album_id
-    WHERE ca.collection_id = p_collection_id;
+    -- Mengambil nilai yang sudah dihitung oleh trigger
+    SELECT COLLECTION_RATING
+    INTO v_rating
+    FROM COLLECTIONS
+    WHERE COLLECTION_ID = p_collection_id;
 
-    RETURN avg_rating;
+    RETURN COALESCE(v_rating, 0);
 END;
 $$ LANGUAGE plpgsql;
