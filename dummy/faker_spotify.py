@@ -68,7 +68,7 @@ def generate_data_safe():
     collected_tracks = []
     attempts = 0
     while len(collected_tracks) < TOTAL_SONGS_WANTED and attempts < 25:
-        search_char = random.choice(["a", "e", "i", "o", "u", "love", "night", "feat"])
+        search_char = random.choice(["a", "e", "i", "o", "u", "love", "night", "feat", "qwertyuiopasdfghjklzxcvbnm"])
         offset_val = random.randint(0, 50)
         try:
             results = sp.search(q=search_char, type="track", limit=50, offset=offset_val)
@@ -101,14 +101,14 @@ def generate_data_safe():
     # PART 1: USERS (Table 1)
     # ==========================================
     print("Generating Users...")
-    for _ in range(25): # 25 Users
+    for _ in range(100): # 25 Users
         u_name = fake.unique.user_name()
         email = f"{u_name}_{ids['users']}@example.com" 
         pfp = f"https://ui-avatars.com/api/?name={u_name}&background=random"
         raw_pw = fake.password(length=12)
         safe_pw = raw_pw.replace("'", "''")
         
-        sql = f"INSERT INTO USERS (USER_ID, USERNAME, USER_EMAIL, PW_HASH, USER_PFP, REGION, COUNTRY) VALUES ({ids['users']}, {escape_sql(u_name)}, {escape_sql(email)}, crypt('{safe_pw}', gen_salt('bf')), {escape_sql(pfp)}, {escape_sql(fake.state())}, 'Indonesia');"
+        sql = f"INSERT INTO USERS (USER_ID, USERNAME, USER_EMAIL, PW_HASH, USER_PFP, REGION, COUNTRY) VALUES ({ids['users']}, {escape_sql(u_name)}, {escape_sql(email)}, crypt('{safe_pw}', gen_salt('bf')), {escape_sql(pfp)}, {escape_sql(fake.city())}, {escape_sql(fake.country())});"
         sql_statements.append(sql)
         ids["users"] += 1
 
