@@ -198,3 +198,5 @@ CALL follow_user(12, 30);
 CALL follow_user(12, 53);
 
 SELECT * FROM get_following(12);
+
+
