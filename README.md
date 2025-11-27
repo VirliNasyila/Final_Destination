@@ -17,33 +17,30 @@ This project is a relational database system for a music streaming platform, dev
 
 ## Current Progress
 
-- **Data Models**: ✔️ Complete (see `/Data Models`)
-- **DDL (Schema Creation)**: ✔️ Complete (see `/Script/DDL/SCRIPT DDL.sql`)
+- **Data Models**: ✔️ Complete (see `/models`)
+- **DDL (Schema Creation)**: ✔️ Complete (see `/database`)
+- **DML (Data Manipulation Language)**: ✔️ Complete (data population, updates, deletes)
+- **Views**: ✔️ Complete
+- **Functions & Procedures**: ✔️ Complete
+- **Triggers**: ✔️ Complete
+- **Cronjobs**: ✔️ Complete
 
 ## Data Insertion 💾
 
 1. Create .env profile
 2. Insert your CLIENT_ID and CLIENT_SECRET from Spotify API
    ```bash
-    SPOTIFY_CLIENT_ID=[YOUR CLIENT ID]
-    SPOTIFY_CLIENT_SECRET=[YOUR CLIENT SECRET]
+   SPOTIFY_CLIENT_ID=[YOUR CLIENT ID]
+   SPOTIFY_CLIENT_SECRET=[YOUR CLIENT SECRET]
    ```
-3. Dont forget to add .env to .gitignore
+3. Don't forget to add .env to .gitignore
 4. Run dummy/faker_spotify.py
-   
-
-## To Be Implemented
-
-- Functions, Procedures, Triggers
-- Views
-- DML (Data Manipulation Language): Data population, updates, deletes
-- Advanced queries and analytics
 
 ## Getting Started
 
 1. Review the data models for an overview of entities and relationships.
 2. Use the DDL script to create the database schema in PostgreSQL 9.x.
-3. Pending: Data population and advanced features.
+3. All features are implemented and ready for use.
 
 ## License
 
