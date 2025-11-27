@@ -1,8 +1,3 @@
-/*10. get_collection_detail(collection_id) — FUNCTION
-11. get_collection_tracks(collection_id) — FUNCTION
-12. get_new_releases(limit_n) — FUNCTION
-    Mirip Spotify Browse → “New Releases”.
-    > get_artist_collections sudah ditutup fungsinya di modul Artist.*/
 DROP FUNCTION IF EXISTS get_collection_detail(INT);
 CREATE OR REPLACE FUNCTION get_collection_detail(p_collection_id INT)
 RETURNS TABLE (

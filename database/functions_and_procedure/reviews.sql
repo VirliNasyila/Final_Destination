@@ -1,7 +1,3 @@
---Procedure: create_review(user_id, collection_id, review_text)
---Procedure: like_review(user_id, review_id)
---Procedure: unlike_review(user_id, review_id)
-
 /*==============================================================*/
 /* Procedure: CREATE_REVIEW                               */
 /*==============================================================*/
@@ -100,42 +96,3 @@ CALL toggle_like_review(2, 1);
 select * from like_reviews
 CALL toggle_like_review(9999, 15);
 CALL toggle_like_review(2, 99999);
-
-/*==============================================================*/
-/* Procedure: UNLIKE_REVIEW                               */
-/*==============================================================*/
-CREATE OR REPLACE PROCEDURE unlike_review(p_user_id INT, p_review_id INT)
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    -- cek user
-    IF NOT EXISTS (SELECT 1 FROM users WHERE user_id = p_user_id) THEN
-        RAISE EXCEPTION 'User_id % not found', p_user_id;
-    END IF;
-
-    -- cek review
-    IF NOT EXISTS (SELECT 1 FROM reviews WHERE review_id = p_review_id) THEN
-        RAISE EXCEPTION 'Review_id % not found', p_review_id;
-    END IF;
-
-    -- cek apakah like belum ada
-    IF NOT EXISTS (
-        SELECT 1 FROM like_reviews WHERE review_id = p_review_id
-        	AND user_id = p_user_id
-    ) THEN
-        RAISE EXCEPTION 'User has not liked this review';
-    END IF;
-
-    -- hapus like
-    DELETE FROM like_reviews WHERE review_id = p_review_id AND user_id = p_user_id;
-
-    RAISE NOTICE 'Review % unliked by user %', p_review_id, p_user_id;
-END;
-$$;
-
-select * from like_reviews
-CALL unlike_review(2, 4);
-CALL unlike_review(9999, 15);
-CALL unlike_review(2, 99999);
-CALL unlike_review(2, 4);
-CALL unlike_review(2, 3);

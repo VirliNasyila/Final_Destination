@@ -1,7 +1,3 @@
-/*19. add_artist_promotion(artist_id, collection_id, comment) — PROCEDURE
-    Hanya boleh untuk rilis milik artis itu (DDL kamu sudah enforce).
-20. get_artist_tours(artist_id) — FUNCTION*/
-
 /*==============================================================*/
 /* Procedure: ADD_ARTIST_PROMOTION                              */
 /*==============================================================*/

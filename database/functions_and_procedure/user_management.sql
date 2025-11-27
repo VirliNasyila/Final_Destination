@@ -1,9 +1,3 @@
-/*register_user
-login_user(email, password_hash)
-follow_user(follower_id, followed_id)
-unfollow_user(follower_id, followed_id)
-get_followers(user_id)*/
-
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 /*==============================================================*/
 /* Function: REGISTER_USER
@@ -137,10 +131,6 @@ END;$$;
 
 CALL toggle_follow_user(12, 20);
 SELECT * FROM follow_users;
-CALL unfollow_user(11, 11);
-CALL unfollow_user(100, 2);
-CALL unfollow_user(2, 100);
-CALL unfollow_user(12, 20);
 
 /*==============================================================*/
 /* Function: GET_FOLLOWERS                                      */
@@ -164,12 +154,12 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL follow_user(11, 53);
-CALL follow_user(12, 53);
-CALL follow_user(20, 53);
-CALL follow_user(31, 53);
+CALL toggle_follow_user(11, 57);
+CALL toggle_follow_user(12, 57);
+CALL toggle_follow_user(20, 57);
+CALL toggle_follow_user(31, 57);
 
-SELECT * FROM get_followers(53);
+SELECT * FROM get_followers(57);
 
 /*==============================================================*/
 /* Function: GET_FOLLOWING                                      */
@@ -193,9 +183,9 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-CALL follow_user(12, 40);
-CALL follow_user(12, 30);
-CALL follow_user(12, 53);
+CALL toggle_follow_user(12, 40);
+CALL toggle_follow_user(12, 30);
+CALL toggle_follow_user(12, 53);
 
 SELECT * FROM get_following(12);
 
