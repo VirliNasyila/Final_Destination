@@ -11,7 +11,7 @@ BEGIN
                 ELSE LEAST(100, LOG(10, COUNT(*)) * 25)
             END AS pop
         FROM listens l
-        WHERE l.timestamp >= CURRENT_DATE - INTERVAL '30 days'
+        WHERE l."TIMESTAMP" >= CURRENT_DATE - INTERVAL '30 days'
         GROUP BY l.song_id
     ) sub
     WHERE s.song_id = sub.song_id;

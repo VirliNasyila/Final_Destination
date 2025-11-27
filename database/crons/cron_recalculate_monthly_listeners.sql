@@ -9,7 +9,7 @@ BEGIN
             COUNT(DISTINCT l.user_id) AS cnt
         FROM listens l
         JOIN create_songs cs ON cs.song_id = l.song_id
-        WHERE DATE_TRUNC('month', l.timestamp) = DATE_TRUNC('month', CURRENT_DATE)
+        WHERE DATE_TRUNC('month', l."TIMESTAMP") = DATE_TRUNC('month', CURRENT_DATE)
         GROUP BY cs.artist_id
     ) sub
     WHERE a.artist_id = sub.artist_id;
