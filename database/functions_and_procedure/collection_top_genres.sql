@@ -29,3 +29,5 @@ BEGIN
     RETURN COALESCE(v_rating, 0);
 END;
 $$ LANGUAGE plpgsql;
+
+
