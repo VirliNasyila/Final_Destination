@@ -56,8 +56,11 @@ SELECT * FROM collection_top_3_genres
 WHERE collection_id = 2;
 
 SELECT * FROM collection_top_3_genres;
+
+-- insert 
 INSERT INTO collections_songs (collection_id, song_id, nomor_disc, nomor_track) 
-VALUES(1, 16, 1, 99)
+VALUES(1, 16, 1, 99);
+
 SELECT * FROM genres
 SELECT * FROM songs_genres
 select * from genres
