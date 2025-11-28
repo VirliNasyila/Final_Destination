@@ -4,23 +4,23 @@ RETURNS TRIGGER AS $$
 DECLARE
     top_genre RECORD;
 BEGIN
-    -- Hapus data lama untuk collection ini
+    -- Hapus data lama untuk collection ini (supaya bisa di isi ulang dari nol  )
     DELETE FROM collection_top_3_genres
     WHERE collection_id = NEW.collection_id;
 
     -- Ambil 3 genre paling sering muncul dari lagu-lagu collection
     FOR top_genre IN
-        SELECT sg.genre_id
-        FROM songs_genres sg
-        JOIN collections_songs cs ON sg.song_id = cs.song_id
-        WHERE cs.collection_id = NEW.collection_id
-        GROUP BY sg.genre_id
-        ORDER BY COUNT(*) DESC
-        LIMIT 3
+        SELECT sg.genre_id  -- Mengambil genre_id
+        FROM songs_genres sg  
+        JOIN collections_songs cs ON sg.song_id = cs.song_id  -- Menghubungkan genre ke lagu dalam sebuah collection
+        WHERE cs.collection_id = NEW.collection_id  -- Filter berdasarkan collection yang sedang di-update
+        GROUP BY sg.genre_id  -- Mengelompokkan berdasarkan genre
+        ORDER BY COUNT(*) DESC  -- Urutkan berdasarkan jumlah kemunculan genre terbanyak
+        LIMIT 3  -- Ambil hanya 3 genre teratas
     LOOP
         -- Insert ke COLLECTION_TOP_3_GENRES
-        INSERT INTO collection_top_3_genres (collection_id, genre_id)
-        VALUES (NEW.collection_id, top_genre.genre_id);
+        INSERT INTO collection_top_3_genres (collection_id, genre_id)  -- Tambahkan satu per satu genre ke tabel top 3
+        VALUES (NEW.collection_id, top_genre.genre_id);   -- Mengisi collection_id dan genre_id hasil loop
     END LOOP;
 
     RETURN NEW;
