@@ -2,11 +2,12 @@
 CREATE OR REPLACE FUNCTION update_collection_top3_genres()
 RETURNS TRIGGER AS $$
 DECLARE
-    top_genre RECORD;
+    top_genre RECORD; -- Variabel RECORD untuk menampung hasil looping genre teratas
 BEGIN
     -- Hapus data lama untuk collection ini (supaya bisa di isi ulang dari nol  )
     DELETE FROM collection_top_3_genres
-    WHERE collection_id = NEW.collection_id;
+    WHERE collection_id = NEW.collection_id;  -- Hanya untuk collection yang sama dengan row yang baru diubah/ditambah
+
 
     -- Ambil 3 genre paling sering muncul dari lagu-lagu collection
     FOR top_genre IN
