@@ -9,7 +9,8 @@ RETURNS TABLE (
     rating NUMERIC(3,0),
     is_prerelease BOOL,
     total_tracks BIGINT,
-    total_artists BIGINT
+    total_artists BIGINT,
+    genres TEXT
 )
 AS $$
 BEGIN
@@ -57,6 +58,43 @@ BEGIN
         v.song_duration,
         v.popularity,
         v.song_file ::TEXT
+    FROM collections_songs cs
+    JOIN view_full_song_details v ON v.song_id = cs.song_id
+    WHERE cs.collection_id = p_collection_id
+    ORDER BY cs.nomor_disc, cs.nomor_track;
+END;
+$$ LANGUAGE plpgsql STABLE;
+
+DROP FUNCTION IF EXISTS get_collection_tracks(INT);
+
+
+---------
+-- 
+-- 
+
+CREATE OR REPLACE FUNCTION get_collection_tracks(p_collection_id INT)
+RETURNS TABLE (
+    track_number INT,
+    song_id INT,
+    song_title TEXT,
+    artist_name TEXT,
+    genres TEXT,        -- <--- KOLOM BARU (Genre)
+    duration INT,
+    popularity NUMERIC(3,0),
+    song_file TEXT
+)
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT
+        cs.nomor_track,
+        v.song_id,
+        v.song_title::TEXT,
+        v.artists_name::TEXT, -- Pastikan ini sesuai dengan nama kolom di View (artists_name / artist_name)
+        v.genres::TEXT,       -- <--- AMBIL DARI VIEW
+        v.song_duration,
+        v.popularity,
+        v.song_file::TEXT
     FROM collections_songs cs
     JOIN view_full_song_details v ON v.song_id = cs.song_id
     WHERE cs.collection_id = p_collection_id

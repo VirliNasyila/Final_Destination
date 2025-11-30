@@ -25,3 +25,48 @@ GROUP BY
     S.SONG_DURATION,
     S.POPULARITY,
     S.SONG_FILE;
+
+
+-----------------------------    
+    
+DROP VIEW IF EXISTS VIEW_FULL_SONG_DETAILS CASCADE;
+
+CREATE OR REPLACE VIEW VIEW_FULL_SONG_DETAILS AS
+SELECT
+    S.SONG_ID,
+    S.SONG_TITLE,
+    
+    -- 1. Gabungkan Nama Artis (Jika feat/banyak artis)
+    STRING_AGG(DISTINCT A.ARTIST_NAME, ', ') AS ARTISTS_NAME,
+    
+    -- 2. BARU: Gabungkan Nama Genre (Jika lagu punya banyak genre)
+    STRING_AGG(DISTINCT G.GENRE_NAME, ', ') AS GENRES,
+
+    C.COLLECTION_TITLE AS ALBUM_NAME,
+    S.SONG_DURATION,
+    S.POPULARITY,
+    S.SONG_FILE,
+    TO_CHAR((S.SONG_DURATION || ' second')::interval, 'MI:SS') AS DURATION_FORMATTED
+
+FROM SONGS S
+
+-- Join ke Artis (Wajib ada artis)
+JOIN CREATE_SONGS CS ON S.SONG_ID = CS.SONG_ID
+JOIN ARTISTS A ON CS.ARTIST_ID = A.ARTIST_ID
+
+-- Join ke Album (Bisa jadi lagu single/belum masuk album, pakai LEFT JOIN)
+LEFT JOIN COLLECTIONS_SONGS C_S ON S.SONG_ID = C_S.SONG_ID
+LEFT JOIN COLLECTIONS C ON C_S.COLLECTION_ID = C.COLLECTION_ID
+
+-- 3. BARU: Join ke Genre (Pakai LEFT JOIN biar lagu tanpa genre tetap muncul)
+LEFT JOIN SONGS_GENRES SG ON S.SONG_ID = SG.SONG_ID
+LEFT JOIN GENRES G ON SG.GENRE_ID = G.GENRE_ID
+
+GROUP BY
+    -- Semua kolom non-agregat wajib ditulis ulang di sini
+    S.SONG_ID,
+    S.SONG_TITLE,
+    C.COLLECTION_TITLE,
+    S.SONG_DURATION,
+    S.POPULARITY,
+    S.SONG_FILE;
